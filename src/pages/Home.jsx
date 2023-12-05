@@ -6,7 +6,7 @@ import { PublishTable } from '../components/UtilsData';
 
 const Home = () => {
   return (
-    <div className="bg-gray-300 py-5">
+    <div className="bg-secondary bg-opacity-25 py-5">
       {/* carte numero 1 */}
 
       <div className="">

@@ -2,12 +2,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-// import React, { useEffect, useState, useRef } from 'react';
+
+import React, { useContext } from 'react';
+import { AuthContext } from '../contexte/authContext';
+import { Outlet, useLocation, Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
 import Home from '../pages/Home';
 
 export default function Template() {
+  // User Invocation
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="d-flex h-100">
       {/************ SidBar********** */}

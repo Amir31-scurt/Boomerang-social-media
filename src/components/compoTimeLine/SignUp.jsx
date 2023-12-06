@@ -65,7 +65,7 @@ function SignUp() {
       // retourner vide les inputs
       formRef.current.reset();
       setValidation('');
-      navigate('/Connexion');
+      navigate('/Timeline');
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err);

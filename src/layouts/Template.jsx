@@ -14,7 +14,7 @@ export default function Template() {
   // User Invocation
   const { user } = useContext(AuthContext);
 
-  if (user) {
+  if (!user) {
     return <Navigate to="/" />;
   }
 

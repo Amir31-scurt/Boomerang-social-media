@@ -16,12 +16,12 @@ const SearchForm = ({search, setSearch}) => {
             <div className="">
               <input onChange={(e) => setSearch(e.target.value)}
                 type="text"
-                className="mb-0 bg-opacity-25 border-0 bg-secondary input form-control text-grey-500 theme-dark-bg "
+                className="mb-0 bg-opacity-25 border-0 bg-secondary input form-control text-grey-500 "
                 placeholder="Search"
                 id="input"
               />
             </div>
-            <CiSearch className="w-40 icon mt-2 ml-5" size={25} />
+            <CiSearch className="w-40 icon mt-3 ml-5" size={20} />
           </div>
         </div>
       </div>

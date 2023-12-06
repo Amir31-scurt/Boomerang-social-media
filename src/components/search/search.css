@@ -1,13 +1,19 @@
 
 body{
-    background: black;
     width: 100%;
     margin: 0;
     margin: 0;
+    height: 100vh;
+    background: none;
 }
 .form{
     width: 100%;
-    margin-top: 20%; 
+    margin-top: 10%;
+    height: auto;
+}
+
+.form:hover{
+    height: auto;
 }
 
 #input{

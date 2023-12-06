@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./search.css";
 import noire from '../../assets/images/noire.png';
 
-const ProfileCard = ({ imageSrc, name, email }) => {
+
+const ProfileCard = ({ imageSrc, name, email}) => {
+  const [buttonText, setButtonText] = useState('suivre')
+
+  const handleClick = () =>{
+    setButtonText('suivi....');
+    console.log(setButtonText);
+
+    setTimeout(() => { 
+      setButtonText('Suivre'); 
+  }, 2000);
+
+  }
+  
+ 
   return (
     
     <div className="mb-3 col-md-6">
@@ -22,7 +36,7 @@ const ProfileCard = ({ imageSrc, name, email }) => {
             </div>
           </div>
           <div className="">
-            <button className="w-20 btn btn-primary btn-sm rounded-5 mt-2">Suivre</button>
+            <button onClick={handleClick} className="w-20 btn btn-primary btn-sm rounded-5 mt-2">Suivre</button>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import FormInput from './FormInput';
+import { Modal, Button } from 'react-bootstrap';
 
 function SignUp() {
 
@@ -24,6 +25,13 @@ function SignUp() {
       event.preventDefault();
     }
   };
+
+  // L'affichage du modal des termes et conditions
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
+  // Fonction pour l'affichage et la fermeture du modal
+  const handleTermsModalClose = () => setShowTermsModal(false);
+  const handleTermsModalShow = () => setShowTermsModal(true);
 
   return (
     <div className="p-2">
@@ -69,7 +77,12 @@ function SignUp() {
               <input className="form-check-input required" type="checkbox" value="" id="flexCheckDefault" required />
               <label className="form-check-label" htmlFor="flexCheckDefault">
                 D’accord avec
-                <span className='text-decoration-underline text-color'> Termes et conditions</span>
+                <span className='text-decoration-underline text-color'
+                onClick={handleTermsModalShow}
+                style={{ cursor: 'pointer' }}
+                > 
+                Termes et conditions
+                </span>
               </label>
             </div>
             <div className="d-grid gap-2 col-6 mx-auto w-75 mt-4">
@@ -97,6 +110,27 @@ function SignUp() {
             </div>
           </div>
         </form>
+
+         {/* Modal pour les Termes et conditions */}
+        <Modal className="me-4" show={showTermsModal} onHide={handleTermsModalClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Termes et conditions</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Bienvenue sur notre réseau social, une plateforme conçue pour connecter les individus de manière positive et respectueuse.</p>
+            <p>En créant un compte et en utilisant notre réseau social, vous acceptez explicitement les présentes conditions d'utilisation. Veuillez les lire attentivement avant de continuer.</p>
+            <p>Le processus de création de compte est simple et ouvert à tous ceux qui respectent nos conditions d'admissibilité. Ces conditions visent à garantir un environnement sûr et respectueux pour tous nos utilisateurs</p>
+            <p>Il est strictement interdit de publier du contenu illégal, offensant, discriminatoire ou contraire à nos normes communautaires. Nous nous réservons le droit de supprimer tout contenu en violation de ces règles.</p>
+            <p>Nous attendons de nos utilisateurs qu'ils interagissent de manière respectueuse envers les autres membres de notre communauté. Tout comportement inapproprié, harcèlement ou discours haineux est strictement interdit</p>
+            <p>Nous nous réservons le droit de modifier les termes et conditions à tout moment. Les utilisateurs seront informés des changements, et il est de leur responsabilité de consulter régulièrement les conditions mises à jour.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={handleTermsModalClose}>
+              Fermer
+            </Button>
+          </Modal.Footer>
+        </Modal>     
+
       </div>
     </div>
   );

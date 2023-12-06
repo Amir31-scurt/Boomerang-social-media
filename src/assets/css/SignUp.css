@@ -42,6 +42,7 @@
     background-color:hsla(207, 65%, 28%, 0.4) ;
     box-shadow: 2px 0px 10px 2px grey;
     width: 50%;
+    border-radius: 15px;
   }
   
   .type{

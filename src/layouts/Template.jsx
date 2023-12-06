@@ -8,6 +8,7 @@ import Body from '../components/Cartes';
 import ComposBody from '../components/ComposBody';
 import SideBar from '../components/SidCompos';
 import Home from '../pages/Home';
+import Search from '../components/search/Search';
 
 export default function Template() {
   return (
@@ -25,7 +26,7 @@ export default function Template() {
           </div>
           <div className="documo col-9 px-5 bg-secondary bg-opacity-25">
             {/* Place ////////////////l */}
-            <Home />
+            <Search />
           </div>
         </div>
         {/********* ConTenu Page **********/}

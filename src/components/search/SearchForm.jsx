@@ -1,26 +1,27 @@
-// SearchForm.js
-import React from 'react';
+// SearchForm.js²
 import { CiSearch } from 'react-icons/ci';
 
-const SearchForm = () => {
+const SearchForm = ({search, setSearch}) => {
+  console.log(search);
+  
   return (
-    <div className='px-5 mx-2 contenu'>
-      <div className="px-5 mb-3 bg-white border-0 card shadow-xss w-100 d-block d-flex g-10" id="searching">
+    <div className='px-5 mx-2 contenu d-flex'>
+      <div className="px-5 mb-5 bg-white border-0 card shadow-xss w-100 d-block d-flex g-10" id="searching">
       <div className="p-3 border-0 d-flex">
-        <div className="flex p-0 card-body align-items-center">
-          <h1 className="mt-0 mb-0 ml-1 fs-4 font-md search" id="titre">
+        <div className="d-flex p-0 card-body align-items-center">
+          <h1 className="mt-0 mb-0 ml-0 fs-4 font-md search" id="titre">
             Compte
           </h1>
-          <div className="flex search-form-2 ms-auto">
+          <div className="d-flex search-form-2 ms-auto mb-2 ml-5">
             <div className="">
-              <input
+              <input onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 className="mb-0 bg-opacity-25 border-0 bg-secondary input form-control text-grey-500 theme-dark-bg "
                 placeholder="Search"
                 id="input"
               />
             </div>
-            <CiSearch className="w-40 icon" size={30} />
+            <CiSearch className="w-40 icon mt-2 ml-5" size={25} />
           </div>
         </div>
       </div>

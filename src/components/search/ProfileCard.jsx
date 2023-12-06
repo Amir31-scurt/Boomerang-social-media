@@ -22,7 +22,7 @@ const ProfileCard = ({ imageSrc, name, email }) => {
             </div>
           </div>
           <div className="">
-            <button className="w-20 btn btn-primary btn-sm rounded-5">Suivre</button>
+            <button className="w-20 btn btn-primary btn-sm rounded-5 mt-2">Suivre</button>
           </div>
         </div>
       </div>

@@ -6,30 +6,28 @@ body{
     margin: 0;
 }
 .form{
-    width: 100%; 
+    width: 100%;
+    margin-top: 20%; 
 }
 
 #input{
     border-radius: 20px;
-    width: 100%;
-    height: 50px;
+    width: 130%;
+    height: 45px;
     text-align: left;
-    padding-left: 20px;
-    margin-left: 80px;
-   
     font-size: 20px;
 }
 
 #titre{
     color: black;
     background: none;
-    font-size: 38px;
+    font-size: 42px;
+   
 }
 .icon{
     color: black;
     width: 100px;
     background: none;
-    margin-top: 9px;
 }
 
 .searchCard{

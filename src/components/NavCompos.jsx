@@ -14,7 +14,6 @@ function NavBar() {
     <header className="d-flex align-items-center justify-content-between px-3 py-4 bg-light">
       <div className="nav-top">
         <Link to="/Timeline">
-          <i className="feather-zap text-success display1-size me-2 ms-0"></i>
           <span className="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Boomerang-Logo.svg"
@@ -32,7 +31,7 @@ function NavBar() {
             <input
               type="text"
               placeholder="Start typing to search.."
-              className="bg-secondary bg-opacity-25 border-0 lh-32 fs-5 py-2 ps-5 pe-3 fs-d1 rounded rounded-5 searchBar"
+              className="bg-secondary bg-opacity-25 border-0 fs-5 py-2 ps-5 pe-0 pe-lg-3 fs-d1 rounded rounded-5 searchBar"
             />
           </div>
         </form>

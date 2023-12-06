@@ -66,14 +66,14 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <aside className="flex flex-col items-center justify-center ">
-      <div className="flex items-center justify-center gap-3 mt-3 mx-4">
-        <div className="container-1st bg-secondary bg-opacity-25 rounded rounded-4">
-          <ul className="list-unstyled gap-3 d-flex flex-column p-4">
-            {SideMenu()}
-          </ul>
+    <nav class="navigation mx-1 mx-lg-4 scroll-bar">
+      <div class="container ps-0 pe-0">
+        <div class="nav-content">
+          <div class="nav-wrap bg-secondary bg-opacity-25 p-3 rounded rounded-3 shadow-sm pt-3 pb-1 mb-2 mt-2">
+            <ul class="mb-1 top-content list-unstyled">{SideMenu()}</ul>
+          </div>
         </div>
       </div>
-    </aside>
+    </nav>
   );
 }

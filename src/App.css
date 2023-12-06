@@ -204,16 +204,14 @@
 }
 
 .navigation {
-  /* transform: translateY(-50em); */
-  right: 0;
+  position: fixed;
   top: 0;
-  position: absolute;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  width: 16.8%;
-  height: auto;
-  overflow-y: scroll;
-  background-color: #145da0;
+  width: 20%;
+  height: 100vh;
+  overflow: hidden;
+  background: 0 0;
   -webkit-transition: width 0.25s;
   -o-transition: width 0.25s;
   transition: width 0.25s;
@@ -221,14 +219,10 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
 }
-.SideContainer {
-  background-color: aqua;
-  /* position: absolute; */
-}
-@media (max-width: 993px) {
+@media (max-width: 1024px) {
   /* .signUp-form{
         height: 100vh !important;
     } */
@@ -244,13 +238,9 @@
   .SideTitle {
     display: none;
   }
-  /* .navigation {
-    width: 15%;
-  } */
+
   .navigation {
-    width: 100%;
-    padding: 0;
-    margin: 0;
+    width: 15%;
   }
 }
 

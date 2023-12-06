@@ -1,12 +1,12 @@
 import React from 'react';
+import '../Barry.css';
 import { Cards } from '../components/Cards';
-import { UnModal } from '../components/UnModal';
 import { TextPublication } from '../components/TextPublication';
 import { PublishTable } from '../components/UtilsData';
 
 const Home = () => {
   return (
-    <div className="bg-secondary bg-opacity-25 py-5">
+    <div className="py-5">
       {/* carte numero 1 */}
 
       <div className="">

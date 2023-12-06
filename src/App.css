@@ -198,6 +198,24 @@ aside {
   color: #75e6da;
 }
 
+.navigation {
+  position: fixed;
+  top: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 20%;
+  height: 100vh;
+  overflow: hidden;
+  background: 0 0;
+  -webkit-transition: width 0.25s;
+  -o-transition: width 0.25s;
+  transition: width 0.25s;
+  padding-top: calc(90px + 10px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 @media (max-width: 1024px) {
   /* .signUp-form{
         height: 100vh !important;
@@ -214,4 +232,9 @@ aside {
   .SideTitle {
     display: none;
   }
+  .navigation {
+    width: 15%;
+  }
 }
+
+/* ________________________________ */

@@ -3,11 +3,15 @@ import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { AuthContext } from '../../contexte/authContext';
 import '../../assets/css/SignUp.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
   console.log(signUp);
   const nameRegex = /^[A-Za-z]+$/; // Alphabetic characters only
+
+  // definir le moyen de naviguer entre les routes
+  const navigate = useNavigate();
 
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
@@ -61,7 +65,7 @@ function SignUp() {
       // retourner vide les inputs
       formRef.current.reset();
       setValidation('');
-      console.log(cred);
+      navigate('/Connexion');
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err);

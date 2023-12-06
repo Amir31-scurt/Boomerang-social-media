@@ -23,8 +23,8 @@ export function AuthContextProvider(props) {
     return unsubscribe;
   }, []);
   return (
-    <AuthContext.Provider value={{ signUp }}>
-      {props.children}
+    <AuthContext.Provider value={{ signUp, user }}>
+      {!loading && props.children}
     </AuthContext.Provider>
   );
 }

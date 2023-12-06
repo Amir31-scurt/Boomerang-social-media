@@ -1,89 +1,101 @@
-*{
-    margin: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.tester {
+  background-image: linear-gradient(
+    90deg,
+    #0c2d48 10%,
+    #145da0 40%,
+    #0c2d48 80%
+  );
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.this_name {
+  width: 95%;
+  display: flex;
+}
+.this_name #firstName,
+.this_name #lastName {
+  width: 100%;
+  margin: 0;
+}
+
+#firstName {
+  position: relative;
+  left: 24px;
+}
+
+#firstName .errorText {
+  position: relative;
+  left: 15px;
+}
+
+#lastName {
+  position: relative;
+  right: 24px;
+}
+
+.group-form {
+  text-align: center !important;
+}
+
+.formPage {
+  background-color: hsla(207, 65%, 28%, 0.4);
+  box-shadow: 2px 0px 10px 2px grey;
+  width: 50%;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.type {
+  width: 28%;
+}
+
+.icon-sign-up a {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.or-sign {
+  font-size: 15px;
+}
+
+@media (max-width: 768px) and (max-width: 1024px) {
+  .this_name {
+    width: 100% !important;
+    margin: 0 !important;
     padding: 0;
-    box-sizing: border-box;
   }
-  
-  .tester{
-    background-image: linear-gradient(90deg, #0C2D48
-    10%,#145DA0 40%,#0C2D48 80%);
-    height: 100vh;
+
+  #firstName {
+    left: 0;
   }
-  
-  .this_name{
-    width: 96%;
-    display: flex;
+
+  #lastName {
+    right: 0;
   }
-  .this_name #firstName, .this_name #lastName {
-    width: 100%;
-    margin: 0;
+
+  .formPage {
+    width: 100% !important;
+    margin: 100px 0 !important;
   }
-  
-  #firstName{
-    position: relative;
-    left: 24px;
+
+  .formPage {
+    padding: 1rem;
   }
-  
-  #firstName .errorText{
-    position: relative;
-    left: 15px;
+
+  .or-sign {
+    font-size: 12px;
   }
-  
-  #lastName{
-    position: relative;
-    right: 24px;
+  .tester {
+    height: fit-content;
   }
-  
-  .group-form{
-    text-align: center !important;
-  }
-  
-  .formPage{
-    background-color:hsla(207, 65%, 28%, 0.4) ;
-    box-shadow: 2px 0px 10px 2px grey;
-    width: 50%;
-  }
-  
-  .type{
-    width: 28%;
-  }
-  
-  .icon-sign-up a {
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-  }
-  
-  .or-sign{
-    font-size: 15px;
-  }
-  
-  @media (max-width: 768px) and (max-width: 1024px) {
-    .this_name{
-      width: 100% !important;
-      margin: 0 !important;
-    }
-  
-    #firstName{
-      left: 0;
-    }
-    
-    #lastName{
-      right: 0;
-    }
-  
-    .formPage{
-        width: 100% !important;
-        margin: 100px 0 !important;
-    }
-  
-    .formPage {
-        padding: 1rem; 
-    }
-  
-    .or-sign{
-      font-size: 12px;
-    }
-    
-  }
-  
+}

@@ -6,6 +6,30 @@
   height: 40vmin;
   pointer-events: none;
 }
+.icon-input {
+  display: flex;
+  align-items: center;
+}
+.feather-search {
+  transform: translate(35px);
+}
+.searchBar {
+  outline: none;
+}
+.feather {
+  font-size: 28px;
+  color: #727272;
+}
+.feather-settings {
+  font-size: 38px;
+  color: #727272;
+  cursor: pointer;
+}
+.feather:hover,
+.feather:focus {
+  color: rgb(67, 147, 173);
+  text-decoration: none;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -13,68 +37,129 @@
   }
 }
 
-.tester{
-  background-image: linear-gradient(90deg, #0C2D48
-  10%,#145DA0 40%,#0C2D48 80%);
-  height: 100vh;
-}
-
-.this_name{
-  width: 96%;
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
-.this_name #firstName, .this_name #lastName {
-  width: 100%;
-  margin: 0;
+.marge {
+  margin-top: 100px;
 }
-
-#firstName{
-  position: relative;
-  left: 24px;
+.feather-search {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-
-#firstName .errorText{
-  position: relative;
-  left: 15px;
-}
-
-#lastName{
-  position: relative;
-  right: 24px;
-}
-
-.group-form{
-  text-align: center !important;
-}
-
-.formPage{
-  background-color:hsla(207, 65%, 28%, 0.4) ;
-  box-shadow: 2px 0px 10px 2px grey;
-  width: 50%;
-}
-
 .App-link {
   color: #61dafb;
 }
-
+.NavBar {
+  position: fixed;
+  width: fit-content;
+}
+.TvIcon {
+  background: linear-gradient(
+    90deg,
+    rgba(1, 0, 36, 1) 0%,
+    rgba(9, 15, 121, 1) 35%,
+    rgba(0, 117, 255, 1) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.link {
+  color: #282c34;
+}
+.li:hover {
+  color: rgb(0, 0, 131);
+  text-decoration: none;
+}
+.UserIcon {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 18, 36, 1) 0%,
+    rgba(9, 98, 121, 1) 35%,
+    rgba(59, 0, 255, 1) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.ThunderIcon {
+  background: linear-gradient(
+    90deg,
+    rgb(150, 92, 0) 0%,
+    rgb(202, 81, 0) 35%,
+    rgb(255, 136, 0) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.LogOutIcon {
+  background: linear-gradient(
+    90deg,
+    rgb(255, 136, 0) 0%,
+    rgb(202, 81, 0) 35%,
+    rgb(150, 92, 0) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.nav-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: fit-content;
+}
+.nav-content {
+  width: fit-content;
+}
+.MainPageContainer {
+  display: flex;
+  flex-direction: column;
+}
+.MainPageBody {
+  margin-top: 100px;
+  background-color: #282c34;
+  color: white;
+  transition: all 0.5s ease;
+}
+.menu-icon {
+  background-color: lightgray;
+  border-radius: 50%;
+  padding: 10px;
+  color: black;
+  display: flex;
+}
+.menu-icon:hover,
+.menu-icon:focus {
+  background-color: lightblue;
+  text-decoration: none;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
-
-  .formPage{
-      width: 100% !important;
-      margin: 100px 0 !important;
+  to {
+    transform: rotate(360deg);
   }
-
-  .formPage {
-      padding: 1rem; 
-  }
-
-  .or-sign{
-    font-size: 12px;
-  }
-  
 }
 
 /* SignUp Style */
@@ -118,7 +203,32 @@
   color: #75e6da;
 }
 
-@media (max-width: 1024px) {
+.navigation {
+  /* transform: translateY(-50em); */
+  right: 0;
+  top: 0;
+  position: absolute;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 16.8%;
+  height: auto;
+  overflow-y: scroll;
+  background-color: #145da0;
+  -webkit-transition: width 0.25s;
+  -o-transition: width 0.25s;
+  transition: width 0.25s;
+  padding-top: calc(90px + 10px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.SideContainer {
+  background-color: aqua;
+  /* position: absolute; */
+}
+@media (max-width: 993px) {
   /* .signUp-form{
         height: 100vh !important;
     } */
@@ -134,4 +244,14 @@
   .SideTitle {
     display: none;
   }
+  /* .navigation {
+    width: 15%;
+  } */
+  .navigation {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
 }
+
+/* ________________________________ */

@@ -1,0 +1,153 @@
+
+body{
+    background: black;
+    width: 100%;
+    margin: 0;
+    margin: 0;
+}
+.form{
+    width: 100%; 
+}
+
+#input{
+    border-radius: 20px;
+    width: 100%;
+    height: 50px;
+    text-align: left;
+    padding-left: 20px;
+    margin-left: 80px;
+   
+    font-size: 20px;
+}
+
+#titre{
+    color: black;
+    background: none;
+    font-size: 38px;
+}
+.icon{
+    color: black;
+    width: 100px;
+    background: none;
+    margin-top: 9px;
+}
+
+.searchCard{
+    display: flex;
+
+}
+
+.ProfileCard{
+    width: 50%;
+    height: 100%;
+    margin: 20px;
+
+}
+
+.imageProfile img{
+    height: 30vh !important;
+    object-fit: cover;
+}
+
+.rounded img{
+   
+    border-radius: 100% !important;
+    width: 90px !important;
+    height: 90px !important;
+    object-fit: cover;
+}
+
+.rounded {
+
+    position: relative;
+    bottom: 50px;
+   
+}
+
+
+
+.image{
+    height: 200px;
+    width: 120%;
+    border:3px solid #e3e9ee;
+    
+}
+.cardConte{
+    height: 80px;;
+}
+.button{
+    color: white;
+    background-color: blue;
+    width: 100px;
+    height: 47px;
+    border-radius: 20px;
+}
+
+
+.paraTest{
+    font-size: 12px;
+    line-height: 5px;
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+    *{
+        width: 100%;
+    }
+    #input{
+       
+        margin-left: 45px;
+        width: 160%;
+      
+    }
+
+    #searching{
+        width: 100%;
+        margin-left: -20px;
+    }
+
+    .form{
+        width: 100%;
+        
+    }
+
+   
+    #buton{
+        margin-left: 0;
+      
+    }
+
+    .icon{
+        color: #145DA0;
+        margin-left: 50px;
+    }
+
+    #boton{
+        margin-left: 60px;
+        font-size: 20px;
+        border-radius: 25px;
+        width: 110px;
+        height: 50px;
+    }
+    #phot{
+        margin: 0;
+       
+    }
+
+    #titre{
+        margin-left: -40%;
+       
+    }
+
+    
+
+
+   
+}
+

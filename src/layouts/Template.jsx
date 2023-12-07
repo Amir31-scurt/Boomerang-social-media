@@ -5,7 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import React, { useContext } from 'react';
 import { AuthContext } from '../contexte/authContext';
-import { Outlet, useLocation, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
 import Home from '../pages/Home';

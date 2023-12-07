@@ -81,9 +81,11 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2 mt-2">
-      <ul class="mb-1 top-content">
-        <li class="logo d-none d-xl-block d-lg-block"></li>
+    <div className="sidebar">
+      <ul>
+        <li>
+          <Link to="/newsfeed">Newsfeed</Link>
+        </li>
         <SideMenu />
       </ul>
     </div>

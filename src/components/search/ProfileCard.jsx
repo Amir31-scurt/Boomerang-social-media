@@ -4,17 +4,24 @@ import noire from '../../assets/images/noire.png';
 
 
 const ProfileCard = ({ imageSrc, name, email}) => {
-  const [buttonText, setButtonText] = useState('suivre')
+  const [isFollowing, setIsFollowing] = useState(false);
 
-  const handleClick = () =>{
-    setButtonText('suivi....');
-    console.log(setButtonText);
+  
+  const handleFollowToggle = (event) => {
+    event.preventDefault();
+    setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+  };
 
-    setTimeout(() => { 
-      setButtonText('Suivre'); 
-  }, 2000);
+  // const handleClick = (event) =>{
+  //   event.preventDefault();
+  //   setButtonText('suivi....');
+    
 
-  }
+  //   setTimeout(() => { 
+  //     setButtonText('Suivre'); 
+  // }, 5000);
+
+  // }
   
  
   return (
@@ -36,7 +43,13 @@ const ProfileCard = ({ imageSrc, name, email}) => {
             </div>
           </div>
           <div className="">
-            <button onClick={handleClick} className="w-20 btn btn-primary btn-sm rounded-5 mt-2">Suivre</button>
+            <button onClick={handleFollowToggle}
+      style={{
+        background: isFollowing ? 'gray' : 'blue',
+        color: isFollowing ? 'white' : 'white',
+      }} className="w-20 btn btn-primary btn-sm rounded-5 mt-2 border:active-none">
+             {isFollowing ? 'Suivi(s)' : 'Suivre'}
+            </button>
           </div>
         </div>
       </div>

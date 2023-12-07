@@ -11,46 +11,45 @@ import { UnModal } from "../components/ComposTimeLine/UnModal";
 
 
 const Home = () => {
-  const [postCard, setPostCard] = useState(TableElems);
+  // const [postCard, setPostCard] = useState(TableElems);
 
-  const DeletePost = (cardId) => {
-    setPostCard((carte) => carte.filter((card) => card.id !== cardId));
-  };
+  // const DeletePost = (cardId) => {
+  //   setPostCard((carte) => carte.filter((card) => card.id !== cardId));
+  // };
 
-  const handleAddPost = (e) => {
-    e.preventDefault();
-    const image = e.target.nom.value;
-    const descipt = e.target.description.value;
-    console.log(image);
+  // const handleAddPost = (e) => {
+  //   e.preventDefault();
+  //   const image = e.target.nom.value;
+  //   const descipt = e.target.description.value;
+  //   console.log(image);
 
-    const newPost = {
-      id: postCard[postCard.length - 1]?.id + 1 ?? 0,
-      likes: 0,
-      profile: <FaRegUser />,
-      nom: "Recuperer Le nom",
-      date: "Recuperer la Date",
-      publication: image,
-      description: descipt,
-    };
+  //   const newPost = {
+  //     id: postCard[postCard.length - 1]?.id + 1 ?? 0,
+  //     likes: 0,
+  //     profile: <FaRegUser />,
+  //     nom: "Recuperer Le nom",
+  //     date: "Recuperer la Date",
+  //     publication: image,
+  //     description: descipt,
+  //   };
     
-    setPostCard([...postCard , newPost])
-  };
+  //   setPostCard([...postCard , newPost])
+  // };
 
   return (
     <div className="pt-5">
 
       {/* carte numero 1 */}
 
-      {/* <UnModal handleAddPost={handleAddPost} /> */}
 
       <div className="CarteContainer">
-        <Cards handleAddPost />
+        <Cards />
       </div>
 
       {/* carte numero 2 */}
       <div className="">{/* <TextPublication /> */}</div>
 
-      <div className="">
+      {/* <div className="">
         {postCard.map((card) => {
           return (
             <PostCard
@@ -69,7 +68,7 @@ const Home = () => {
             />
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };

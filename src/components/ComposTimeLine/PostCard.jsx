@@ -15,9 +15,9 @@ export const PostCard = ({ publication, addLikes, nom, profile, date, descriptio
           <div className="d-flex align-items-center justify-content-between">
             <div className="PartieProfil">
               <div className="icone-carte me-3">{profile}</div>
-              <div>
+              <div className='ms-0'>
                 <p className="fw-bold text-secondary mb-0">{nom}</p>
-                <p className="text-sm text-secondary mb-0">{date}</p>
+                <p className=" text-secondary mb-0">{date}</p>
               </div>
             </div>
             <button className="icone-actions">
@@ -27,7 +27,9 @@ export const PostCard = ({ publication, addLikes, nom, profile, date, descriptio
 
           <div className="mt-4">
             {/* le texte a publié */}
-            <div className="w-100 rounded-3  m-auto ">{publication}</div>
+            <div className="w-100 rounded-3  m-auto ">
+              <img src={publication} alt="images" className="w-100 rounded-3" />
+            </div>
           </div>
           <div className="mt-3 description">{description}</div>
 

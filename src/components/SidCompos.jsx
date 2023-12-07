@@ -65,7 +65,7 @@ export default function SideBar() {
   const SideMenu = () => {
     return SideElem.map((item, index) => {
       return (
-        <li className="nav-item">
+        <li className="">
           <Link
             className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 link"
             to={item.link}
@@ -81,14 +81,11 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <nav class="navigation mx-1 mx-lg-4 scroll-bar">
-      <div class="container ps-0 pe-0">
-        <div class="nav-content">
-          <div class="nav-wrap bg-secondary bg-opacity-25 p-3 rounded rounded-3 shadow-sm pt-3 pb-1 mb-2 mt-2">
-            <ul class="mb-1 top-content list-unstyled">{SideMenu()}</ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2 mt-2">
+      <ul class="mb-1 top-content">
+        <li class="logo d-none d-xl-block d-lg-block"></li>
+        <SideMenu />
+      </ul>
+    </div>
   );
 }

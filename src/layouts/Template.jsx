@@ -27,11 +27,11 @@ export default function Template() {
         <div className="col-12 border-gray-300 NavBar">
           <NavBar />
         </div>
-        <div className="SideAndContainer d-flex row m-0 p-0">
-          <div className="col-2 col-lg-3">
+        <div className="SideAndContainer d-flex">
+          <div className="col-2 col-lg-2">
             <SideBar />
           </div>
-          <div className="documo col-9 px-5 bg-light">
+          <div className="col-10 col-lg-10 bg-secondary bg-opacity-25">
             {/* Place ////////////////l */}
             <Search/>
           </div>

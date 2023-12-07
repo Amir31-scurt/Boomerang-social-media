@@ -3,9 +3,23 @@ import { Link } from 'react-router-dom';
 import { PiTelevisionSimpleBold } from 'react-icons/pi';
 import { AiOutlineThunderbolt } from 'react-icons/ai';
 import { RiLogoutBoxLine } from 'react-icons/ri';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../config/firebase-config';
 
 export default function SideBar() {
   // state///////////
+  // SignOut state
+  const navigate = useNavigate();
+
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const SideElem = [
     {
       id: 1,
@@ -44,8 +58,8 @@ export default function SideBar() {
           <RiLogoutBoxLine />
         </div>
       ),
+      onclick: logOut,
       title: 'Logout',
-      link: '/logout',
     },
   ];
   const SideMenu = () => {
@@ -56,6 +70,7 @@ export default function SideBar() {
             className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 link"
             to={item.link}
             key={index}
+            onClick={item.onclick}
           >
             <h4 className="SideIcon">{item.icon}</h4>
             <h4 className="SideTitle">{item.title}</h4>
@@ -66,14 +81,14 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <aside className="flex flex-col items-center justify-center ">
-      <div className="flex items-center justify-center gap-3 mt-3 mx-4">
-        <div className="container-1st bg-secondary bg-opacity-25 rounded rounded-4">
-          <ul className="list-unstyled gap-3 d-flex flex-column p-4">
-            {SideMenu()}
-          </ul>
+    <nav class="navigation mx-1 mx-lg-4 scroll-bar">
+      <div class="container ps-0 pe-0">
+        <div class="nav-content">
+          <div class="nav-wrap bg-secondary bg-opacity-25 p-3 rounded rounded-3 shadow-sm pt-3 pb-1 mb-2 mt-2">
+            <ul class="mb-1 top-content list-unstyled">{SideMenu()}</ul>
+          </div>
         </div>
       </div>
-    </aside>
+    </nav>
   );
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/components/ComposTimeLine/TableElems.jsx
 
 import React from 'react'
 
@@ -11,12 +12,55 @@ import MyButton from "../ComposTimeLine/MyButton";
 import { DropDown } from "../ComposTimeLine/DropDown";
 
 export const TableElems = [
+=======
+import { FiEdit3 } from 'react-icons/fi';
+import { FaRegUser, FaVideo } from 'react-icons/fa';
+import { FaRegImage } from 'react-icons/fa6';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+// import pic1 from '../assets/images/logo.webp';
+
+export const TableCards = [
+  {
+    icone: <FiEdit3 className="text-2xl" />,
+    text1: 'Create Post',
+    container1: (
+      <div className="icone-profile">
+        <FaRegUser className="text-2xl" />
+      </div>
+    ),
+
+    // container2: (
+    //   <textarea
+    //     name=""
+    //     id="text-aria"
+    //     className="w-full"
+    //     placeholder="What's your mind ?"
+    //   ></textarea>
+    // ),
+    bouton1: <FaVideo className="text-3xl text-[#6d3]" />,
+    bouton2: <FaRegImage className="text-3xl text-[#6d35e6]" />,
+    bouton3: (
+      <button className="icone-actions">
+        <button className="publish">Publish</button>
+      </button>
+    ),
+  },
+];
+
+export const PublishTable = [
+>>>>>>> fcff6304fbdda33811f3627ca435d26ab4109449:src/components/UtilsData.jsx
   {
     id: 1,
     likes: 0,
     profile: <FaRegUser />,
+<<<<<<< HEAD:src/components/ComposTimeLine/TableElems.jsx
     nom: "Moussa Diop",
     date: "12 / 05 / 2023",
+=======
+    nom: 'Moussa Diop',
+    date: '12 / 05 / 2023',
+    suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
+>>>>>>> fcff6304fbdda33811f3627ca435d26ab4109449:src/components/UtilsData.jsx
     publication: (
       <p className="fw-bold text-secondary">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti esse
@@ -39,6 +83,7 @@ export const TableElems = [
     likes: 0,
     profile: <FaRegUser />,
     nom: "Ousmane N'Diaye",
+<<<<<<< HEAD:src/components/ComposTimeLine/TableElems.jsx
     date: "14 / 06 / 2023",
     suppression: <DropDown />,
     publication: (
@@ -50,15 +95,26 @@ export const TableElems = [
         expedita ducimus? Ipsam libero adipisci earum sapiente dolores! Lorem
       </p>
     ),
+=======
+    date: '14 / 06 / 2023',
+    suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
+    // publication: <img src={pic1} alt="image" className="w-full" />,
+>>>>>>> fcff6304fbdda33811f3627ca435d26ab4109449:src/components/UtilsData.jsx
   },
 
   {
     id: 3,
     likes: 0,
     profile: <FaRegUser />,
+<<<<<<< HEAD:src/components/ComposTimeLine/TableElems.jsx
     nom: "Fanta Sy",
     date: "18 / 04 / 2023",
     suppression: <DropDown />,
+=======
+    nom: 'Fanta Sy',
+    date: '18 / 04 / 2023',
+    suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
+>>>>>>> fcff6304fbdda33811f3627ca435d26ab4109449:src/components/UtilsData.jsx
     publication: (
       <figure>
         <iframe

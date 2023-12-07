@@ -1,8 +1,10 @@
+
 import React, { useState } from "react";
 import MyButton from "../ComposTimeLine/MyButton";
 
 export const UnModal = ({ modalStyle, handleCloseModal, handleAddPost, }) => {
   //States
+
 
 
   return (

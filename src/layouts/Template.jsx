@@ -2,14 +2,22 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-// import React, { useEffect, useState, useRef } from 'react';
+
+import React, { useContext } from 'react';
+import { AuthContext } from '../contexte/authContext';
+import { Outlet, useLocation, Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
-import Body from '../components/Cartes';
-import ComposBody from '../components/ComposBody';
 import SideBar from '../components/SidCompos';
 import Home from '../pages/Home';
 
 export default function Template() {
+  // User Invocation
+  const { user } = useContext(AuthContext);
+
+  if (!user) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="d-flex h-100">
       {/************ SidBar********** */}
@@ -19,11 +27,11 @@ export default function Template() {
         <div className="col-12 border-gray-300 NavBar">
           <NavBar />
         </div>
-        <div className="SideAndContainer d-flex">
-          <div className="col-3 h-auto route">
+        <div className="SideAndContainer d-flex row m-0 p-0">
+          <div className="col-2 col-lg-3">
             <SideBar />
           </div>
-          <div className="documo col-9 px-5 bg-secondary bg-opacity-25">
+          <div className="col-10 col-lg-9 bg-secondary bg-opacity-25">
             {/* Place ////////////////l */}
             <Home />
           </div>

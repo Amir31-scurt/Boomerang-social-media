@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/components/ComposTimeLine/Cards.jsx
 import React, { useRef, useState } from "react";
 import { FaRegUser, FaVideo } from "react-icons/fa";
 import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
@@ -5,6 +6,13 @@ import { FiEdit3 } from "react-icons/fi";
 import { UnModal } from "../ComposTimeLine/UnModal";
 import MyButton from "../ComposTimeLine/MyButton";
 import { Test } from "../ComposTimeLine/UtilsData";
+=======
+import React, { useState } from 'react';
+import { FaVideo } from 'react-icons/fa';
+import { FaRegImage } from 'react-icons/fa6';
+import { UnModal } from './UnModal';
+import { TableCards } from './UtilsData';
+>>>>>>> fcff6304fbdda33811f3627ca435d26ab4109449:src/components/Cards.jsx
 
 export const Cards = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -14,7 +22,18 @@ export const Cards = () => {
   const handleOpenModal = () => {
     setModalOpen(true);
   };
+<<<<<<< HEAD:src/components/ComposTimeLine/Cards.jsx
   //_________________________  Fermeture Du modal _________//
+=======
+
+  const Changement = (e) => {
+    if (e.target.value !== '') {
+      setAfficheBtn(true);
+    } else {
+      setAfficheBtn(false);
+    }
+  };
+>>>>>>> fcff6304fbdda33811f3627ca435d26ab4109449:src/components/Cards.jsx
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -35,11 +54,11 @@ export const Cards = () => {
   };
 
   const modalStyle = {
-    display: isModalOpen ? "block" : "none",
+    display: isModalOpen ? 'block' : 'none',
   };
 
   const DisplayTime = {
-    display: afficheBtn ? "block" : "none",
+    display: afficheBtn ? 'block' : 'none',
   };
 
   return (

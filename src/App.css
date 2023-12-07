@@ -6,6 +6,30 @@
   height: 40vmin;
   pointer-events: none;
 }
+.icon-input {
+  display: flex;
+  align-items: center;
+}
+.feather-search {
+  transform: translate(35px);
+}
+.searchBar {
+  outline: none;
+}
+.feather {
+  font-size: 28px;
+  color: #727272;
+}
+.feather-settings {
+  font-size: 38px;
+  color: #727272;
+  cursor: pointer;
+}
+.feather:hover,
+.feather:focus {
+  color: rgb(67, 147, 173);
+  text-decoration: none;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -23,11 +47,112 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.marge {
+  margin-top: 100px;
+}
+.feather-search {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .App-link {
   color: #61dafb;
 }
-
+.NavBar {
+  position: fixed;
+  width: fit-content;
+}
+.TvIcon {
+  background: linear-gradient(
+    90deg,
+    rgba(1, 0, 36, 1) 0%,
+    rgba(9, 15, 121, 1) 35%,
+    rgba(0, 117, 255, 1) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.link {
+  color: #282c34;
+}
+.li:hover {
+  color: rgb(0, 0, 131);
+  text-decoration: none;
+}
+.UserIcon {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 18, 36, 1) 0%,
+    rgba(9, 98, 121, 1) 35%,
+    rgba(59, 0, 255, 1) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.ThunderIcon {
+  background: linear-gradient(
+    90deg,
+    rgb(150, 92, 0) 0%,
+    rgb(202, 81, 0) 35%,
+    rgb(255, 136, 0) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.LogOutIcon {
+  background: linear-gradient(
+    90deg,
+    rgb(255, 136, 0) 0%,
+    rgb(202, 81, 0) 35%,
+    rgb(150, 92, 0) 100%
+  );
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  display: flex;
+}
+.nav-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: fit-content;
+}
+.nav-content {
+  width: fit-content;
+}
+.MainPageContainer {
+  display: flex;
+  flex-direction: column;
+}
+.MainPageBody {
+  margin-top: 100px;
+  background-color: #282c34;
+  color: white;
+  transition: all 0.5s ease;
+}
+.menu-icon {
+  background-color: lightgray;
+  border-radius: 50%;
+  padding: 10px;
+  color: black;
+  display: flex;
+}
+.menu-icon:hover,
+.menu-icon:focus {
+  background-color: lightblue;
+  text-decoration: none;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +161,87 @@
     transform: rotate(360deg);
   }
 }
+
+/* SignUp Style */
+
+.Form-page {
+  background-image: linear-gradient(
+    90deg,
+    #0c2d48 10%,
+    #145da0 40%,
+    #0c2d48 80%
+  );
+}
+
+.group-form {
+  text-align: center !important;
+}
+
+.formPage {
+  background-color: hsla(207, 65%, 28%, 0.4);
+  box-shadow: 2px 0px 10px 2px grey;
+  width: 50%;
+}
+
+.type {
+  width: 30%;
+  /* border-bottom: 1px solid black !important; */
+  /* border: none !important; */
+}
+
+.icon-sign-up a {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.or-sign {
+  font-size: 13px;
+}
+
+.text-color {
+  color: #75e6da;
+}
+
+.navigation {
+  position: fixed;
+  top: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: 20%;
+  height: 100vh;
+  overflow: hidden;
+  background: 0 0;
+  -webkit-transition: width 0.25s;
+  -o-transition: width 0.25s;
+  transition: width 0.25s;
+  padding-top: calc(90px + 10px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+@media (max-width: 1024px) {
+  /* .signUp-form{
+        height: 100vh !important;
+    } */
+
+  .formPage {
+    width: 100% !important;
+    margin: 100px 0 !important;
+  }
+
+  .formPage {
+    padding: 1rem;
+  }
+  .SideTitle {
+    display: none;
+  }
+
+  .navigation {
+    width: 15%;
+  }
+}
+
+/* ________________________________ */

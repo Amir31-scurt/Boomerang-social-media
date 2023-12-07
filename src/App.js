@@ -1,19 +1,11 @@
 import './App.css';
-import Signin from './pages/Sign-in';
-import SignUp from './pages/SignUp';
-import { Started } from './pages/started';
-import { Route, Routes } from 'react-router-dom';
-import Template from './layouts/Template';
+import AutreProfile from './components/AutreProfile/AutreProfile';
+import './assets/css/Yaya.css'
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Started />} />
-        <Route path="/Connexion" element={<Signin />} />
-        <Route path="/Inscription" element={<SignUp />} />
-        <Route path="/Timeline" element={<Template />} />
-      </Routes>
+      <AutreProfile />
     </div>
   );
 }

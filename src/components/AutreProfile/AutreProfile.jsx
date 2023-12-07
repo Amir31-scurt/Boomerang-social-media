@@ -1,4 +1,4 @@
-import "../Yaya.css";
+
 import React, { useState } from "react";
 import { IoLinkOutline } from "react-icons/io5";
 import { BiMessageDots } from "react-icons/bi";

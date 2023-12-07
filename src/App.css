@@ -228,7 +228,7 @@
 }
 .sidebar li a:hover {
   color: #145da0;
-  opacity: 0.7;
+  opacity: 0.7;}
 .nac-wrap {
   --f7-theme-color: #132977;
   --bs-primary: #1e74fd;

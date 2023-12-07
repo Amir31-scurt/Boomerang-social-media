@@ -23,20 +23,16 @@ export default function Template() {
       {/************ SidBar********** */}
 
       <div className="MainPageContainer">
-        {/********NavBar**********/}
-        <div className="col-12 border-gray-300 NavBar">
+        <div className="col-12 NavBar">
           <NavBar />
         </div>
-        <div className="">
+        <div className="d-flex flex-row LOL">
           <SideBar />
-        </div>
-        <div className="SideAndContainer d-flex row m-0 p-0">
-          <div className="col-10 offset-2 bg-secondary px-5 bg-opacity-25">
-            {/* Place ////////////////l */}
+          <div className="mx-4 box-contain">
             <Home />
           </div>
+          {/* Place ////////////////l */}
         </div>
-        {/********* ConTenu Page **********/}
       </div>
     </div>
   );

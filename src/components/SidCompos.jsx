@@ -81,14 +81,13 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <nav class="navigation mx-1 mx-lg-4 scroll-bar">
-      <div class="container ps-0 pe-0">
-        <div class="nav-content">
-          <div class="nav-wrap bg-secondary bg-opacity-25 p-3 rounded rounded-3 shadow-sm pt-3 pb-1 mb-2 mt-2">
-            <ul class="mb-1 top-content list-unstyled">{SideMenu()}</ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <div className="sidebar">
+      <ul>
+        <li>
+          <Link to="/newsfeed">Newsfeed</Link>
+        </li>
+        <SideMenu />
+      </ul>
+    </div>
   );
 }

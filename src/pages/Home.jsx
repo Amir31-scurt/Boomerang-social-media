@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../Barry.css';
+import '../Barry.css';
 import { Cards } from '../components/Cards';
 import { TextPublication } from '../components/TextPublication';
 import { PublishTable } from '../components/UtilsData';

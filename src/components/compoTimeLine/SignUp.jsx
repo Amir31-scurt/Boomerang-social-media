@@ -2,8 +2,11 @@ import React, { useState, useRef, useContext } from 'react';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { AuthContext } from '../../contexte/authContext';
 import '../../assets/css/SignUp.css';
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -49,7 +52,7 @@ function SignUp() {
     if (
       (inputs.current[3].value.length || inputs.current[4].value.length) < 6
     ) {
-      setValidation('Le mots de passe doit contenir minimum 6 caracteres');
+      setValidation('Les mots de passe doit contenir minimum 6 caracteres');
       return;
     } else if (inputs.current[3].value !== inputs.current[4].value) {
       setValidation('Les mots de passe ne correspondent pas');
@@ -62,21 +65,49 @@ function SignUp() {
         inputs.current[2].value,
         inputs.current[3].value
       );
+      console.log(cred);
       // retourner vide les inputs
       formRef.current.reset();
       setValidation('');
-      navigate('/Timeline');
+      navigate('/Connexion');
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err);
       if (err.code === 'auth/invalid_email') {
-        setValidation("L'email n'est pas valide");
+        toast.error("L'email n'est pas valide", {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       }
       if (err.code === 'auth/invalid_password') {
-        setValidation("Le mot de passe n'est pas valide");
+        toast.error("Le mot de passe n'est pas valide", {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       }
       if (err.code === 'auth/email-already-in-use') {
-        setValidation("L'email est déja utilisé'");
+        toast.error("L'email est déja utilisé, veuillez saisir un autre mail", {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
       }
     }
   };
@@ -223,16 +254,16 @@ function SignUp() {
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">
                 <p>
                   Vous avez déjà un compte ?
-                  <a className="text-color" href="sign-in">
-                    {' '}
+                  <Link to="/Connexion" className="text-color">
                     Connexion
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

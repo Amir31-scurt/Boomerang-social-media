@@ -1,10 +1,8 @@
-import React, { useRef, useState } from "react";
-import { FiEdit3 } from "react-icons/fi";
-import { FaRegUser, FaVideo } from "react-icons/fa";  
-import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
-import { UnModal } from "./UnModal";
-
-import { TableCards } from "./UtilsData";
+import React, { useState } from 'react';
+import { FaVideo } from 'react-icons/fa';
+import { FaRegImage } from 'react-icons/fa6';
+import { UnModal } from './UnModal';
+import { TableCards } from './UtilsData';
 
 export const Cards = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -15,10 +13,10 @@ export const Cards = () => {
   };
 
   const Changement = (e) => {
-    if (e.target.value !== "") {
-      setAfficheBtn(true)
+    if (e.target.value !== '') {
+      setAfficheBtn(true);
     } else {
-      setAfficheBtn(false)
+      setAfficheBtn(false);
     }
   };
 
@@ -27,11 +25,11 @@ export const Cards = () => {
   };
 
   const modalStyle = {
-    display: isModalOpen ? "block" : "none",
+    display: isModalOpen ? 'block' : 'none',
   };
 
   const DisplayTime = {
-    display: afficheBtn ? "block" : "none",
+    display: afficheBtn ? 'block' : 'none',
   };
 
   return (

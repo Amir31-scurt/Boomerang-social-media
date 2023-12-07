@@ -27,7 +27,7 @@ const ProfileCard = ({ imageSrc, name, email}) => {
   return (
     
     <div className="mb-3 col-md-6">
-      <div className="card">
+      <div className="card w-100 position-relative">
         <div className="imageProfile">
           <img src={imageSrc} alt="" className='img-fluid w-100' />
         </div>
@@ -39,16 +39,15 @@ const ProfileCard = ({ imageSrc, name, email}) => {
             </div>
             <div className="paraTest ms-3">
               <h6 className='fw-bold'>{name}</h6>
-              <p>{email}</p>
+              <p className="ml-1">{email}</p>
             </div>
           </div>
           <div className="">
             <button onClick={handleFollowToggle}
-      style={{
-        background: isFollowing ? 'gray' : 'blue',
+      style={{background: isFollowing ? 'gray' : 'blue',
         color: isFollowing ? 'white' : 'white',
-      }} className="w-20 btn btn-primary btn-sm rounded-5 mt-2 border:active-none">
-             {isFollowing ? 'Suivi(s)' : 'Suivre'}
+      }} className="w-20 btn btn-primary btn-sm rounded-5 mt-2 border:active-none" id="button">
+             {isFollowing ? 'Suivi(s)' : 'Suivre'} 
             </button>
           </div>
         </div>

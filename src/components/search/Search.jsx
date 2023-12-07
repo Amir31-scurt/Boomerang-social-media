@@ -1,9 +1,9 @@
 // Search.js
 import React, {useState} from 'react';
-import ProfileCard from './ProfileCard';
-import SearchForm from './SearchForm'; // Import the SearchForm component
+import ProfileCard from './ProfileCard.jsx';
+import SearchForm from './SearchForm.jsx'; // Import the SearchForm component
 import "../../App.css";
-import {profiles} from "../../components/search/profile.jsx";
+import {profiles} from "./profile.jsx";
 
 export default function Search() {
  const [search, setSearch] = useState('');

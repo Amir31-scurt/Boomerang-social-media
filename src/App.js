@@ -1,6 +1,6 @@
 import './App.css';
 import Signin from './pages/Sign-in';
-import SignUp from './pages/SignUp';
+import SignUp from './components/compoTimeLine/SignUp';
 import { Started } from './pages/started';
 import { Route, Routes } from 'react-router-dom';
 import Template from './layouts/Template';

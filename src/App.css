@@ -47,6 +47,9 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.marge {
+  margin-top: 100px;
+}
 .feather-search {
   width: 20px;
   height: 20px;
@@ -62,14 +65,6 @@
 .NavBar {
   position: fixed;
   width: fit-content;
-}
-aside {
-  position: fixed;
-  height: 100vh;
-  width: 25%;
-  margin-top: 100px;
-  color: white;
-  transition: all 0.5s ease;
 }
 .TvIcon {
   background: linear-gradient(
@@ -125,6 +120,16 @@ aside {
   padding: 10px;
   color: white;
   display: flex;
+}
+.nav-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: fit-content;
+}
+.nav-content {
+  width: fit-content;
 }
 .MainPageContainer {
   display: flex;
@@ -214,6 +219,7 @@ aside {
   left: 0;
   display: flex;
   flex-direction: column;
+
   align-items: center;
 }
 @media (max-width: 1024px) {
@@ -232,6 +238,7 @@ aside {
   .SideTitle {
     display: none;
   }
+
   .navigation {
     width: 15%;
   }

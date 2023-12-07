@@ -2,7 +2,10 @@
 import { CiSearch } from 'react-icons/ci';
 
 const SearchForm = ({search, setSearch}) => {
-  console.log(search);
+  const handleFilterChange = (event) => {
+    setSearch(event.target.value);
+  };
+ 
   
   return (
     <div className='px-5 mx-2 contenu d-flex'>
@@ -14,8 +17,8 @@ const SearchForm = ({search, setSearch}) => {
           </h1>
           <div className="d-flex search-form-2 ms-auto mb-2 ml-5">
             <div className="">
-              <input onChange={(e) => setSearch(e.target.value)}
-                type="text"
+              <input onChange={handleFilterChange}
+                type="text" name="search"
                 className="mb-0 bg-opacity-25 border-0 bg-secondary input form-control text-grey-500 "
                 placeholder="Search"
                 id="input"

@@ -3,9 +3,23 @@ import { Link } from 'react-router-dom';
 import { PiTelevisionSimpleBold } from 'react-icons/pi';
 import { AiOutlineThunderbolt } from 'react-icons/ai';
 import { RiLogoutBoxLine } from 'react-icons/ri';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../config/firebase-config';
 
 export default function SideBar() {
   // state///////////
+  // SignOut state
+  const navigate = useNavigate();
+
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const SideElem = [
     {
       id: 1,
@@ -44,8 +58,8 @@ export default function SideBar() {
           <RiLogoutBoxLine />
         </div>
       ),
+      onclick: logOut,
       title: 'Logout',
-      link: '/logout',
     },
   ];
   const SideMenu = () => {
@@ -56,6 +70,7 @@ export default function SideBar() {
             className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 link"
             to={item.link}
             key={index}
+            onClick={item.onclick}
           >
             <h4 className="SideIcon">{item.icon}</h4>
             <h4 className="SideTitle">{item.title}</h4>

@@ -7,7 +7,7 @@ body{
     background: none;
 }
 .form{
-    width: 100%;
+    width: fixed;
     margin-top: 10%;
     height: auto;
 }
@@ -79,18 +79,15 @@ body{
 .cardConte{
     height: 80px;;
 }
-.button{
-    color: white;
-    background-color: blue;
-    width: 100px;
-    height: 47px;
-    border-radius: 20px;
-}
 
 
 .paraTest{
     font-size: 12px;
     line-height: 5px;
+}
+
+#button{
+    border: 1px solid white;
 }
 
 
@@ -133,7 +130,7 @@ body{
     }
 
     #boton{
-        margin-left: 60px;
+        margin-left:60px;
         font-size: 20px;
         border-radius: 25px;
         width: 110px;

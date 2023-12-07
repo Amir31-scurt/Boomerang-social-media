@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { FiEdit3 } from "react-icons/fi";
-import { FaRegUser, FaVideo } from "react-icons/fa";
-import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
-import { FcLike } from "react-icons/fc";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { PublishTable } from "./UtilsData";
+import React, { useState } from 'react';
+import { FaShareFromSquare } from 'react-icons/fa6';
+import { FcLike } from 'react-icons/fc';
+import { PublishTable } from './UtilsData';
 
 export const TextPublication = () => {
   // unitialisation du bouton Likes à 0
@@ -12,6 +9,7 @@ export const TextPublication = () => {
   const [likes, setLikes] = useState(0);
   const addLikes = (id) => {
     setLikes(likes + 1);
+    console.log(id);
   };
 
   return (

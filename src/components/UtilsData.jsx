@@ -1,36 +1,35 @@
-import { FiEdit3 } from "react-icons/fi";
-import { FaRegUser, FaVideo } from "react-icons/fa";
-import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
-import { FcLike } from "react-icons/fc";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { FiEdit3 } from 'react-icons/fi';
+import { FaRegUser, FaVideo } from 'react-icons/fa';
+import { FaRegImage } from 'react-icons/fa6';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+// import pic1 from '../assets/images/logo.webp';
 
+export const TableCards = [
+  {
+    icone: <FiEdit3 className="text-2xl" />,
+    text1: 'Create Post',
+    container1: (
+      <div className="icone-profile">
+        <FaRegUser className="text-2xl" />
+      </div>
+    ),
 
-  export const TableCards = [
-    {
-      icone: <FiEdit3 className="text-2xl" />,
-      text1: "Create Post",
-      container1: (
-        <div className="icone-profile">
-          <FaRegUser className="text-2xl" />
-        </div>
-      ),
-
-      // container2: (
-      //   <textarea
-      //     name=""
-      //     id="text-aria"
-      //     className="w-full"
-      //     placeholder="What's your mind ?"
-      //   ></textarea>
-      // ),
-      bouton1: <FaVideo className="text-3xl text-[#6d3]" />,
-      bouton2: <FaRegImage className="text-3xl text-[#6d35e6]" />,
-      bouton3: (
-        <button className="icone-actions">
-          <button className="publish">Publish</button>
-        </button>
-      ),
-    },
+    // container2: (
+    //   <textarea
+    //     name=""
+    //     id="text-aria"
+    //     className="w-full"
+    //     placeholder="What's your mind ?"
+    //   ></textarea>
+    // ),
+    bouton1: <FaVideo className="text-3xl text-[#6d3]" />,
+    bouton2: <FaRegImage className="text-3xl text-[#6d35e6]" />,
+    bouton3: (
+      <button className="icone-actions">
+        <button className="publish">Publish</button>
+      </button>
+    ),
+  },
 ];
 
 export const PublishTable = [
@@ -38,8 +37,8 @@ export const PublishTable = [
     id: 1,
     likes: 0,
     profile: <FaRegUser />,
-    nom: "Moussa Diop",
-    date: "12 / 05 / 2023",
+    nom: 'Moussa Diop',
+    date: '12 / 05 / 2023',
     suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
     publication: (
       <p className="font-bold text-gray-500">
@@ -68,19 +67,17 @@ export const PublishTable = [
     likes: 0,
     profile: <FaRegUser />,
     nom: "Ousmane N'Diaye",
-    date: "14 / 06 / 2023",
+    date: '14 / 06 / 2023',
     suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
-    publication: (
-      <img src="../images/test1.jpg" alt="image" className="w-full" />
-    ),
+    // publication: <img src={pic1} alt="image" className="w-full" />,
   },
 
   {
     id: 3,
     likes: 0,
     profile: <FaRegUser />,
-    nom: "Fanta Sy",
-    date: "18 / 04 / 2023",
+    nom: 'Fanta Sy',
+    date: '18 / 04 / 2023',
     suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
     publication: (
       <figure>

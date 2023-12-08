@@ -65,7 +65,7 @@ export default function SideBar() {
   const SideMenu = () => {
     return SideElem.map((item, index) => {
       return (
-        <li className="">
+        <li className="nav-item">
           <Link
             className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 link"
             to={item.link}

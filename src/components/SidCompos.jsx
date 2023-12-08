@@ -29,7 +29,7 @@ export default function SideBar() {
         </div>
       ),
       title: 'Profile',
-      link: '/profile',
+      link: '#',
     },
     {
       id: 2,
@@ -39,7 +39,7 @@ export default function SideBar() {
         </div>
       ),
       title: 'Settings',
-      link: '/settings',
+      link: '#',
     },
     {
       id: 3,
@@ -49,7 +49,7 @@ export default function SideBar() {
         </div>
       ),
       title: 'View',
-      link: '/view',
+      link: '#',
     },
     {
       id: 4,
@@ -81,10 +81,12 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <div className="sidebar">
-      <ul>
-        <li>
-          <Link to="/newsfeed">Newsfeed</Link>
+    <div className="sidebar fixed-left bg-light">
+      <ul className="nav flex-column">
+        <li className="nav-item">
+          <Link className="nav-link active" href="#">
+            Newsfeed
+          </Link>
         </li>
         <SideMenu />
       </ul>

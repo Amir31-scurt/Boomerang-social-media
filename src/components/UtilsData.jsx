@@ -25,8 +25,8 @@ export const TableCards = [
     bouton1: <FaVideo className="text-3xl text-[#6d3]" />,
     bouton2: <FaRegImage className="text-3xl text-[#6d35e6]" />,
     bouton3: (
-      <button className="icone-actions">
-        <button className="publish">Publish</button>
+      <button className="btn icone-actions p-0">
+        <button className="btn text-white publish">Publish</button>
       </button>
     ),
   },
@@ -39,7 +39,7 @@ export const PublishTable = [
     profile: <FaRegUser />,
     nom: 'Moussa Diop',
     date: '12 / 05 / 2023',
-    suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
+    suppression: <RiDeleteBin6Line className="fs-3 me-5 text-danger" />,
     publication: (
       <p className="font-bold text-gray-500">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti esse
@@ -68,7 +68,7 @@ export const PublishTable = [
     profile: <FaRegUser />,
     nom: "Ousmane N'Diaye",
     date: '14 / 06 / 2023',
-    suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
+    suppression: <RiDeleteBin6Line className="fs-3 text-danger me-5" />,
     // publication: <img src={pic1} alt="image" className="w-full" />,
   },
 
@@ -78,7 +78,7 @@ export const PublishTable = [
     profile: <FaRegUser />,
     nom: 'Fanta Sy',
     date: '18 / 04 / 2023',
-    suppression: <RiDeleteBin6Line className="text-3xl text-[#f00]" />,
+    suppression: <RiDeleteBin6Line className="fs-3 text-danger me-3" />,
     publication: (
       <figure>
         <iframe
@@ -89,7 +89,7 @@ export const PublishTable = [
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
-          className="w-full"
+          className="w-100"
         ></iframe>
         <figcaption className="fontFamily mt-2">Une vidéo</figcaption>
       </figure>

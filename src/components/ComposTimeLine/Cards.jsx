@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { FaRegUser, FaVideo } from "react-icons/fa";
 import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
-import { FiEdit3 } from "react-icons/fi";
 import MyButton from "../ComposTimeLine/MyButton";
 import { PostText } from "../ComposTimeLine/UtilsData";
 import { TableElems, TextTablePost } from "./TableElems";

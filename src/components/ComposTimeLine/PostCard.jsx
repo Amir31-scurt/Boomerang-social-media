@@ -37,8 +37,10 @@ export const PostCard = ({
             <div className="PartieProfil">
               <div className="icone-carte me-3">{profile}</div>
               <div className="ms-0">
-                <p className="fw-bold text-secondary mb -0">{nom}</p>
-                <p className=" text-secondary mb-0">{date}</p>
+                <p className="fw-bold text-secondary mt-2">
+                  {nom} <br />
+                  <span className="text-secondary dato mb-0">{date}</span>
+                </p>
               </div>
             </div>
             <button className="icone-actions">

@@ -65,7 +65,7 @@ export const Cards = () => {
 
     //Destructurer le tableau, puis ajouter un nouveau post
     setPostCard([...postCard, newPostText]);
-    setTextPost("");
+    setTextPost(" ");
     setAfficheBtn(false);
 
   };
@@ -75,12 +75,10 @@ export const Cards = () => {
     e.preventDefault();
 
     if (imageUrl === "") {
-      alert('attands')
-    }else if (descript === "") {
-      alert("attands encore");
+      alert("Ajouter l'adresse de l'image" )
     }
 
-    if (imageUrl && descript !== "") {
+    if (imageUrl !== "") {
       const newPost = {
         id: postCard[postCard.length - 1]?.id + 1 ?? 0,
         likes: 0,
@@ -151,7 +149,6 @@ export const Cards = () => {
               </div>
             </div>
 
-            <div className=""></div>
           </div>
         </div>
       ))}
@@ -170,7 +167,9 @@ export const Cards = () => {
               suppression={card.suppression}
               publication={card.publication}
               description={card.description}
-              addLikes={() => alert(card.id)}
+              addLikes={() => {
+              alert((card.likes += 1));
+              }}
               hadleDelete={(id) => {
                 DeletePost(card.id);
               }}

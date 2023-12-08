@@ -1,7 +1,4 @@
 import { FiEdit3 } from "react-icons/fi";
-import { FaRegUser, FaVideo } from "react-icons/fa";
-import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
-import { FcLike } from "react-icons/fc";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { PiDotsThreeOutline } from "react-icons/pi";
 import {React} from "react";

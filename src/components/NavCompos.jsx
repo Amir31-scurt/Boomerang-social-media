@@ -7,7 +7,7 @@ import { FiHome } from 'react-icons/fi';
 
 const Navbar = () => {
   return (
-    <nav className="navbar">
+    <nav className="navbar fixed-top">
       <div className="container">
         <div className="nav-top">
           <Link to="/Timeline">

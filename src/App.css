@@ -19,6 +19,7 @@
 .feather {
   font-size: 28px;
   color: #727272;
+  cursor: pointer;
 }
 .feather-settings {
   font-size: 38px;
@@ -29,6 +30,7 @@
 .feather:focus {
   color: rgb(67, 147, 173);
   text-decoration: none;
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -197,7 +199,10 @@
   justify-content: space-between;
   align-items: center;
 }
-
+textarea {
+  resize: none;
+  border: none;
+}
 .navbar a {
   color: #adb5bd;
   text-decoration: none;
@@ -230,3 +235,5 @@
   color: #145da0;
   opacity: 0.7;
 }
+
+/* Css de Barry */

@@ -1,8 +1,8 @@
-import { FaMagnifyingGlass } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
-import { CiSettings } from 'react-icons/ci';
-import { FaRegUser } from 'react-icons/fa';
-import { FiHome } from 'react-icons/fi';
+import { CiSettings } from "react-icons/ci";
+import { FaRegUser } from "react-icons/fa";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FiHome } from "react-icons/fi";
+import { Link } from "react-router-dom";
 function NavBar() {
   // state///////////
 
@@ -11,7 +11,7 @@ function NavBar() {
   // affichage //////////////
 
   return (
-    <header className="d-flex align-items-center justify-content-between px-3 py-4 bg-light">
+    <header className="d-flex align-items-center justify-content-between px-3 py-4 bg-light z-5">
       <div className="nav-top">
         <Link to="/Timeline">
           <span className="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">

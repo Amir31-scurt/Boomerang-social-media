@@ -1,85 +1,116 @@
-
 import React, { useRef, useState } from "react";
 import { FaRegUser, FaVideo } from "react-icons/fa";
 import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
-import { UnModal } from "../ComposTimeLine/UnModal";
 import MyButton from "../ComposTimeLine/MyButton";
-import { PostText} from "../ComposTimeLine/UtilsData";
-import { TableElems } from "./TableElems";
+import { PostText } from "../ComposTimeLine/UtilsData";
+import { TableElems, TextTablePost } from "./TableElems";
 import { PostCard } from "./PostCard";
 
-
 export const Cards = () => {
+  // l'etat du Modal par defaut
   const [isModalOpen, setModalOpen] = useState(false);
+  // Ouverture du Modal
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+  //Fermeture du Modal
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setImageUrl("");
+    setDescript("");
+  };
+
+  // l'etat du Bouton Post Text par defaut
   const [afficheBtn, setAfficheBtn] = useState(false);
 
+  // l'etat du Tableau par defaut du Post Card
+  const [postCard, setPostCard] = useState(TableElems);
+  const [postCardText, setPostCardText] = useState(TextTablePost);
+  const DeletePost = (cardId) => {
+    setPostCard((carte) => carte.filter((card) => card.id !== cardId));
+  };
 
+  // l'etat de l'input  de l'image
+  const [imageUrl, setImageUrl] = useState("");
+  const handleChangeImageUrl = (e) => {
+    setImageUrl(e.target.value);
+  };
 
-    const [postCard, setPostCard] = useState(TableElems);
+  // l'etat de du text Area de l'la Description
+  const [descript, setDescript] = useState("");
+  const handleChangeDescription = (e) => {
+    setDescript(e.target.value);
+  };
 
-    const DeletePost = (cardId) => {
-      setPostCard((carte) => carte.filter((card) => card.id !== cardId));
+  // l'etat de du text Area du Creat Post
+  const [textPost, setTextPost] = useState("");
+  const Changement = (e) => {
+    setTextPost(e.target.value);
+    if (textPost !== "") {
+      setAfficheBtn(true);
+    } else {
+      setAfficheBtn(false);
+    }
+  };
+  //______ L'evenement onClick sur le bouron Publier __
+  const handleSubmit = () => {
+    const newPostText = {
+      id: new Date(),
+      likes: 0,
+      profile: <FaRegUser />,
+      nom: "Recuperer Le nom",
+      date: "Recuperer la Date",
+      publication: textPost,
     };
 
-    const handleAddPost = (e) => {
-      e.preventDefault();
-      const image = e.target.nom.value;
-      const descipt = e.target.description.value;
-      console.log(image);
+    //Destructurer le tableau, puis ajouter un nouveau post
+    setPostCard([...postCard, newPostText]);
+    setTextPost("");
+    setAfficheBtn(false);
 
+  };
+
+  //_________________________  Ajouter un Post ___
+  const handleAddPost = (e) => {
+    e.preventDefault();
+
+    if (imageUrl === "") {
+      alert('attands')
+    }else if (descript === "") {
+      alert("attands encore");
+    }
+
+    if (imageUrl && descript !== "") {
       const newPost = {
         id: postCard[postCard.length - 1]?.id + 1 ?? 0,
         likes: 0,
         profile: <FaRegUser />,
         nom: "Recuperer Le nom",
         date: "Recuperer la Date",
-        publication: image,
-        description: descipt,
+        publication: imageUrl,
+        description: descript,
       };
-
+  
+      //Destructurer le tableau, puis ajouter un nouveau post
       setPostCard([...postCard, newPost]);
+  
+      setImageUrl("");
+      setDescript("");
       setModalOpen(false);
-    };
-
-
-  //_________________________  Ouverture Du modal _________//
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  //_________________________  Fermeture Du modal _________//
-
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
-
-  //_________________________ Affichage du bouton Publier_________//
-  const Changement = (e) => {
-    if (e.target.value !== "") {
-      setAfficheBtn(true);
-    } else {
-      setAfficheBtn(false);
     }
   };
 
-  //____________ L'evenement onClick sur le bouron Publier _________//
-  const handleSubmit = () => {
-    alert("Modal non ouvert");
-  };
-
   const modalStyle = {
-    display: isModalOpen ? 'block' : 'none',
+    display: isModalOpen ? "block" : "none",
   };
 
   const DisplayTime = {
-    display: afficheBtn ? 'block' : 'none',
+    display: afficheBtn ? "block" : "none",
   };
 
   return (
     <div>
-      {/* <Probleme handleSubmit={handleSubmit}/> */}
       {Object.values(PostText({ handleSubmit })).map((elem, index) => (
         <div className="carte1 mb-4" key={index}>
           {/*Pour créer un post */}
@@ -95,6 +126,7 @@ export const Cards = () => {
               {/* le texte a publié */}
               <div className="w-100 aria-content">
                 <textarea
+                  value={textPost}
                   onChange={Changement}
                   name=""
                   id="text-aria"
@@ -120,16 +152,12 @@ export const Cards = () => {
               </div>
             </div>
 
-            <div className="">
-              <UnModal
-                modalStyle={modalStyle}
-                handleCloseModal={handleCloseModal}
-                handleAddPost={handleAddPost}
-              />
-            </div>
+            <div className=""></div>
           </div>
         </div>
       ))}
+
+      {/*_________L'affichage Carte DEBUT  _____________________*/}
 
       <div className="">
         {postCard.map((card) => {
@@ -151,6 +179,62 @@ export const Cards = () => {
           );
         })}
       </div>
+      {/*_________L'affichage Carte FIN___________________________________ */}
+
+      {/*________________________Le Modal_ DEBUT____________________________ */}
+
+      <div className="">
+        <div className="modal-parant" style={modalStyle}>
+          <div className="modal-contenu">
+            {/* Le contenu du Modal */}
+
+            <div className=" d-flex flex-column mb-5">
+              <label htmlFor="imageUrl" className="ms-2 fs-4 text-start">
+                * Image URL
+              </label>
+              <input
+                type="text"
+                id="imageUrl"
+                placeholder="image URL ..."
+                className="px-3 mt-3"
+                name="nom"
+                value={imageUrl}
+                onChange={handleChangeImageUrl}
+              />
+            </div>
+
+            <div className="  d-flex flex-column mb-5">
+              <label htmlFor="aria-modal" className="ms-2 fs-4 text-start">
+                * Add a description
+              </label>
+              <textarea
+                cols=""
+                id="aria-modal"
+                rows="5"
+                className="area-modal"
+                name="description"
+                value={descript}
+                onChange={handleChangeDescription}
+              ></textarea>
+            </div>
+
+            {/* Les Ations du Modale */}
+
+            <div className=" d-flex w-100 justify-content-end">
+              <button className="close me-2" onClick={handleCloseModal}>
+                Anuler
+              </button>
+              <MyButton
+                arg1="publish"
+                handleClick={handleAddPost}
+                btnName="Publier"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/*________________________Le Modal_ FIN _______________________*/}
     </div>
   );
 };

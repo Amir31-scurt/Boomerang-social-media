@@ -12,28 +12,6 @@ import MyButton from "../ComposTimeLine/MyButton";
 import { DropDown } from "../ComposTimeLine/DropDown";
 
 export const TableElems = [
-  {
-    id: 1,
-    likes: 0,
-    profile: <FaRegUser />,
-    nom: "Moussa Diop",
-    date: "12 / 05 / 2023",
-
-    publication: (
-      <p className="fw-bold text-secondary">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti esse
-        facere, provident accusamus, praesentium explicabo, dolorum voluptas
-        iste eius nisi tenetur? Totam, expedita ducimus? Ipsam libero adipisci
-        earum sapiente dolores! Lorem ipsum dolor sit amet consectetur, ducimus?
-        Ipsam libero adipisci earum sapiente dolores! Lorem ipsum dolor dolores!
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti esse
-        facere, provident accusamus, praesentium explicabo, dolorum voluptas
-        iste eius nisi tenetur? Totam, expedita ducimus? Ipsam libero adipisci
-        earum sapiente dolores!
-      </p>
-    ),
-  },
-
   // Element numero 2
 
   {
@@ -60,25 +38,45 @@ export const TableElems = [
     date: "18 / 04 / 2023",
     suppression: <DropDown />,
 
-    publication: (
-      <figure>
-        <iframe
-          width="100%"
-          height="300"
-          src="https://www.youtube.com/embed/Dn1jhs-MsXE?si=6MCQmOX1E8Ozo8oT"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          className="w-100 rounded-3"
-        ></iframe>
-        <figcaption className="fontFamily"></figcaption>
-      </figure>
-    ),
+    publication: "../imgs/video1.mp4",
     description: (
       <p className="">
         Praesentium explicabo, dolorum voluptas iste eius nisi tenetur? Totam,
         expedita ducimus? Ipsam libero adipisci earum sapiente dolores! Lorem
+      </p>
+    ),
+  },
+
+  {
+    id: 1,
+    likes: 0,
+    profile: <FaRegUser />,
+    nom: "Moussa Diop",
+    date: "12 / 05 / 2023",
+
+    publication:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti ess hbsqjhbfhqsbfjsqbqshhhhhhhhistghidfsghjdfhkjsdhkjee ksiuerussklqezuidshuezybfeqjksdezhfbuyeheholquiqhrhqsjqshie",
+  },
+];
+
+export const TextTablePost = [
+  {
+    id: 1,
+    likes: 0,
+    profile: <FaRegUser />,
+    nom: "Moussa Diop",
+    date: "12 / 05 / 2023",
+
+    publication: (
+      <p className="fw-bold text-secondary">
+        "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti esse
+        facere, provident accusamus, praesentium explicabo, dolorum voluptas
+        iste eius nisi tenetur? Totam, expedita ducimus? Ipsam libero adipisci
+        earum sapiente dolores! Lorem ipsum dolor sit amet consectetur, ducimus?
+        Ipsam libero adipisci earum sapiente dolores! Lorem ipsum dolor dolores!
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti esse
+        facere, provident accusamus, praesentium explicabo, dolorum voluptas
+        iste eius nisi tenetur? Totam, expedita ducimus? Ipsam libero adipisci
+        earum sapiente dolores!"
       </p>
     ),
   },

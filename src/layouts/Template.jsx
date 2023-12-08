@@ -27,11 +27,11 @@ export default function Template() {
         <div className="col-12 border-gray-300 NavBar">
           <NavBar />
         </div>
-          <SideBar />
-          <div className="col-10 col-md-12 offset-2 offset-md-4 px-3 bg-secondary bg-opacity-25">
-            {/* Place ////////////////l */}
-            <Home />
-          </div>
+        <SideBar />
+        <div className="col-10 col-md-12 offset-2 offset-md-4 px-3 bg-secondary bg-opacity-25">
+          {/* Place ////////////////l */}
+          <Home />
+        </div>
         {/********* ConTenu Page **********/}
       </div>
     </div>

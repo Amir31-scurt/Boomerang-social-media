@@ -177,3 +177,8 @@
   border: none;
   background-color: rgba(224, 222, 222, 0.797);
 }
+.containerTextPost{
+  width: 350px;
+  max-width: 1100px;
+  overflow-wrap: break-word;
+}

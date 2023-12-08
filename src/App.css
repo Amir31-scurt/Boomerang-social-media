@@ -236,4 +236,20 @@ textarea {
   opacity: 0.7;
 }
 
-/* Css de Barry */
+/* Css de Started */
+.Back-Started {
+  background: linear-gradient(-45deg, #f3f6f6, #9d9d9d);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+  }
+}

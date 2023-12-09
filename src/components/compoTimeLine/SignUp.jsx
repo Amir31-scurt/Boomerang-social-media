@@ -1,5 +1,4 @@
 import React, { useState, useRef, useContext } from 'react';
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { AuthContext } from '../../contexte/authContext';
 import '../../assets/css/SignUp.css';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -221,35 +220,6 @@ function SignUp() {
                 <button className="btn btn-primary rounded-5" type="submit">
                   S’enregistrer
                 </button>
-              </div>
-              <div className="w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
-                <div className="border-0 type border-bottom me-1"></div>
-                <div className="or-sign"> Ou inscrivez-vous avec</div>
-                <div className="border-0 type border-bottom mx-1"></div>
-              </div>
-              <div className="icon-sign-up w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
-                {/* Icône Google */}
-                <a
-                  href="google"
-                  className="d-flex me-4 justify-content-center align-items-center border border-primary rounded-circle p-2"
-                >
-                  <FaGoogle
-                    className="text-white"
-                    size={29}
-                    style={{ color: '#4285F4' }}
-                  />
-                </a>
-                {/* Icône Facebook */}
-                <a
-                  href="facebook"
-                  className="d-flex justify-content-center align-items-center border border-primary rounded-circle p-2"
-                >
-                  <FaFacebook
-                    className="text-white"
-                    size={30}
-                    style={{ color: '#1877F2' }}
-                  />
-                </a>
               </div>
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">
                 <p>

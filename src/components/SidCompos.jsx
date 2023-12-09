@@ -81,15 +81,13 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <div className="sidebar fixed-left bg-light">
-      <ul className="nav flex-column">
-        <li className="nav-item">
-          <Link className="nav-link active" href="#">
-            Newsfeed
-          </Link>
-        </li>
-        <SideMenu />
-      </ul>
+    <div>
+      {/* <!-- Side navigation --> */}
+      <div className="sidenav">
+        <ul>
+          <SideMenu />
+        </ul>
+      </div>
     </div>
   );
 }

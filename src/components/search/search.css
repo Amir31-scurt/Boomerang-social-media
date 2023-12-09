@@ -12,9 +12,7 @@ body{
     height: auto;
 }
 
-.form:hover{
-    height: auto;
-}
+
 
 #input{
     border-radius: 20px;

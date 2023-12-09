@@ -27,7 +27,7 @@ const ProfileCard = ({ imageSrc, name, email}) => {
   return (
     
     <div className="mb-3 col-md-6">
-      <div className="card w-100 position-relative">
+      <div className="card w-100  position-relative">
         <div className="imageProfile">
           <img src={imageSrc} alt="" className='img-fluid w-100' />
         </div>

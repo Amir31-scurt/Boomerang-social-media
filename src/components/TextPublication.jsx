@@ -17,41 +17,41 @@ export const TextPublication = () => {
       {PublishTable.map((el, index) => (
         <div className="carte1 mb-4" key={index}>
           <div className="contenu-carte1">
-            <div className="flex items-center justify-between">
-              <div className="w-11/12 flex items-center">
+            <div className="d-flex align-items-center justify-content-between">
+              <div className="col-11 d-flex align-items-center">
                 <div className="icone-carte me-3">{el.profile}</div>
-                <div>
-                  <p className="font-bold text-gray-500">{el.nom}</p>
-                  <p className="text-sm text-gray-400">{el.date}</p>
+                <div className="d-flex flex-column align-items-start">
+                  <p className="fw-bold m-0 p-0">{el.nom}</p>
+                  <p className="fs-6 text-secondary">{el.date}</p>
                 </div>
               </div>
 
               <div className="">
-                <button className="icone-actions">{el.suppression}</button>
+                <button className="btn icone-actions">{el.suppression}</button>
               </div>
             </div>
 
             <div className="mt-4">
               {/* le texte a publié */}
-              <div className="w-full w-11/12 m-auto ">{el.publication}</div>
+              <div className="w-100 col-11 m-auto ">{el.publication}</div>
             </div>
 
             {/* Les icones d'action */}
-            <div className="w-full justify-between flex py-4 px-2">
-              <div className="W-1/12">
+            <div className="w-100 justify-content-between d-flex py-4 px-2">
+              <div className="col-1">
                 <button
-                  className="icone-actions flex items-center "
+                  className="btn icone-actions d-flex align-items-center"
                   onClick={() => addLikes()}
                 >
-                  <FcLike className="text-3xl me-2" />
-                  <h1 className="font-bold">{likes} </h1>
+                  <FcLike className="fs-3 me-2" />
+                  <h1 className="fw-bold">{likes} </h1>
                   <p className="ms-1">Like</p>
                 </button>
               </div>
 
-              <div className="partager flex justify-center ">
-                <button className="icone-actions">
-                  <button className="publish px-2">
+              <div className="partager d-flex justify-content-end ">
+                <button className="btn icone-actions">
+                  <button className="btn publish px-2">
                     <FaShareFromSquare className="me-2" /> Share
                   </button>
                 </button>

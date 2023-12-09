@@ -6,6 +6,8 @@ import '../Maria.css';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexte/authContext';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ModalOubli from './ModalOubli';
 
 export default function Signin() {
@@ -36,7 +38,16 @@ export default function Signin() {
       navigate('/Timeline');
     } catch {
       // Si y'a erreur dans la connection du form
-      setValidation("L'email et / ou le mot de passe est incorrecte");
+      toast.error("L'email et / ou le mot de passe n'est pas correcte", {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
   };
 
@@ -113,7 +124,7 @@ export default function Signin() {
             </div>
           </div>
         </div>
+      </div>
     </div>
-    
   );
 }

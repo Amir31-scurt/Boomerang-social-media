@@ -210,10 +210,10 @@ function SignUp() {
                 />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
                   D’accord avec
-                  <span className="text-decoration-underline text-color">
+                  <Link className="text-decoration-underline text-color">
                     {' '}
                     Termes et conditions
-                  </span>
+                  </Link>
                 </label>
               </div>
               {/* Submit button */}

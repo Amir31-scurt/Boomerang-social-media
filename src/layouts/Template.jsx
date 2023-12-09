@@ -2,6 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import '../Barry.css';
 
 import React, { useContext } from 'react';
 import { AuthContext } from '../contexte/authContext';
@@ -23,8 +24,7 @@ export default function Template() {
       {/************ SidBar********** */}
 
       <div className="MainPageContainer">
-        {/********NavBar**********/}
-        <div className="col-12 border-gray-300 NavBar">
+        <div className="col-12 NavBar">
           <NavBar />
         </div>
         <div className="SideAndContainer d-flex">
@@ -34,10 +34,18 @@ export default function Template() {
           <div className="col-10 col-lg-10 bg-secondary bg-opacity-25">
             {/* Place ////////////////l */}
             <Search/>
+
+        <div className="d-flex flex-row LOL">
+          <SideBar />
+          <div className="mx-4 box-contain">
+            <Home />
           </div>
+          {/* Place ////////////////l */}
         </div>
-        {/********* ConTenu Page **********/}
       </div>
     </div>
+    </div>
+    </div>
+  
   );
 }

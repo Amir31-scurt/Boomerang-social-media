@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line
 // import '../Barry.css';
 import { Cards } from '../components/Cards';
 import { TextPublication } from '../components/TextPublication';

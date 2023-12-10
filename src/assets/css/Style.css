@@ -7,14 +7,14 @@
   padding-top: 20px;
 }
 .CarteContainer {
-  margin-top: 80px;
+  margin-top: 30px;
 }
 
 .bouton1 {
   background: transparent;
 }
 
-.description{
+.description {
   font-size: 14px;
   font-weight: 500;
   color: #888888b0;
@@ -38,7 +38,7 @@
 
 .PartieProfil {
   width: 93%;
-  
+
   display: flex;
   align-items: center;
 }
@@ -107,7 +107,6 @@
 }
 .contenuPartage {
   height: 40px;
-  
 }
 
 /* //////////////////////Modal //////////////////////**/
@@ -121,6 +120,11 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(5, 60, 114, 0.826);
+}
+@media (max-width: 1024px) {
+  .modal-parant {
+    top: 50px;
+  }
 }
 
 .modal-contenu {
@@ -204,16 +208,15 @@
   border: none;
   background-color: rgba(224, 222, 222, 0.797);
 }
-.dato{
+.dato {
   font-size: 13px;
   opacity: 0.6;
 }
-.ParantText{
+.ParantText {
   height: auto;
   min-height: 100px;
   margin-bottom: -70px;
 }
-
 
 .liked {
   opacity: 1;
@@ -222,20 +225,20 @@
   opacity: 0.3;
 }
 
-.PatrageReseau{
+.PatrageReseau {
   display: flex;
   align-items: center;
 }
 
-.bouton1a{
-  font-size: 11px ;
+.bouton1a {
+  font-size: 11px;
   display: flex;
   align-items: center;
 }
-.GrosContainerPost{
+.GrosContainerPost {
   border-color: #066e41;
   height: auto;
 }
-  .milieuContenu{
-    height: auto;
-  }
+.milieuContenu {
+  height: auto;
+}

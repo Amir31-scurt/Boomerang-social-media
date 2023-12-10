@@ -1,9 +1,9 @@
-import React from "react";
-import { Cards } from "../components/ComposTimeLine/Cards";
+import React from 'react';
+import { Cards } from '../components/ComposTimeLine/Cards';
 
 const Home = () => {
   return (
-    <div className="pt-5">
+    <div className="mt-1">
       {/*___________________ carte numero 1 ___________ */}
 
       <div className="CarteContainer">

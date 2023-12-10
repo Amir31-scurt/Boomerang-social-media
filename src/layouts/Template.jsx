@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
 import { Outlet } from 'react-router-dom';
+import  Search  from '../components/search/seearch';
 // import '../Barry.css';
 
 export default function Template() {
@@ -41,7 +42,7 @@ export default function Template() {
           </div>
           <div className="col-10 col-lg-10 bg-secondary bg-opacity-25">
             {/* Place ////////////////l */}
-            <Search />
+            <Search/>
 
         <div className="d-flex flex-row LOL">
           {/* <SideBar /> */}

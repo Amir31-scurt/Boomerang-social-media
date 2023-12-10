@@ -38,10 +38,10 @@ export const Cards = () => {
         <div className="carte1 mb-4" key={index}>
           {/*Pour créer un post */}
           <div className="contenu-carte1">
-            <div className="flex items-center">
+            <div className="d-flex align-items-center">
               <div className="icone-carte me-3">{elem.icone}</div>
               <div>
-                <p className="font-bold text-gray-500">{elem.text1}</p>
+                <p className="fw-bold text-gray-500">{elem.text1}</p>
               </div>
             </div>
 
@@ -49,31 +49,31 @@ export const Cards = () => {
               <div className="m-4">{elem.container1}</div>
 
               {/* le texte a publié */}
-              <div className="w-full aria-content">
+              <div className="w-100 aria-content">
                 <textarea
                   onChange={Changement}
                   name=""
                   id="text-aria"
-                  className="w-full"
+                  className="w-100"
                   placeholder="What's your mind ?"
                 ></textarea>
               </div>
             </div>
 
             {/* Les icones d'action */}
-            <div className="w-full justify-between flex py-5 px-2">
-              <div className="W-1/12">
-                <button className="icone-actions" onClick={handleOpenModal}>
-                  <FaVideo className="text-3xl text-[#6d3]" />
+            <div className="w-100 py-5 px-2 d-flex gap-3">
+              <div className="col-1">
+                <button className="btn" onClick={handleOpenModal}>
+                  <FaVideo className="fs-3 text-danger" />
                 </button>
               </div>
-              <div className="W-1/12">
-                <button className="icone-actions" onClick={handleOpenModal}>
-                  <FaRegImage className="text-3xl text-[#6d35e6]" />
+              <div className="col-1">
+                <button className="btn" onClick={handleOpenModal}>
+                  <FaRegImage className="fs-3 text-success" />
                 </button>
               </div>
 
-              <div className="partager flex justify-center ">
+              <div className="partager d-flex justify-contet-center ">
                 <div className="" style={DisplayTime}>
                   {elem.bouton3}
                 </div>

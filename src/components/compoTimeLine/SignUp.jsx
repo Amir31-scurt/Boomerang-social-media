@@ -1,5 +1,4 @@
 import React, { useState, useRef, useContext } from 'react';
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { AuthContext } from '../../contexte/authContext';
 import '../../assets/css/SignUp.css';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -117,13 +116,10 @@ function SignUp() {
       <div className="p-2">
         <div className="container signUp-form">
           <form action="" onSubmit={handleSubmit} ref={formRef}>
-            <div className="formPage p-lg-2 mx-auto text-white">
+            <div className="formPage p-lg-2 mx-auto text-dark">
               <div className="signup-text mt-3 text-center">
                 <h4 className="fw-boold">Créer un compte</h4>
-                <p>
-                  Remplissez vos informations ci-dessous ou inscrivez-vous avec
-                  votre compte{' '}
-                </p>
+                <p>Remplissez vos informations ci-dessous.</p>
               </div>
 
               <div className="row this_name g-0 mx-auto">
@@ -131,7 +127,7 @@ function SignUp() {
                   <div className="mb-3 w-75 mx-auto">
                     <input
                       type="text"
-                      className={`form-control ${
+                      className={`form-control text-center fs-5 py-2 ${
                         firstNameError && 'is-invalid'
                       }`}
                       id="firstName"
@@ -150,7 +146,7 @@ function SignUp() {
                   <div className="mb-3 w-75 mx-auto">
                     <input
                       type="text"
-                      className={`form-control ${
+                      className={`form-control text-center fs-5 py-2 ${
                         lastNameError && 'is-invalid'
                       }`}
                       id="lastName"
@@ -169,7 +165,7 @@ function SignUp() {
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="email"
-                  className="form-control"
+                  className="form-control text-center py-2 fs-5"
                   id="email"
                   placeholder="Email"
                   required
@@ -180,80 +176,52 @@ function SignUp() {
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="password"
-                  className="form-control"
+                  className="form-control text-center fs-5 py-2"
                   id="password"
                   placeholder="Mot de passe"
                   required
                   ref={addInputs}
                 />
-                {/* {<p className="text-danger">{validation}</p>} */}
+                {<p className="text-danger">{validation}</p>}
               </div>
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="password"
-                  className="form-control"
+                  className="form-control text-center fs-5 py-2"
                   id="passwordConfirmation"
                   placeholder="Confirmation du mot de passe"
                   required
                   ref={addInputs}
                 />
-                {<p className="text-danger">{validation}</p>}
               </div>
               {/* Terms and conditions checkbox */}
-              <div className="form-check mx-auto w-75">
+              <div className="form-check d-flex justify-content-center gap-3">
                 <input
-                  className="form-check-input required"
+                  className="form-check-input required text-center"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                   required
                 />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                  D’accord avec
-                  <span className="text-decoration-underline text-color">
-                    {' '}
+                  D’accord avec {'    '}
+                  <Link className="text-decoration-underline text-color">
                     Termes et conditions
-                  </span>
+                  </Link>
                 </label>
               </div>
               {/* Submit button */}
               <div className="d-grid gap-2 col-6 mx-auto w-75 mt-4">
-                <button className="btn btn-primary rounded-5" type="submit">
-                  S’enregistrer
+                <button
+                  className="btn btn-primary rounded-2 fs-5"
+                  type="submit"
+                >
+                  S’inscrire
                 </button>
-              </div>
-              <div className="w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
-                <div className="border-0 type border-bottom me-1"></div>
-                <div className="or-sign"> Ou inscrivez-vous avec</div>
-                <div className="border-0 type border-bottom mx-1"></div>
-              </div>
-              <div className="icon-sign-up w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
-                {/* Icône Google */}
-                <a
-                  href="google"
-                  className="d-flex me-4 justify-content-center align-items-center border border-primary rounded-circle p-2"
-                >
-                  <FaGoogle
-                    className="text-white"
-                    size={29}
-                    style={{ color: '#4285F4' }}
-                  />
-                </a>
-                {/* Icône Facebook */}
-                <a
-                  href="facebook"
-                  className="d-flex justify-content-center align-items-center border border-primary rounded-circle p-2"
-                >
-                  <FaFacebook
-                    className="text-white"
-                    size={30}
-                    style={{ color: '#1877F2' }}
-                  />
-                </a>
               </div>
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">
                 <p>
-                  Vous avez déjà un compte ?
+                  Vous avez déjà un compte ?{'   '}
                   <Link to="/Connexion" className="text-color">
                     Connexion
                   </Link>

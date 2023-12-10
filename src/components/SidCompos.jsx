@@ -25,11 +25,11 @@ export default function SideBar() {
       id: 1,
       icon: (
         <div className="TvIcon">
-          <PiTelevisionSimpleBold className="fw-bold" />
+          <PiTelevisionSimpleBold className="fw-normal" />
         </div>
       ),
-      title: 'Profile',
-      link: '/profile',
+      title: 'Actualité',
+      link: '/Timeline',
     },
     {
       id: 2,
@@ -38,8 +38,8 @@ export default function SideBar() {
           <FiUser className="fw-bold" />
         </div>
       ),
-      title: 'Settings',
-      link: '/settings',
+      title: 'Paramètre',
+      link: '#',
     },
     {
       id: 3,
@@ -49,7 +49,7 @@ export default function SideBar() {
         </div>
       ),
       title: 'View',
-      link: '/view',
+      link: '#',
     },
     {
       id: 4,
@@ -59,13 +59,13 @@ export default function SideBar() {
         </div>
       ),
       onclick: logOut,
-      title: 'Logout',
+      title: 'Déconnexion',
     },
   ];
   const SideMenu = () => {
     return SideElem.map((item, index) => {
       return (
-        <li className="">
+        <li className="nav-item">
           <Link
             className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 link"
             to={item.link}
@@ -73,7 +73,7 @@ export default function SideBar() {
             onClick={item.onclick}
           >
             <h4 className="SideIcon">{item.icon}</h4>
-            <h4 className="SideTitle">{item.title}</h4>
+            <h5 className="SideTitle">{item.title}</h5>
           </Link>
         </li>
       );
@@ -81,11 +81,13 @@ export default function SideBar() {
   };
   // affichage //////////////
   return (
-    <div class="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2 mt-2">
-      <ul class="mb-1 top-content">
-        <li class="logo d-none d-xl-block d-lg-block"></li>
-        <SideMenu />
-      </ul>
+    <div>
+      {/* <!-- Side navigation --> */}
+      <div className="sidenav">
+        <ul>
+          <SideMenu />
+        </ul>
+      </div>
     </div>
   );
 }

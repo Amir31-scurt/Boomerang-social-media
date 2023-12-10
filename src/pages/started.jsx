@@ -15,9 +15,9 @@ export function Started() {
   };
 
   return (
-    <div className=" justify-content-center  text-center align-items-center">
-      <div className="w-50 m-auto mt-5 scale-up-right">
-        <img src={Logo} alt="" className="w-100" />
+    <div className="Back-Started">
+      <div className="w-50 m-auto d-flex flex-column vh-100 justify-content-center text-center align-items-center">
+        <img src={Logo} alt="" className="w-100 scale-up-right" />
         <Link to="/Inscription" className="text-white">
           <button
             onClick={handleGetStartedClick}

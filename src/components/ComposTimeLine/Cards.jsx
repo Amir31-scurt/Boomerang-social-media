@@ -5,6 +5,7 @@ import MyButton from "../ComposTimeLine/MyButton";
 import { PostText } from "../ComposTimeLine/UtilsData";
 import { TableElems, TextTablePost } from "./TableElems";
 import { PostCard } from "./PostCard";
+import { format } from "date-fns";
 
 export const Cards = () => {
   // l'etat du Modal par defaut
@@ -59,7 +60,7 @@ export const Cards = () => {
       likes: 0,
       profile: <FaRegUser />,
       nom: "Recuperer Le nom",
-      date: "Recuperer la Date",
+      date: format(new Date(), "dd / MM / yyyy"),
       publication: textPost,
     };
 
@@ -67,36 +68,54 @@ export const Cards = () => {
     setPostCard([...postCard, newPostText]);
     setTextPost(" ");
     setAfficheBtn(false);
+  };
 
+  //etat message d'erreur
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const isValidImageUrl = (url) => {
+    // Utilisez une expression régulière pour valider l'URL de l'image
+    const imageUrlRegex = /(https?:\/\/.*\.)/i;
+    return imageUrlRegex.test(url);
   };
 
   //_________________________  Ajouter un Post ___
   const handleAddPost = (e) => {
     e.preventDefault();
 
-    if (imageUrl === "") {
-      alert("Ajouter l'adresse de l'image" )
-    }
-
-    if (imageUrl !== "") {
+    if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
       const newPost = {
         id: postCard[postCard.length - 1]?.id + 1 ?? 0,
         likes: 0,
         profile: <FaRegUser />,
         nom: "Recuperer Le nom",
-        date: "Recuperer la Date",
+        date: format(new Date(), "dd / MM / yyyy"),
         publication: imageUrl,
         description: descript,
       };
-  
+
       //Destructurer le tableau, puis ajouter un nouveau post
       setPostCard([...postCard, newPost]);
-  
+
       setImageUrl("");
       setDescript("");
       setModalOpen(false);
+      setErrorMessage(""); // Réinitialiser le message d'erreur
+    } else {
+      setErrorMessage("Ajouter l'adresse de l'image");
     }
   };
+
+  // Fonction pour comparer les dates de deux publications
+  const compareDates = (postA, postB) => {
+    const dateA = new Date(postA.date);
+    const dateB = new Date(postB.date);
+
+    return dateB - dateA; // Tri décroissant
+  };
+
+  // La Methode short Pour trier le tab
+  const sortedPosts = postCard.slice().sort(compareDates);
 
   const modalStyle = {
     display: isModalOpen ? "block" : "none",
@@ -148,17 +167,17 @@ export const Cards = () => {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       ))}
 
       {/*_________L'affichage Carte DEBUT  _____________________*/}
 
-      <div className="">
-        {postCard.map((card) => {
+      <div className="milieu">
+        {sortedPosts.map((card) => {
           return (
             <PostCard
+              key={card.id}
               id={card.id}
               likes={card.likes}
               profile={card.profile}
@@ -167,11 +186,12 @@ export const Cards = () => {
               suppression={card.suppression}
               publication={card.publication}
               description={card.description}
-              addLikes={() => {
-              alert((card.likes += 1));
-              }}
+              addLikes={() => card.likes}
               hadleDelete={(id) => {
                 DeletePost(card.id);
+              }}
+              handleEdit={() => {
+                alert(card.id);
               }}
             />
           );
@@ -199,6 +219,7 @@ export const Cards = () => {
                 value={imageUrl}
                 onChange={handleChangeImageUrl}
               />
+              <small className="text-danger">{errorMessage}</small>
             </div>
 
             <div className="  d-flex flex-column mb-5">

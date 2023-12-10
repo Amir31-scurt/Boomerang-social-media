@@ -3,8 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { PiDotsThreeOutline } from "react-icons/pi";
 import {React} from "react";
 
-export const DropDown = ({handleDelete}) => {
-
+export const DropDown = ({ handleDelete, handleEdit }) => {
   return (
     <div className="">
       <div class="dropdown border border-0">
@@ -18,7 +17,10 @@ export const DropDown = ({handleDelete}) => {
         </button>
         <ul class="dropdown-menu dropDownMenu">
           <li>
-            <button class="dropdown-item d-flex align-items-center">
+            <button
+              class="dropdown-item d-flex align-items-center"
+              onClick={handleEdit}
+            >
               <FiEdit3 className="fs-5 text-primary me-2" />
               Modifier
             </button>

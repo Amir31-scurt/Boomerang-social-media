@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PiShareNetworkBold } from "react-icons/pi";
 import { FcLike } from "react-icons/fc";
 import { DropDown } from "./DropDown";
@@ -13,11 +13,13 @@ export const PostCard = ({
   likes,
   id,
   hadleDelete,
+  handleEdit,
 }) => {
+
   const isYouTubeLink =
-    publication &&
-    (publication.toLowerCase().includes("youtube.com") ||
-      publication.toLowerCase().includes("youtu.be"));
+  publication &&
+  (publication.toLowerCase().includes("youtube.com") ||
+  publication.toLowerCase().includes("youtu.be"));
 
   const isMP4Link = publication && publication.toLowerCase().endsWith(".mp4");
 
@@ -28,6 +30,22 @@ export const PostCard = ({
     !publication.toLowerCase().includes(".mp4") &&
     !publication.toLowerCase().includes(".jpg") &&
     !publication.toLowerCase().includes(".png");
+
+  const [isLiked, setIsLiked] = useState(false);//State Like
+
+    const handleFacebookShare = () => {
+      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        publication
+      )}`;
+      window.open(url, "_blank");
+    };
+
+    const handleLinkedInShare = () => {
+      const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        publication
+      )}`;
+      window.open(url, "_blank");
+    };
 
   return (
     <div className="">
@@ -44,54 +62,100 @@ export const PostCard = ({
               </div>
             </div>
             <button className="icone-actions">
-              <DropDown handleDelete={hadleDelete} />
+              <DropDown handleDelete={hadleDelete} handleEdit={handleEdit} />
             </button>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 milieuContenu">
             {/* le texte à publié */}
-            <div className=" GrosContainerPost arrondi-3 m-auto ">
+            <div className=" GrosContainerPost rounded-3 m-auto ">
               {isYouTubeLink ? (
                 <iframe
                   src={publication}
                   controls
                   width="100%"
-                  height="300px"
+                  height="490px"
                   border-radius="15px"
-                  className="w-100 arrondi-3"
+                  className="w-100 rounded-3 videoo ParantText2"
                 />
               ) : isMP4Link ? (
-                <video src={publication} controls className="w-100 arrondi-3" />
+                <video
+                  src={publication}
+                  controls
+                  className="w-100 rounded-3 videoo ParantText2"
+                />
               ) : isParagraphe ? (
-                <p className="fw-bold text-secondary containerTextPost">
-                  {publication}
-                </p>
+                <div className="">
+                  <textarea
+                    value={publication}
+                    id="text-aria3"
+                    className="w-100 ParantText"
+                  ></textarea>
+                </div>
               ) : (
                 <img
                   src={publication}
                   alt="images"
-                  className="w-100 arrondi-3"
+                  className="w-100 rounded-3 imageo ParantText2"
                 />
               )}
             </div>
+          <textarea
+            value={description}
+            id="text-aria2"
+            className="w-100"
+          ></textarea>
           </div>
-          <div className="mt-3 description">{description}</div>
           {/* Les icônes d'action */}
           <div className="w-100 justifier-content-between d-flex pb-2 px-2">
             <div className="">
               <button
-                className=" icone-actions d-flex align-items-center "
-                onClick={() => addLikes(id)}
+                className="icone-actions d-flex align-items-center"
+                onClick={() => {
+                  addLikes(id);
+                  setIsLiked(!isLiked); // Basculez l'état du like
+                }}
               >
-                <FcLike className=" fs-2 me-2" />
-                <h1 className="fw-bold pt-2 fs-6">{likes}</h1>
+                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : ""}`} />
+                <h1 className="fw-bold pt-2 fs-6">
+                  {likes + (isLiked ? 1 : 0)}
+                </h1>
                 <p className="ms-1 pt-2 pt-3">J'aime</p>
               </button>
             </div>
             <div className="partager d-flex justifier-content-end ">
-              <div className="d-flex contenuPartage">
-                <button className="partagerBtn px-2 ">
-                  <PiShareNetworkBold className="fs-3" /> Partager
+              <div class="dropdown border border-0 PatrageReseau">
+                <div className="d-flex contenuPartage"></div>
+                <button
+                  className=" border border-0 fs-2 bouton1a partagerBtn px-1"
+                  data-bs-toggle="dropdown"
+                >
+                  <PiShareNetworkBold className="fs-3" />
+                  <p className="fs-6 mt-3">Partager</p>
                 </button>
+                <ul class="dropdown-menu dropDownMenu2">
+                  <li>
+                    <button
+                      className="partagerBtn w-100 justify-content-center px-2 d-flex align-items-center"
+                      onClick={handleLinkedInShare}
+                    >
+                      <PiShareNetworkBold className="fs-3 text-success" />
+                      <p className="fs-6 mt-3 ms-2 fw-bold text-info">
+                        LinkedIn
+                      </p>
+                    </button>
+                  </li>
+                  <li className="mt-2">
+                    <button
+                      className="partagerBtn px-2 justify-content-center w-100 d-flex align-items-center "
+                      onClick={handleFacebookShare}
+                    >
+                      <PiShareNetworkBold className="fs-3 text-success" />
+                      <p className="fs-6 mt-3 ms-2 fw-bold text-primary">
+                        Facebook
+                      </p>
+                    </button>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

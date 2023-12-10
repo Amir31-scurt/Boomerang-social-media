@@ -1,9 +1,11 @@
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { CiSettings } from 'react-icons/ci';
 import { FaRegUser } from 'react-icons/fa';
 import { FiHome } from 'react-icons/fi';
+import userProfile from '../assets/images/User.png';
 
 const Navbar = () => {
   return (
@@ -15,7 +17,7 @@ const Navbar = () => {
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Boomerang-Logo.svg"
                 alt=""
-                width="100px"
+                className="logo"
               />
             </span>
           </Link>
@@ -23,36 +25,38 @@ const Navbar = () => {
         </div>
         <div className="d-flex gap-5 align-items-center">
           <div className="d-flex gap-3">
-            <div
+            <Link
               to="/Timeline"
               className="p-2 text-center ms-3 menu-icon center-menu-icon"
             >
-              <FiHome className="feather-home feather" />
-            </div>
+              <FiHome className="feather-home feathers" />
+            </Link>
             <div
               href="default-group.html"
               className="p-2 text-center ms-0 menu-icon center-menu-icon"
             >
-              <FaRegUser className="feather-user feather" />
+              <FaRegUser className="feather-user feathers" />
             </div>
-            <div className="p-2 text-center ms-0 menu-icon icon-input">
-              <FaMagnifyingGlass className=" feather" />
-            </div>
+            <NavLink
+              to="chercher"
+              className="p-2 text-center ms-0 menu-icon icon-input"
+            >
+              <FaMagnifyingGlass className="feathers" />
+            </NavLink>
           </div>
         </div>
 
         <div className="d-flex align-items-center">
           <div className="p-2 text-center ms-3 position-relative dropdown-menu-icon setting-icon cursor-pointer">
-            <CiSettings className="feather-settings feather" />
+            <CiSettings className="feather-settings feathers" />
           </div>
-          <a href="default-settings.html" className="p-0 ms-3 menu-icon">
+          <Link to="" className="p-0 ms-3">
             <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              src={userProfile}
               alt="user"
-              className="rounded rounded-circle"
-              width="50px"
+              className="rounded-circle img-user"
             />
-          </a>
+          </Link>
         </div>
       </div>
     </nav>

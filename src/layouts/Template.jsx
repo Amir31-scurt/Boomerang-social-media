@@ -1,15 +1,14 @@
-// import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import '../Barry.css';
 
 import React, { useContext } from 'react';
 import { AuthContext } from '../contexte/authContext';
 import { Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
-import Home from '../pages/Home';
+import { Outlet } from 'react-router-dom';
+// import '../Barry.css';
 
 export default function Template() {
   // User Invocation
@@ -20,19 +19,24 @@ export default function Template() {
   }
 
   return (
-    <div className="d-flex h-100">
-      {/************ SidBar********** */}
-
+    <div className="h-100">
+      {/*<!-- TimeLine Component --> */}
       <div className="MainPageContainer">
+        {/*<!-- Navbar Component --> */}
         <div className="col-12 NavBar">
           <NavBar />
         </div>
+        {/*<!-- Sidebar and Page Component --> */}
         <div className="d-flex flex-row LOL">
-          <SideBar />
-          <div className="mx-4 box-contain">
-            <Home />
+          <div className="sidebar">
+            {/* <!-- Side navigation --> */}
+            <SideBar />
+            {/* <!-- Page content --> */}
+            <div className="main">
+              {/*<!-- TimeLine Component --> */}
+              <Outlet />
+            </div>
           </div>
-          {/* Place ////////////////l */}
         </div>
       </div>
     </div>

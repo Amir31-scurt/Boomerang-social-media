@@ -1,23 +1,16 @@
-import React from 'react';
-// eslint-disable-next-line
-// import '../Barry.css';
-import { Cards } from '../components/Cards';
-import { TextPublication } from '../components/TextPublication';
-import { PublishTable } from '../components/UtilsData';
+import React from "react";
+import { Cards } from "../components/ComposTimeLine/Cards";
 
 const Home = () => {
   return (
-    <div className="py-5">
-      {/* carte numero 1 */}
+    <div className="pt-5">
+      {/*___________________ carte numero 1 ___________ */}
 
-      <div className="">
+      <div className="CarteContainer">
         <Cards />
       </div>
 
-      {/* carte numero 2 */}
-      <div className="">
-        <TextPublication key={PublishTable.id} />
-      </div>
+      {/*  ______________ carte numero 2 ______________  */}
     </div>
   );
 };

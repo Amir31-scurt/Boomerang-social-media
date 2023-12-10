@@ -53,7 +53,7 @@ export const Cards = () => {
       setAfficheBtn(false);
     }
   };
-  //______ L'evenement onClick sur le bouron Publier __
+  // L'evenement onClick sur le bouron Publier __
   const handleSubmit = () => {
     const newPostText = {
       id: new Date(),

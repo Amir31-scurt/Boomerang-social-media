@@ -5,8 +5,9 @@
   }
   
   .tester{
-    background-image: linear-gradient(90deg, #0C2D48
-    10%,#145DA0 40%,#0C2D48 80%);
+    background: #F8FAFC;
+    /* background-image: linear-gradient(90deg, #0C2D48
+    10%,#145DA0 40%,#0C2D48 80%); */
     height: 100vh;
   }
   
@@ -39,10 +40,15 @@
   }
   
   .formPage{
-    background-color:hsla(207, 65%, 28%, 0.4) ;
+    /* background-color:hsla(207, 65%, 28%, 0.4) ; */
+    background: #FFFFFF;
     box-shadow: 2px 0px 10px 2px grey;
     width: 50%;
     border-radius: 15px;
+  }
+
+  .text-color{
+    color: #777;
   }
   
   .type{

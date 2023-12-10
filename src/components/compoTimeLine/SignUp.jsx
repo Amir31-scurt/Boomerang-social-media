@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import FormInput from './FormInput';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -29,19 +28,19 @@ function SignUp() {
   // L'affichage du modal des termes et conditions
   const [showTermsModal, setShowTermsModal] = useState(false);
 
-  // Fonction pour l'affichage et la fermeture du modal
+  // Fonction pour l'affichage et la fermeture du modald
   const handleTermsModalClose = () => setShowTermsModal(false);
   const handleTermsModalShow = () => setShowTermsModal(true);
 
   return (
     <div className="p-2">
-      <div className='container signUp-form'>
+      <div className="signup-text mt-3 text-center">
+        <h4 className='fw-boold'>Créer un compte</h4>
+        <p>Remplissez vos informations ci-dessous ou inscrivez-vous avec votre compte </p>
+      </div>
+      <div className='container signUp-form mt-2'>
         <form action="" onSubmit={handleSubmit}>
           <div className="formPage p-lg-2 mx-auto text-white">
-            <div className="signup-text mt-3 text-center">
-              <h4 className='fw-boold'>Créer un compte</h4>
-              <p>Remplissez vos informations ci-dessous ou inscrivez-vous avec votre compte </p>
-            </div>
 
             <div className="row this_name g-0 mx-auto ">
               <div className="col-md-6 col-12">
@@ -73,15 +72,15 @@ function SignUp() {
                 }
               }
             `}</style>
-            <div className="form-check mx-auto w-75">
+            <div className="form-check mx-auto w-75 text-color">
               <input className="form-check-input required" type="checkbox" value="" id="flexCheckDefault" required />
               <label className="form-check-label" htmlFor="flexCheckDefault">
                 D’accord avec
-                <span className='text-decoration-underline text-color'
-                onClick={handleTermsModalShow}
-                style={{ cursor: 'pointer' }}
-                > 
-                Termes et conditions
+                <span className='text-decoration-underline text-primary'
+                  onClick={handleTermsModalShow}
+                  style={{ cursor: 'pointer' }}
+                >
+                  Termes et conditions
                 </span>
               </label>
             </div>
@@ -90,28 +89,13 @@ function SignUp() {
                 S’enregistrer
               </button>
             </div>
-            <div className="w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
-              <div className="border-0 type border-bottom me-1"></div>
-              <div className="or-sign"> Ou inscrivez-vous avec</div>
-              <div className="border-0 type border-bottom mx-1"></div>
-            </div>
-            <div className="icon-sign-up w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
-              {/* Icône Google */}
-              <a href="google" className="d-flex me-4 justify-content-center align-items-center border border-primary rounded-circle p-2">
-                <FaGoogle className='text-white' size={29} style={{ color: '#4285F4', }} />
-              </a>
-              {/* Icône Facebook */}
-              <a href="facebook" className="d-flex justify-content-center align-items-center border border-primary rounded-circle p-2">
-                <FaFacebook className='text-white' size={30} style={{ color: '#1877F2' }} />
-              </a>
-            </div>
             <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">
-              <p>Vous avez déjà un compte ?<a className='text-color' href="sign-in"> Connexion</a></p>
+              <p className='text-color'>Vous avez déjà un compte ?<a className='text-primary' href="sign-in"> Connexion</a></p>
             </div>
           </div>
         </form>
 
-         {/* Modal pour les Termes et conditions */}
+        {/* Modal pour les Termes et conditions */}
         <Modal className="me-4" show={showTermsModal} onHide={handleTermsModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>Termes et conditions</Modal.Title>
@@ -129,7 +113,7 @@ function SignUp() {
               Fermer
             </Button>
           </Modal.Footer>
-        </Modal>     
+        </Modal>
 
       </div>
     </div>

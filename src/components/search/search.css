@@ -1,152 +1,119 @@
+body {
+  width: 100%;
+  margin: 0;
+  margin: 0;
+  height: 100vh;
+  background: none;
+}
+.form {
+  width: fixed;
+  margin-top: 10%;
+  height: auto;
+}
 
-body{
+#input {
+  border-radius: 20px;
+  width: 130%;
+  height: 45px;
+  text-align: left;
+  font-size: 20px;
+}
+
+#titre {
+  color: black;
+  background: none;
+  font-size: 42px;
+}
+.icon {
+  color: black;
+  width: 100px;
+  background: none;
+}
+
+.searchCard {
+  display: flex;
+}
+
+.ProfileCard {
+  width: 50%;
+  height: 100%;
+  margin: 20px;
+}
+
+.imageProfile img {
+  height: 30vh !important;
+  object-fit: cover;
+}
+
+.rounded img {
+  border-radius: 100% !important;
+  width: 90px !important;
+  height: 90px !important;
+  object-fit: cover;
+}
+
+.searchRounded {
+  position: relative;
+  bottom: 50px;
+}
+
+.image {
+  height: 200px;
+  width: 120%;
+  border: 3px solid #e3e9ee;
+}
+.cardConte {
+  height: 80px;
+}
+
+.paraTest {
+  font-size: 12px;
+  line-height: 5px;
+}
+
+#button {
+  border: 1px solid white;
+}
+
+@media only screen and (max-width: 1024px) {
+  .formSearch {
     width: 100%;
-    margin: 0;
-    margin: 0;
-    height: 100vh;
-    background: none;
-}
-.form{
-    width: fixed;
-    margin-top: 10%;
-    height: auto;
-}
+  }
+  #input {
+    margin-left: 35px;
+    width: 160%;
+  }
 
+  #searching {
+    width: 100%;
+    margin-left: -20px;
+  }
 
+  .form {
+    width: 100%;
+  }
 
-#input{
-    border-radius: 20px;
-    width: 130%;
-    height: 45px;
-    text-align: left;
+  #buton {
+    margin-left: 0;
+  }
+
+  .icon {
+    color: #145da0;
+    margin-left: 50px;
+  }
+
+  #boton {
+    margin-left: 60px;
     font-size: 20px;
+    border-radius: 25px;
+    width: 110px;
+    height: 50px;
+  }
+  #phot {
+    margin: 0;
+  }
+
+  #titre {
+    margin-left: -40%;
+  }
 }
-
-#titre{
-    color: black;
-    background: none;
-    font-size: 42px;
-   
-}
-.icon{
-    color: black;
-    width: 100px;
-    background: none;
-}
-
-.searchCard{
-    display: flex;
-
-}
-
-.ProfileCard{
-    width: 50%;
-    height: 100%;
-    margin: 20px;
-
-}
-
-.imageProfile img{
-    height: 30vh !important;
-    object-fit: cover;
-}
-
-.rounded img{
-   
-    border-radius: 100% !important;
-    width: 90px !important;
-    height: 90px !important;
-    object-fit: cover;
-}
-
-.rounded {
-
-    position: relative;
-    bottom: 50px;
-   
-}
-
-
-
-.image{
-    height: 200px;
-    width: 120%;
-    border:3px solid #e3e9ee;
-    
-}
-.cardConte{
-    height: 80px;;
-}
-
-
-.paraTest{
-    font-size: 12px;
-    line-height: 5px;
-}
-
-#button{
-    border: 1px solid white;
-}
-
-
-
-
-
-
-
-
-@media only screen and (max-width: 768px) {
-    *{
-        width: 100%;
-    }
-    #input{
-       
-        margin-left: 45px;
-        width: 160%;
-      
-    }
-
-    #searching{
-        width: 100%;
-        margin-left: -20px;
-    }
-
-    .form{
-        width: 100%;
-        
-    }
-
-   
-    #buton{
-        margin-left: 0;
-      
-    }
-
-    .icon{
-        color: #145DA0;
-        margin-left: 50px;
-    }
-
-    #boton{
-        margin-left:60px;
-        font-size: 20px;
-        border-radius: 25px;
-        width: 110px;
-        height: 50px;
-    }
-    #phot{
-        margin: 0;
-       
-    }
-
-    #titre{
-        margin-left: -40%;
-       
-    }
-
-    
-
-
-   
-}
-

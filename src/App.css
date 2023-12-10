@@ -16,7 +16,7 @@
 .searchBar {
   outline: none;
 }
-.feather {
+.feathers {
   font-size: 28px;
   color: #727272;
   cursor: pointer;
@@ -26,8 +26,8 @@
   color: #727272;
   cursor: pointer;
 }
-.feather:hover,
-.feather:focus {
+.feathers:hover,
+.feathers:focus {
   color: rgb(67, 147, 173);
   text-decoration: none;
   cursor: pointer;
@@ -118,7 +118,7 @@
   display: flex;
 }
 .img-user {
-  width: 50px;
+  width: 45px;
 }
 .menu-icon:hover,
 .menu-icon:focus {
@@ -199,7 +199,7 @@
   .SideIcon {
     font-size: 20px;
   }
-  .feather {
+  .feathers {
     font-size: 15px;
   }
   .feather-settings {

@@ -65,11 +65,10 @@ export default function SideBar() {
   const SideMenu = () => {
     return SideElem.map((item, index) => {
       return (
-        <li className="nav-item">
+        <li className="nav-item" key={item.id}>
           <Link
             className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 link"
             to={item.link}
-            key={index}
             onClick={item.onclick}
           >
             <h4 className="SideIcon">{item.icon}</h4>

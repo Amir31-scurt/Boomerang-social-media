@@ -9,6 +9,7 @@ import { AuthContext } from '../contexte/authContext';
 import { Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
+import Search from '../components/search/search';
 // import { UserPage } from '../components/user-page/UserPage';
 import Home from '../pages/Home';
 
@@ -35,9 +36,9 @@ export default function Template() {
             {/* <!-- Page content --> */}
             <div class="main">
               <Home />
+              <Search/>
             </div>
           </div>
-          {/* Place ////////////////l */}
         </div>
       </div>
     </div>

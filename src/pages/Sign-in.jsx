@@ -55,7 +55,7 @@ export default function Signin() {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
-  const handleHideModal = () => setOnHide(false);
+  // const handleHideModal = () => setOnHide(false);
   // render login
   return (
     <div className="">
@@ -125,6 +125,5 @@ export default function Signin() {
           </div>
         </div>
       </div>
-    </div>
   );
 }

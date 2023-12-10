@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <Routes>
         {/* <Route path="/" element={<Started />} /> */}
-        <Route path="/" element={<Signin />} />
+        <Route path="" element={<Signin />} />
         <Route path="/Inscription" element={<SignUp />} />
         <Route path="/Timeline" element={<Template />} />
         <Route path="/Modal" element={<ModalOubli />} />

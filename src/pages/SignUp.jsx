@@ -59,7 +59,7 @@ function SignUp() {
               </label>
             </div>
             <div className="d-grid gap-2 col-6 mx-auto mt-4">
-              <Link to="/Connexion" className="w-100">
+              <Link to="/" className="w-100">
                 <button
                   className="btn btn-primary rounded-5 w-100"
                   type="submit"

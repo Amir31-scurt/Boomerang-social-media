@@ -36,9 +36,9 @@ export default function Template() {
             <Search/>
 
         <div className="d-flex flex-row LOL">
-          <SideBar />
+          {/* <SideBar /> */}
           <div className="mx-4 box-contain">
-            <Home />
+            {/* <Home /> */}
           </div>
           {/* Place ////////////////l */}
         </div>

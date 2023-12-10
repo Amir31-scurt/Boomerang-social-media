@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<SignUp />} />
+        <Route path="/" element={<Signin />} />
         <Route path="/connexion" element={<Signin />} />
         <Route path="/inscription" element={<SignUp />} />
         <Route path="/timeline" element={<Template />}>

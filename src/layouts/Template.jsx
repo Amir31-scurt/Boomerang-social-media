@@ -9,6 +9,7 @@ import { AuthContext } from '../contexte/authContext';
 import { Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
+// import { UserPage } from '../components/user-page/UserPage';
 import Home from '../pages/Home';
 
 export default function Template() {
@@ -20,7 +21,7 @@ export default function Template() {
   }
 
   return (
-    <div className="d-flex h-100">
+    <div className="h-100">
       {/************ SidBar********** */}
 
       <div className="MainPageContainer">
@@ -28,9 +29,13 @@ export default function Template() {
           <NavBar />
         </div>
         <div className="d-flex flex-row LOL">
-          <SideBar />
-          <div className="mx-4 box-contain">
-            <Home />
+          <div className="sidebar">
+            {/* <!-- Side navigation --> */}
+            <SideBar />
+            {/* <!-- Page content --> */}
+            <div class="main">
+              <Home />
+            </div>
           </div>
           {/* Place ////////////////l */}
         </div>

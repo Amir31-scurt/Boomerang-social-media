@@ -38,7 +38,12 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+* {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -63,10 +68,6 @@
 }
 .App-link {
   color: #61dafb;
-}
-.NavBar {
-  position: fixed;
-  width: fit-content;
 }
 .TvIcon {
   background: linear-gradient(90deg, #021f7e 0%, #056ede 100%);
@@ -116,6 +117,9 @@
   color: black;
   display: flex;
 }
+.img-user {
+  width: 50px;
+}
 .menu-icon:hover,
 .menu-icon:focus {
   background-color: lightblue;
@@ -156,7 +160,14 @@
   /* border-bottom: 1px solid black !important; */
   /* border: none !important; */
 }
-
+.SideTitle {
+  font-size: 1em;
+}
+@media (max-width: 1245px) {
+  .SideTitle {
+    font-size: 0.68em;
+  }
+}
 .icon-sign-up a {
   width: 50px;
   height: 50px;
@@ -170,6 +181,9 @@
 .text-color {
   color: #75e6da;
 }
+.logo {
+  width: 100px;
+}
 @media (max-width: 1024px) {
   /* .signUp-form{
         height: 100vh !important;
@@ -179,12 +193,31 @@
     width: 100% !important;
     margin: 100px 0 !important;
   }
-
+  .logo {
+    width: 80px;
+  }
+  .SideIcon {
+    font-size: 20px;
+  }
+  .feather {
+    font-size: 15px;
+  }
+  .feather-settings {
+    font-size: 30px;
+  }
   .formPage {
     padding: 1rem;
   }
   .SideTitle {
     display: none;
+  }
+  .img-user {
+    display: none;
+  }
+}
+@media (max-width: 280px) {
+  .logo {
+    width: 18px;
   }
 }
 
@@ -198,6 +231,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 100;
 }
 textarea {
   resize: none;
@@ -210,8 +244,6 @@ textarea {
 }
 
 .sidebar {
-  background-color: #f1f1f1;
-  padding: 10px;
   width: 80%;
 }
 
@@ -236,4 +268,171 @@ textarea {
   opacity: 0.7;
 }
 
-/* Css de Barry */
+/* Css de Started */
+.Back-Started {
+  background: linear-gradient(-45deg, #f3f6f6, #9d9d9d);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+  }
+}
+
+/*  */
+
+.photo_Profile {
+  height: 8rem;
+  width: 8rem;
+}
+.Sec1 {
+  height: max-content;
+  padding-bottom: 5em;
+}
+.banner {
+  height: 15vw;
+}
+.Sec2Body {
+  height: max-content;
+}
+.Publications {
+  margin-top: 10px;
+}
+.Publications button {
+  padding: 10px 20px;
+  color: #145da0;
+  font-weight: 600;
+  border-radius: 15px;
+}
+.Publications .act,
+.Publications button:hover {
+  background-color: #145da0;
+  padding: 10px 20px;
+  color: white;
+  font-weight: 600;
+  border-radius: 35px;
+}
+.imagesPublished {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  place-items: center;
+}
+.imagesPublished img {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 15px;
+  -webkit-box-shadow: -1px 1px 26px -1px rgba(171, 171, 171, 0.76);
+  -moz-box-shadow: -1px 1px 26px -1px rgba(171, 171, 171, 0.76);
+  box-shadow: -1px 1px 26px -1px rgba(171, 171, 171, 0.76);
+}
+@media (max-width: 1024px) {
+  .imagesPublished {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    place-items: center;
+  }
+  .imagesPublished img {
+    width: 28vw;
+    height: 28vw;
+    object-fit: cover;
+  }
+  .Sec1 {
+    height: 30em;
+  }
+  .Sec1::after {
+    content: '';
+    position: absolute;
+    top: 188px;
+    border-radius: 15px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(255, 255, 255);
+  }
+  .banner {
+    height: 200px;
+  }
+}
+
+/*  */
+
+/* The sidebar menu */
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 19%; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */ /* Stay at the top */
+  left: 0;
+  background-color: #f7f8fa;
+  padding: 0px 15px; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+  margin-left: 25%; /* Same as the width of the sidebar */
+  /* padding: 0px 10px; */
+  width: 100%;
+  overflow: hidden;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media (max-height: 1024px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+@media (max-width: 1024px) {
+  .sidenav {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    height: 65px;
+    width: 100%;
+  }
+  .sidenav ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .main {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 50px;
+    overflow: hidden;
+  }
+  .sidebar {
+    width: 100%;
+  }
+}

@@ -15,7 +15,7 @@ const Navbar = () => {
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Boomerang-Logo.svg"
                 alt=""
-                width="100px"
+                className="logo"
               />
             </span>
           </Link>
@@ -45,14 +45,13 @@ const Navbar = () => {
           <div className="p-2 text-center ms-3 position-relative dropdown-menu-icon setting-icon cursor-pointer">
             <CiSettings className="feather-settings feather" />
           </div>
-          <a href="default-settings.html" className="p-0 ms-3 menu-icon">
+          <Link to="" className="p-0 ms-3 menu-icon">
             <img
               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt="user"
-              className="rounded rounded-circle"
-              width="50px"
+              className="rounded rounded-circle img-user"
             />
-          </a>
+          </Link>
         </div>
       </div>
     </nav>

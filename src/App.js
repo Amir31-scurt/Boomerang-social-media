@@ -7,7 +7,7 @@ import { UserPage } from './components/user-page/UserPage';
 import Home from './pages/Home';
 import Search from './components/search/seearch';
 import './assets/css/Style.css';
-// import ModalOubli from './pages/ModalOubli';
+import ModalOubli from './pages/ModalOubli';
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
           <Route path="chercher" element={<Search />} />
           <Route path="user-page" element={<UserPage />} />
         </Route>
+        <Route path="/Modal" element={<ModalOubli />} />
       </Routes>
     </div>
   );

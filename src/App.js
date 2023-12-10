@@ -7,6 +7,10 @@ import { UserPage } from './components/user-page/UserPage';
 import Home from './pages/Home';
 import Search from './components/search/seearch';
 import './assets/css/Style.css';
+import { Route, Routes } from 'react-router-dom';
+import Template from './layouts/Template';
+import ModalOubli from './pages/ModalOubli';
+
 function App() {
   return (
     <div className="App">

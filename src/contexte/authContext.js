@@ -24,6 +24,8 @@ export function AuthContextProvider(props) {
     });
     return unsubscribe;
   }, []);
+ 
+
   return (
     <AuthContext.Provider value={{ signUp, user, signIn }}>
       {!loading && props.children}

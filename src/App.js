@@ -1,12 +1,12 @@
 import './App.css';
 import Signin from './pages/Sign-in';
-import SignUp from './components/compoTimeLine/SignUp';
+import SignUp from './components/composSignUp/SignUp';
 import { Route, Routes } from 'react-router-dom';
 import Template from './layouts/Template';
 import { UserPage } from './components/user-page/UserPage';
 import Home from './pages/Home';
 import Search from './components/search/seearch';
-import "./assets/css/Style.css";
+import './assets/css/Style.css';
 function App() {
   return (
     <div className="App">

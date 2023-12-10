@@ -7,7 +7,7 @@ body {
 }
 .form {
   width: fixed;
-  margin-top: 10%;
+  margin-top: 20px;
   height: auto;
 }
 
@@ -75,18 +75,18 @@ body {
   border: 1px solid white;
 }
 
-@media only screen and (max-width: 1024px) {
+@media (max-width: 1024px) {
   .formSearch {
     width: 100%;
   }
   #input {
-    margin-left: 35px;
-    width: 160%;
+    margin-left: 0px;
+    width: fit-content;
   }
 
   #searching {
     width: 100%;
-    margin-left: -20px;
+    margin-left: 0px;
   }
 
   .form {
@@ -99,7 +99,11 @@ body {
 
   .icon {
     color: #145da0;
-    margin-left: 50px;
+    margin-left: 0px;
+    width: 30px;
+    position: relative;
+    left: -3.2em;
+    top: -0.2em;
   }
 
   #boton {
@@ -114,6 +118,7 @@ body {
   }
 
   #titre {
-    margin-left: -40%;
+    margin-left: -40px;
+    display: none;
   }
 }

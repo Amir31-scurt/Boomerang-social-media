@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
 import { Outlet } from 'react-router-dom';
-import '../Barry.css';
+// import '../Barry.css';
 
 export default function Template() {
   // User Invocation

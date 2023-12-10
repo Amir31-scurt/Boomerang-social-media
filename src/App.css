@@ -400,6 +400,7 @@ textarea {
   /* padding: 0px 10px; */
   width: 100%;
   overflow: hidden;
+  padding-right: 15px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
@@ -428,7 +429,7 @@ textarea {
   }
   .main {
     margin: 0;
-    padding: 0;
+    padding: 0px 10px;
     padding-bottom: 50px;
     overflow: hidden;
   }

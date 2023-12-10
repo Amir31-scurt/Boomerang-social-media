@@ -38,7 +38,12 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+* {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -63,11 +68,6 @@
 }
 .App-link {
   color: #61dafb;
-}
-.NavBar {
-  position: fixed;
-  width: fit-content;
-  z-index: 33;
 }
 .TvIcon {
   background: linear-gradient(90deg, #021f7e 0%, #056ede 100%);
@@ -117,6 +117,9 @@
   color: black;
   display: flex;
 }
+.img-user {
+  width: 50px;
+}
 .menu-icon:hover,
 .menu-icon:focus {
   background-color: lightblue;
@@ -157,7 +160,14 @@
   /* border-bottom: 1px solid black !important; */
   /* border: none !important; */
 }
-
+.SideTitle {
+  font-size: 1em;
+}
+@media (max-width: 1245px) {
+  .SideTitle {
+    font-size: 0.68em;
+  }
+}
 .icon-sign-up a {
   width: 50px;
   height: 50px;
@@ -171,6 +181,9 @@
 .text-color {
   color: #75e6da;
 }
+.logo {
+  width: 100px;
+}
 @media (max-width: 1024px) {
   /* .signUp-form{
         height: 100vh !important;
@@ -180,12 +193,31 @@
     width: 100% !important;
     margin: 100px 0 !important;
   }
-
+  .logo {
+    width: 80px;
+  }
+  .SideIcon {
+    font-size: 20px;
+  }
+  .feather {
+    font-size: 15px;
+  }
+  .feather-settings {
+    font-size: 30px;
+  }
   .formPage {
     padding: 1rem;
   }
   .SideTitle {
     display: none;
+  }
+  .img-user {
+    display: none;
+  }
+}
+@media (max-width: 280px) {
+  .logo {
+    width: 18px;
   }
 }
 
@@ -199,6 +231,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 100;
 }
 textarea {
   resize: none;
@@ -339,8 +372,7 @@ textarea {
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 19%; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 4.4em; /* Stay at the top */
+  z-index: 1; /* Stay on top */ /* Stay at the top */
   left: 0;
   background-color: #f7f8fa;
   padding: 0px 15px; /* Black */
@@ -377,5 +409,30 @@ textarea {
   }
   .sidenav a {
     font-size: 18px;
+  }
+}
+@media (max-width: 1024px) {
+  .sidenav {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    height: 65px;
+    width: 100%;
+  }
+  .sidenav ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .main {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 50px;
+    overflow: hidden;
+  }
+  .sidebar {
+    width: 100%;
   }
 }

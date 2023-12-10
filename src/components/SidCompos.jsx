@@ -25,11 +25,11 @@ export default function SideBar() {
       id: 1,
       icon: (
         <div className="TvIcon">
-          <PiTelevisionSimpleBold className="fw-bold" />
+          <PiTelevisionSimpleBold className="fw-normal" />
         </div>
       ),
-      title: 'Profile',
-      link: '#',
+      title: 'Actualité',
+      link: '/Timeline',
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ export default function SideBar() {
           <FiUser className="fw-bold" />
         </div>
       ),
-      title: 'Settings',
+      title: 'Paramètre',
       link: '#',
     },
     {
@@ -59,7 +59,7 @@ export default function SideBar() {
         </div>
       ),
       onclick: logOut,
-      title: 'Logout',
+      title: 'Déconnexion',
     },
   ];
   const SideMenu = () => {
@@ -73,7 +73,7 @@ export default function SideBar() {
             onClick={item.onclick}
           >
             <h4 className="SideIcon">{item.icon}</h4>
-            <h4 className="SideTitle">{item.title}</h4>
+            <h5 className="SideTitle">{item.title}</h5>
           </Link>
         </li>
       );

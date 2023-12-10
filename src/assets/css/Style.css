@@ -216,8 +216,10 @@
 
 
 .liked {
-  background-color: #42f22b; /* Couleur de like */
-  border-radius: 20%;
+  opacity: 1;
+}
+.vide{
+  opacity: 0.3;
 }
 
 .PatrageReseau{

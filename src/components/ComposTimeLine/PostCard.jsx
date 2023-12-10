@@ -115,7 +115,7 @@ export const PostCard = ({
                   setIsLiked(!isLiked); // Basculez l'état du like
                 }}
               >
-                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : ""}`} />
+                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : "vide"}`} />
                 <h1 className="fw-bold pt-2 fs-6">
                   {likes + (isLiked ? 1 : 0)}
                 </h1>

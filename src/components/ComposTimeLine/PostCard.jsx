@@ -122,11 +122,11 @@ export const PostCard = ({
                 <p className="ms-1 pt-2 pt-3">J'aime</p>
               </button>
             </div>
-            <div className="partager d-flex justifier-content-end ">
+            <div className="partager d-flex justifier-content-end">
               <div class="dropdown border border-0 PatrageReseau">
-                <div className="d-flex contenuPartage"></div>
+                {/* <div className="d-flex contenuPartage"></div> */}
                 <button
-                  className=" border border-0 fs-2 bouton1a partagerBtn px-1"
+                  className=" border border-0 fs-2 bouton1a partagerBtn px-3"
                   data-bs-toggle="dropdown"
                 >
                   <PiShareNetworkBold className="fs-3" />

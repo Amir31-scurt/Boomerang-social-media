@@ -219,7 +219,7 @@ export const Cards = () => {
                 value={imageUrl}
                 onChange={handleChangeImageUrl}
               />
-              <small className="text-danger">{errorMessage}</small>
+              <small className="text-danger BlsSmall">{errorMessage}</small>
             </div>
 
             <div className="  d-flex flex-column mb-5">

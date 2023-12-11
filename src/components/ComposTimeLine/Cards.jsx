@@ -102,7 +102,7 @@ export const Cards = () => {
       setModalOpen(false);
       setErrorMessage(""); // Réinitialiser le message d'erreur
     } else {
-      setErrorMessage("Ajouter l'adresse de l'image");
+      setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
     }
   };
 
@@ -147,7 +147,7 @@ export const Cards = () => {
                   name=""
                   id="text-aria"
                   className="w-100"
-                  placeholder="What's your mind ?"
+                  placeholder="À quoi penses-tu ?"
                 ></textarea>
               </div>
             </div>
@@ -208,12 +208,12 @@ export const Cards = () => {
 
             <div className=" d-flex flex-column mb-5">
               <label htmlFor="imageUrl" className="ms-2 fs-4 text-start">
-                * Image URL
+                * Image / Vidéo URL
               </label>
               <input
                 type="text"
                 id="imageUrl"
-                placeholder="image URL ..."
+                placeholder="image / Vidéo URL ..."
                 className="px-3 mt-3"
                 name="nom"
                 value={imageUrl}
@@ -224,16 +224,17 @@ export const Cards = () => {
 
             <div className="  d-flex flex-column mb-5">
               <label htmlFor="aria-modal" className="ms-2 fs-4 text-start">
-                * Add a description
+                * Ajouter Une Description
               </label>
               <textarea
                 cols=""
                 id="aria-modal"
                 rows="5"
-                className="area-modal"
+                className="area-modal ps-3  "
                 name="description"
                 value={descript}
                 onChange={handleChangeDescription}
+                placeholder="La description..."
               ></textarea>
             </div>
 

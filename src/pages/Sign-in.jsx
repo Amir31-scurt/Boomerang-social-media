@@ -61,7 +61,7 @@ export default function Signin() {
       {/* <ModalOubli/> */}
       <div className="container text-center">
         <div className="row  justify-content-center align-items-center">
-          <div class="col-lg-6 my-5 mb-5 mb-lg-0 ">
+          <div class="col-lg-6 FormSignIn mb-lg-0 ">
             <div class=" first p-4 ">
               <div class="card-body  p-4 text-center text-white">
                 {/* <Link  className="text-decoration-none border-none">
@@ -92,13 +92,13 @@ export default function Signin() {
                     placeholder="Mot de passe"
                   />
                   {<p className="text-danger">{validation}</p>}
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-between ">
                     <Link
                       to="/Modal"
                       onClick={handleShowModal}
                       className="text-decoration-none"
                     >
-                      <p className="text-dark">Mot de passe oublié?</p>
+                      <p className="m-0 p-0">Mot de passe oublié?</p>
                     </Link>
                     {showModal}
                   </div>
@@ -106,15 +106,18 @@ export default function Signin() {
                 {/* <!-- Submit button --> */}
                 <button
                   type="submit"
-                  className="btn btn-primary fs-5 w-100 but mb-3 text-white"
+                  className="btn fs-5 w-100 but mb-3 text-white"
                 >
                   Se connecter
                 </button>
                 {/* <!-- Register buttons --> */}
                 <div className="mb-2">
                   <p className="text-dark">Je n'ai pas de compte?</p>
-                  <button type="button" class="btn btn-link mx-1">
-                    <Link to="/Inscription">
+                  <button
+                    type="button"
+                    class="btn btn-link mx-1 text-decoration-none"
+                  >
+                    <Link to="/Inscription" className="text-decoration-none">
                       <h5>Créer un compte</h5>
                     </Link>
                   </button>

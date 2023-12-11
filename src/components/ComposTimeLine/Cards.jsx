@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaRegUser, FaVideo } from "react-icons/fa";
 import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
 import MyButton from "../ComposTimeLine/MyButton";
@@ -7,7 +7,7 @@ import { TableElems, TextTablePost } from "./TableElems";
 import { PostCard } from "./PostCard";
 import { format } from "date-fns";
 import { firebase } from "firebase/app";
-import { addDoc, collection, firestore } from "firebase/firestore";
+import { addDoc, collection, firestore, getDoc, getDocs, onSnapshot } from "firebase/firestore";
 import {db} from "../../config/firebase-config"
 
 export const Cards = () => {
@@ -23,12 +23,11 @@ export const Cards = () => {
     setImageUrl("");
     setDescript("");
   };
-
   // l'etat du Bouton Post Text par defaut
   const [afficheBtn, setAfficheBtn] = useState(false);
 
   // l'etat du Tableau par defaut du Post Card
-  const [postCard, setPostCard] = useState(TableElems);
+  const [postCard, setPostCard] = useState([]);
   const [postCardText, setPostCardText] = useState(TextTablePost);
   const DeletePost = (cardId) => {
     setPostCard((carte) => carte.filter((card) => card.id !== cardId));
@@ -63,7 +62,7 @@ export const Cards = () => {
       likes: 0,
       profile: <FaRegUser />,
       nom: "Recuperer Le nom",
-      date: format(new Date(), "dd / MM / yyyy"),
+      date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
       publication: textPost,
       description: "",
     };
@@ -83,87 +82,48 @@ export const Cards = () => {
     return imageUrlRegex.test(url);
   };
 
-  //_________________________  Ajouter un Post ___
-  // const handleAddPost = async (e) => {
-  //   e.preventDefault();
+  const handleAddPost = async (e) => {
+    e.preventDefault();
 
-  //   if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
-  //     const newPost = {
-  //       id: postCard[postCard.length - 1]?.id + 1 ?? 0,
-  //       likes: 0,
-  //       profile: <FaRegUser />,
-  //       nom: "Recuperer Le nom",
-  //       date: format(new Date(), "dd / MM / yyyy"),
-  //       publication: imageUrl,
-  //       description: descript,
-  //     };
+    if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
+      try {
+        const docRef = await addDoc(collection(db, "posts"), {
+          userID: 'docRef.id',
+          likes: 0,
+          profile: "<FaRegUser />",
+          nom: "Recuperer Le nom",
+          date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
+          publication: imageUrl,
+          description: descript,
+        });
 
-  //     // Ajoutez le nouveau post à Firestore
-  //     try {
-  //       const docRef = await addDoc(collection(db, "posts"), newPost);
-  //       console.log("Document written with ID: ", docRef.id);
-  //     } catch (error) {
-  //       console.error("Error adding document: ", error);
-  //     }
+        console.log("Document written with ID: ", docRef.id);
 
-  //     //Destructurer le tableau, puis ajouter un nouveau post
-  //     setPostCard([...postCard, newPost]);
+        const newPost = {
+          userID: docRef.id,
+          likes: 0,
+          profile: <FaRegUser />,
+          nom: "Recuperer Le nom",
+          date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
+          publication: imageUrl,
+          description: descript,
+        };
 
-  //     setImageUrl("");
-  //     setDescript("");
-  //     setModalOpen(false);
-  //     setErrorMessage(""); // Réinitialiser le message d'erreur
-  //   } else {
-  //     setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
-  //   }
-  // };
+        // Destructurer le tableau, puis ajouter un nouveau post
+        setPostCard([...postCard, newPost]);
 
-
-
-
-
-  
-const handleAddPost = async (e) => {
-  e.preventDefault();
-
-  if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
-    try {
-      const docRef = await addDoc(collection(db, "posts"), {
-        likes: 0,
-        profile: "<FaRegUser />",
-        nom: "Recuperer Le nom",
-        date: format(new Date(), "dd / MM / yyyy"),
-        publication: imageUrl,
-        description: descript,
-      });
-
-      console.log("Document written with ID: ", docRef.id);
-
-      const newPost = {
-        id: docRef.id,
-        likes: 0,
-        profile: <FaRegUser />,
-        nom: "Recuperer Le nom",
-        date: format(new Date(), "dd / MM / yyyy"),
-        publication: imageUrl,
-        description: descript,
-      };
-
-      // Destructurer le tableau, puis ajouter un nouveau post
-      setPostCard([...postCard, newPost]);
-
-      setImageUrl("");
-      setDescript("");
-      setModalOpen(false);
-      setErrorMessage(""); // Réinitialiser le message d'erreur
-    } catch (e) {
-      console.error("Error adding document: ", e);
+        setImageUrl("");
+        setDescript("");
+        setModalOpen(false);
+        setErrorMessage(""); // Réinitialiser le message d'erreur
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    } else {
+      setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
     }
-  } else {
-    setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
-  }
-};
-
+  };
+  //==============================================================================
   // Fonction pour comparer les dates de deux publications
   const compareDates = (postA, postB) => {
     const dateA = new Date(postA.date);
@@ -171,6 +131,22 @@ const handleAddPost = async (e) => {
 
     return dateB - dateA; // Tri décroissant
   };
+
+  //useEffect pour effectuer une requête Firestore lors du montage du composant
+  useEffect(() => {
+    const UnePublication = onSnapshot(collection(db, "posts"), (snapshot) => {
+      const posts = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      // Tri décroissant des publications par date
+      const sortedPosts = posts.slice().sort(compareDates);
+      setPostCard(sortedPosts);
+    });
+    // Nettoyer l'abonnement lorsque le composant est démonté
+    return () => UnePublication();
+  }, []);
+  //===========================================================================
 
   // La Methode short Pour trier le tab
   const sortedPosts = postCard.slice().sort(compareDates);
@@ -231,29 +207,28 @@ const handleAddPost = async (e) => {
 
       {/*_________L'affichage Carte DEBUT  _____________________*/}
 
+      {/* L'affichage des données de Firestore */}
       <div className="milieu">
-        {sortedPosts.map((card) => {
-          return (
-            <PostCard
-              key={card.id}
-              id={card.id}
-              likes={card.likes}
-              profile={card.profile}
-              nom={card.nom}
-              date={card.date}
-              suppression={card.suppression}
-              publication={card.publication}
-              description={card.description}
-              addLikes={() => card.likes}
-              hadleDelete={(id) => {
-                DeletePost(card.id);
-              }}
-              handleEdit={() => {
-                alert(card.id);
-              }}
-            />
-          );
-        })}
+        {postCard.map((card) => (
+          <PostCard
+            key={card.id}
+            id={card.id}
+            likes={card.likes}
+            profile={card.profile}
+            nom={card.nom}
+            date={card.date}
+            suppression={card.suppression}
+            publication={card.publication}
+            description={card.description}
+            addLikes={() => card.likes}
+            hadleDelete={(id) => {
+              DeletePost(card.id);
+            }}
+            handleEdit={() => {
+              alert(card.id);
+            }}
+          />
+        ))}
       </div>
       {/*_________L'affichage Carte FIN___________________________________ */}
 

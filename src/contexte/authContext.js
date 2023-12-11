@@ -24,8 +24,22 @@ export function AuthContextProvider(props) {
     });
     return unsubscribe;
   }, []);
+
+  // const Email = "utilisateur@example.com";
+  //  await.
+  //     .then(() => {
+
+  //       // Password reset email sent!
+  //       console.log("E-mail de réinitialisation envoyé avec succès");
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       // ..
+  //     });
+
   return (
-    <AuthContext.Provider value={{ signUp, user, signIn }}>
+    <AuthContext.Provider value={{ signIn, user, signUp }}>
       {!loading && props.children}
     </AuthContext.Provider>
   );

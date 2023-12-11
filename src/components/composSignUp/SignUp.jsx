@@ -118,7 +118,7 @@ function SignUp() {
           <form action="" onSubmit={handleSubmit} ref={formRef}>
             <div className="formPage p-lg-2 mx-auto text-dark">
               <div className="signup-text mt-3 text-center">
-                <h4 className="fw-boold">Créer un compte</h4>
+                <h4 className="fw-bold">Créer un compte</h4>
                 <p>Remplissez vos informations ci-dessous.</p>
               </div>
 
@@ -127,7 +127,7 @@ function SignUp() {
                   <div className="mb-3 w-75 mx-auto">
                     <input
                       type="text"
-                      className={`form-control text-center fs-5 py-2 ${
+                      className={`form-control text-center p-3 ${
                         firstNameError && 'is-invalid'
                       }`}
                       id="firstName"
@@ -146,7 +146,7 @@ function SignUp() {
                   <div className="mb-3 w-75 mx-auto">
                     <input
                       type="text"
-                      className={`form-control text-center fs-5 py-2 ${
+                      className={`form-control text-center p-3 ${
                         lastNameError && 'is-invalid'
                       }`}
                       id="lastName"
@@ -165,7 +165,7 @@ function SignUp() {
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="email"
-                  className="form-control text-center py-2 fs-5"
+                  className="form-control text-center p-3"
                   id="email"
                   placeholder="Email"
                   required
@@ -176,7 +176,7 @@ function SignUp() {
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="password"
-                  className="form-control text-center fs-5 py-2"
+                  className="form-control text-center p-3"
                   id="password"
                   placeholder="Mot de passe"
                   required
@@ -187,7 +187,7 @@ function SignUp() {
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="password"
-                  className="form-control text-center fs-5 py-2"
+                  className="form-control text-center p-3"
                   id="passwordConfirmation"
                   placeholder="Confirmation du mot de passe"
                   required
@@ -204,8 +204,8 @@ function SignUp() {
                   required
                 />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                  D’accord avec {'    '}
-                  <Link className="text-decoration-underline text-color">
+                  D’accord avec les {'    '}
+                  <Link className="text-decoration-none">
                     Termes et conditions
                   </Link>
                 </label>
@@ -213,7 +213,7 @@ function SignUp() {
               {/* Submit button */}
               <div className="d-grid gap-2 col-6 mx-auto w-75 mt-4">
                 <button
-                  className="btn btn-primary rounded-2 fs-5"
+                  className="btn text-white rounded-2 fs-5 but"
                   type="submit"
                 >
                   S’inscrire
@@ -222,7 +222,7 @@ function SignUp() {
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">
                 <p>
                   Vous avez déjà un compte ?{'   '}
-                  <Link to="/Connexion" className="text-color">
+                  <Link to="/Connexion" className="text-decoration-none">
                     Connexion
                   </Link>
                 </p>

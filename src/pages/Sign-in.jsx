@@ -106,7 +106,7 @@ export default function Signin() {
                 {/* <!-- Submit button --> */}
                 <button
                   type="submit"
-                  className="btn but btn-block mb-3 text-white"
+                  className="btn btn-primary fs-5 w-100 but mb-3 text-white"
                 >
                   Se connecter
                 </button>

@@ -99,11 +99,12 @@ export const PostCard = ({
                 />
               )}
             </div>
-          <textarea
+            <p className="OverfParag">{description}</p>
+            {/* <textarea
             value={description}
             id="text-aria2"
             className="w-100"
-          ></textarea>
+          ></textarea> */}
           </div>
           {/* Les icônes d'action */}
           <div className="w-100 justifier-content-between d-flex pb-2 px-2">

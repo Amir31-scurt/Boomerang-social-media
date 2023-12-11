@@ -6,6 +6,9 @@ import { PostText } from "../ComposTimeLine/UtilsData";
 import { TableElems, TextTablePost } from "./TableElems";
 import { PostCard } from "./PostCard";
 import { format } from "date-fns";
+import { firebase } from "firebase/app";
+import { addDoc, collection, firestore } from "firebase/firestore";
+import {db} from "../../config/firebase-config"
 
 export const Cards = () => {
   // l'etat du Modal par defaut
@@ -62,6 +65,7 @@ export const Cards = () => {
       nom: "Recuperer Le nom",
       date: format(new Date(), "dd / MM / yyyy"),
       publication: textPost,
+      description: "",
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
@@ -80,12 +84,63 @@ export const Cards = () => {
   };
 
   //_________________________  Ajouter un Post ___
-  const handleAddPost = (e) => {
-    e.preventDefault();
+  // const handleAddPost = async (e) => {
+  //   e.preventDefault();
 
-    if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
+  //   if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
+  //     const newPost = {
+  //       id: postCard[postCard.length - 1]?.id + 1 ?? 0,
+  //       likes: 0,
+  //       profile: <FaRegUser />,
+  //       nom: "Recuperer Le nom",
+  //       date: format(new Date(), "dd / MM / yyyy"),
+  //       publication: imageUrl,
+  //       description: descript,
+  //     };
+
+  //     // Ajoutez le nouveau post à Firestore
+  //     try {
+  //       const docRef = await addDoc(collection(db, "posts"), newPost);
+  //       console.log("Document written with ID: ", docRef.id);
+  //     } catch (error) {
+  //       console.error("Error adding document: ", error);
+  //     }
+
+  //     //Destructurer le tableau, puis ajouter un nouveau post
+  //     setPostCard([...postCard, newPost]);
+
+  //     setImageUrl("");
+  //     setDescript("");
+  //     setModalOpen(false);
+  //     setErrorMessage(""); // Réinitialiser le message d'erreur
+  //   } else {
+  //     setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
+  //   }
+  // };
+
+
+
+
+
+  
+const handleAddPost = async (e) => {
+  e.preventDefault();
+
+  if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
+    try {
+      const docRef = await addDoc(collection(db, "posts"), {
+        likes: 0,
+        profile: "<FaRegUser />",
+        nom: "Recuperer Le nom",
+        date: format(new Date(), "dd / MM / yyyy"),
+        publication: imageUrl,
+        description: descript,
+      });
+
+      console.log("Document written with ID: ", docRef.id);
+
       const newPost = {
-        id: postCard[postCard.length - 1]?.id + 1 ?? 0,
+        id: docRef.id,
         likes: 0,
         profile: <FaRegUser />,
         nom: "Recuperer Le nom",
@@ -94,17 +149,20 @@ export const Cards = () => {
         description: descript,
       };
 
-      //Destructurer le tableau, puis ajouter un nouveau post
+      // Destructurer le tableau, puis ajouter un nouveau post
       setPostCard([...postCard, newPost]);
 
       setImageUrl("");
       setDescript("");
       setModalOpen(false);
       setErrorMessage(""); // Réinitialiser le message d'erreur
-    } else {
-      setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
-  };
+  } else {
+    setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
+  }
+};
 
   // Fonction pour comparer les dates de deux publications
   const compareDates = (postA, postB) => {

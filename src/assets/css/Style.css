@@ -253,3 +253,9 @@
   margin: auto;
   align-items: center;
 }
+
+.OverfParag{
+  overflow-wrap: break-word;
+  padding: 0px 10px;
+  /* background-color: rgba(255, 0, 0, 0.37); */
+}

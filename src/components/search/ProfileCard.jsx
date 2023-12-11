@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
 import './search.css';
 import noire from '../../assets/images/noire.png';
+import { db } from '../../config/firestore.js';
+
+
+
+
 
 const ProfileCard = ({ imageSrc, name, email }) => {
   const [isFollowing, setIsFollowing] = useState(false);
 
-  const handleFollowToggle = (event) => {
+  const handleFollowToggle = async (event) => {
     event.preventDefault();
-    setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+    // setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+
+    try {
+      const profileRef = db.collection.get('profiles').then(email);
+      await profileRef.update({ isFollowing: !isFollowing });
+      setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour dans Firestore', error);
+    }
+
+
+
   };
-
-  // const handleClick = (event) =>{
-  //   event.preventDefault();
-  //   setButtonText('suivi....');
-
-  //   setTimeout(() => {
-  //     setButtonText('Suivre');
-  // }, 5000);
-
-  // }
 
   return (
     <div className="mb-3 col-md-6">

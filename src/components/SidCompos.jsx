@@ -39,7 +39,7 @@ export default function SideBar() {
         </div>
       ),
       title: 'Paramètre',
-      link: '#',
+      link: 'autre-profile',
     },
     {
       id: 3,

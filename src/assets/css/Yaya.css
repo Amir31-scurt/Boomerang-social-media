@@ -1,0 +1,101 @@
+/* 
+.ronde img{
+  margin-bottom: 20%;
+  border-radius: 50% !important;
+  width: 100%;
+  height: 100%;
+}
+.ronde{
+  position: absolute ;
+  top: -60px;
+  border: 3px solid white;
+   width: 120px !important;
+  height: 120px !important;
+  border-radius: 50% !important;
+  
+}
+ .bg{
+  height: 400px;
+  background: #145DA0;
+ }
+.bas{
+  position: relative;
+  margin-top: 300px;
+}
+
+@media screen and (max-width: 900px) {
+  .bas{
+    background: white !important;
+    width: 100% !important;
+  }
+}
+ .coleur{
+  background-image: linear-gradient(90deg,#145DA0
+    10%,#2E8BC040) !important;
+    border:  2px solid #145DA0;
+ } */
+
+ .haut{
+  height: 40vh !important;
+  object-fit: cover;
+
+ }
+
+ /* .blanc{
+  bottom: 30vh;
+ } */
+ 
+
+ /* Profil */
+ .profil{
+  position: relative;
+  bottom: 40px;
+
+ }
+ .profil img{
+  border: 5px solid rgb(230, 230, 219) !important;
+  width: 130px !important;
+  height: 130px !important;
+  border-radius: 100% !important;
+ }
+
+ /* button message */
+ .message{
+  height: 40px !important;
+ }
+.message:hover{
+   color: white !important;
+}
+
+/* publication*/
+.imagespublié {
+  background-color: #fff;
+  width: 100%;
+  height: 65vh;
+  object-fit: cover;
+}
+.imagespublié {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 170px 80px;
+  column-gap: 3px;
+  row-gap: 20px;
+}
+
+/* responsive design */
+/* responsive design */
+@media (max-width:  900px) {
+  .imagespublié {
+  background-color: #fff;
+  width: 100%;
+  height: 40vh;
+  object-fit: cover;
+}
+.imagespublié {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 50px 40px;
+  column-gap: 3px;
+  row-gap: 20px;
+}
+}

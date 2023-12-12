@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { auth } from '../../config/firebase-config';
+import icon from '../../assets/images/User.png';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -62,9 +64,14 @@ function SignUp() {
     try {
       const cred = await signUp(
         inputs.current[2].value,
-        inputs.current[3].value
+        inputs.current[3].value,
+        inputs.current[0].value,
+        inputs.current[1].value,
+        icon
       );
+      // console.log(auth);
       console.log(cred);
+
       // retourner vide les inputs
       formRef.current.reset();
       setValidation('');

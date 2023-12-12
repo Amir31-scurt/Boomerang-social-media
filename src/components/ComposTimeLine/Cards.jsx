@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaRegUser, FaVideo } from "react-icons/fa";
 import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
 import MyButton from "../ComposTimeLine/MyButton";
@@ -8,7 +8,8 @@ import { PostCard } from "./PostCard";
 import { format } from "date-fns";
 import { firebase } from "firebase/app";
 import { addDoc, collection, firestore, getDoc, getDocs, onSnapshot } from "firebase/firestore";
-import {db} from "../../config/firebase-config"
+import {DB} from "../../config/firebase-config"
+import { AuthContext } from "../../contexte/authContext";
 
 export const Cards = () => {
   // l'etat du Modal par defaut
@@ -60,7 +61,7 @@ export const Cards = () => {
     const newPostText = {
       id: new Date(),
       likes: 0,
-      profile: <FaRegUser />,
+      profile: user.profilPic,
       nom: "Recuperer Le nom",
       date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
       publication: textPost,
@@ -82,28 +83,28 @@ export const Cards = () => {
     return imageUrlRegex.test(url);
   };
 
+  const { user } = useContext(AuthContext);
+
   const handleAddPost = async (e) => {
     e.preventDefault();
 
     if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
       try {
-        const docRef = await addDoc(collection(db, "posts"), {
-          userID: 'docRef.id',
+        const docRef = await addDoc(collection(DB, "posts"), {
+          userID: user.uid,
           likes: 0,
           profile: "<FaRegUser />",
-          nom: "Recuperer Le nom",
+          nom: "user.prenom", // après on va enlever les griff('')
           date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
           publication: imageUrl,
           description: descript,
         });
 
-        console.log("Document written with ID: ", docRef.id);
-
         const newPost = {
-          userID: docRef.id,
+          userID: user.uid,
           likes: 0,
-          profile: <FaRegUser />,
-          nom: "Recuperer Le nom",
+          profile: "user.profilPic", // après on va enlever les griff('')
+          nom: "user.nom", // après on va enlever les griff('')
           date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
           publication: imageUrl,
           description: descript,
@@ -134,7 +135,7 @@ export const Cards = () => {
 
   //useEffect pour effectuer une requête Firestore lors du montage du composant
   useEffect(() => {
-    const UnePublication = onSnapshot(collection(db, "posts"), (snapshot) => {
+    const UnePublication = onSnapshot(collection(DB, "posts"), (snapshot) => {
       const posts = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),

@@ -1,30 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './search.css';
 import noire from '../../assets/images/noire.png';
-import { db } from '../../config/firestore.js';
-
-
-
-
+import { db } from '../../config/firestore.js' ;
 
 const ProfileCard = ({ imageSrc, name, email }) => {
   const [isFollowing, setIsFollowing] = useState(false);
 
+  // const handleFollowToggle = (event) => {
+  //   event.preventDefault();
+  //   setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+  // };
+
+   // Use useEffect to fetch the initial follow state from Firestore when the component mounts
+   useEffect(() => {
+    const fetchFollowState = async () => {
+      try {
+        const profileRef = db.collection('profiles').doc(email);
+        const doc = await profileRef.get();
+
+        if (doc.exists) {
+          const data = doc.data();
+          setIsFollowing(data.isFollowing || false);
+        }
+      } catch (error) {
+        console.error('Error fetching data from Firestore', error);
+      }
+    };
+
+    fetchFollowState();
+  }, [email]);
+
   const handleFollowToggle = async (event) => {
     event.preventDefault();
-    // setIsFollowing((prevIsFollowing) => !prevIsFollowing);
 
     try {
-      const profileRef = db.collection.get('profiles').then(email);
+      const profileRef = db.collection('profiles').doc(email);
+
+      // If the document does not exist, create it with an initial isFollowing value
+      if (!(await profileRef.get()).exists) {
+        await profileRef.set({ isFollowing: false });
+      }
+
+      // Update the isFollowing field based on the current state
       await profileRef.update({ isFollowing: !isFollowing });
+
+      // Update the local state based on the new value in Firestore
       setIsFollowing((prevIsFollowing) => !prevIsFollowing);
     } catch (error) {
-      console.error('Erreur lors de la mise à jour dans Firestore', error);
+      console.error('Error updating data in Firestore', error);
     }
-
-
-
   };
+
 
   return (
     <div className="mb-3 col-md-6">

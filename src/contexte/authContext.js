@@ -32,7 +32,7 @@ export function AuthContextProvider(props) {
       console.error('Error signing up:', error);
     }
   };
-  
+
   const signIn = (email, password) =>
   signInWithEmailAndPassword(auth, email, password);
   

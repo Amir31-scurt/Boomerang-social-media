@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaRegUser, FaVideo } from "react-icons/fa";
 import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
@@ -12,6 +13,7 @@ import {DB} from "../../config/firebase-config"
 import { AuthContext } from "../../contexte/authContext";
 import { auth } from "../../config/firebase-config";
 
+
 export const Cards = () => {
   // l'etat du Modal par defaut
   const [isModalOpen, setModalOpen] = useState(false);
@@ -22,8 +24,8 @@ export const Cards = () => {
   //Fermeture du Modal
   const handleCloseModal = () => {
     setModalOpen(false);
-    setImageUrl("");
-    setDescript("");
+    setImageUrl('');
+    setDescript('');
   };
   // l'etat du Bouton Post Text par defaut
   const [afficheBtn, setAfficheBtn] = useState(false);
@@ -36,22 +38,22 @@ export const Cards = () => {
   };
 
   // l'etat de l'input  de l'image
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
   const handleChangeImageUrl = (e) => {
     setImageUrl(e.target.value);
   };
 
   // l'etat de du text Area de l'la Description
-  const [descript, setDescript] = useState("");
+  const [descript, setDescript] = useState('');
   const handleChangeDescription = (e) => {
     setDescript(e.target.value);
   };
 
   // l'etat de du text Area du Creat Post
-  const [textPost, setTextPost] = useState("");
+  const [textPost, setTextPost] = useState('');
   const Changement = (e) => {
     setTextPost(e.target.value);
-    if (textPost !== "") {
+    if (textPost !== '') {
       setAfficheBtn(true);
     } else {
       setAfficheBtn(false);
@@ -63,20 +65,20 @@ export const Cards = () => {
       id: new Date(),
       likes: 0,
       profile: user.profilPic,
-      nom: "Recuperer Le nom",
-      date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
+      nom: 'Recuperer Le nom',
+      date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
       publication: textPost,
-      description: "",
+      description: '',
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
     setPostCard([...postCard, newPostText]);
-    setTextPost(" ");
+    setTextPost(' ');
     setAfficheBtn(false);
   };
 
   //etat message d'erreur
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const isValidImageUrl = (url) => {
     // Utilisez une expression régulière pour valider l'URL de l'image
@@ -89,9 +91,9 @@ export const Cards = () => {
   const handleAddPost = async (e) => {
     e.preventDefault();
 
-    if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
+    if (imageUrl !== '' && isValidImageUrl(imageUrl)) {
       try {
-        const docRef = await addDoc(collection(DB, "posts"), {
+        const docRef = await addDoc(collection(DB, 'posts'), {
           userID: user.uid,
           likes: 0,
           profile: "P.P",
@@ -104,9 +106,9 @@ export const Cards = () => {
         const newPost = {
           userID: user.uid,
           likes: 0,
-          profile: "user.profilPic", // après on va enlever les griff('')
-          nom: "user.nom", // après on va enlever les griff('')
-          date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
+          profile: 'user.profilPic', // après on va enlever les griff('')
+          nom: 'user.nom', // après on va enlever les griff('')
+          date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
           description: descript,
         };
@@ -114,12 +116,12 @@ export const Cards = () => {
         // Destructurer le tableau, puis ajouter un nouveau post
         setPostCard([...postCard, newPost]);
 
-        setImageUrl("");
-        setDescript("");
+        setImageUrl('');
+        setDescript('');
         setModalOpen(false);
-        setErrorMessage(""); // Réinitialiser le message d'erreur
+        setErrorMessage(''); // Réinitialiser le message d'erreur
       } catch (e) {
-        console.error("Error adding document: ", e);
+        console.error('Error adding document: ', e);
       }
     } else {
       setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
@@ -136,7 +138,7 @@ export const Cards = () => {
 
   //useEffect pour effectuer une requête Firestore lors du montage du composant
   useEffect(() => {
-    const UnePublication = onSnapshot(collection(DB, "posts"), (snapshot) => {
+    const UnePublication = onSnapshot(collection(DB, 'posts'), (snapshot) => {
       const posts = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -154,11 +156,11 @@ export const Cards = () => {
   const sortedPosts = postCard.slice().sort(compareDates);
 
   const modalStyle = {
-    display: isModalOpen ? "block" : "none",
+    display: isModalOpen ? 'block' : 'none',
   };
 
   const DisplayTime = {
-    display: afficheBtn ? "block" : "none",
+    display: afficheBtn ? 'block' : 'none',
   };
 
   return (

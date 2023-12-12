@@ -29,6 +29,7 @@ export const PostCard = ({
     !publication.toLowerCase().includes("youtu.be") &&
     !publication.toLowerCase().includes(".mp4") &&
     !publication.toLowerCase().includes(".jpg") &&
+    !publication.toLowerCase().includes(".jpeg") &&
     !publication.toLowerCase().includes(".png");
 
   const [isLiked, setIsLiked] = useState(false);//State Like
@@ -99,12 +100,7 @@ export const PostCard = ({
                 />
               )}
             </div>
-            <p className="OverfParag">{description}</p>
-            {/* <textarea
-            value={description}
-            id="text-aria2"
-            className="w-100"
-          ></textarea> */}
+            <p className="OverfParag mt-3">{description}</p>
           </div>
           {/* Les icônes d'action */}
           <div className="w-100 justifier-content-between d-flex pb-2 px-2">

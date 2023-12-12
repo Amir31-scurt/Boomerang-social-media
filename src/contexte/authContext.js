@@ -26,8 +26,8 @@ export function AuthContextProvider(props) {
         prenom : prenom,
         nom : nom,
         profilPic,
+        displayName : prenom + ' ' + nom,
       });
-      user.displayName = prenom + ' ' + nom;
     } catch (error) {
       console.error('Error signing up:', error);
     }

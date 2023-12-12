@@ -332,7 +332,7 @@ export const Cards = () => {
 
             <div className=" d-flex w-100 justify-content-end LimitBtnDiv">
               <button className="close me-2" onClick={handleCloseModal}>
-                Anuler
+                Annuler
               </button>
               <MyButton
                 arg1="publish"

@@ -5,8 +5,9 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from 'firebase/auth';
-import { auth } from '../config/firebase-config';
+import { auth } from '../config/firebase-config'; 
 import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Import Firestore functions
+
 
 export const AuthContext = createContext();
 

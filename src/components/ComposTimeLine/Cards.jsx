@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaRegUser, FaVideo } from "react-icons/fa";
 import { FaRegImage, FaShareFromSquare } from "react-icons/fa6";
 import MyButton from "../ComposTimeLine/MyButton";
@@ -6,6 +6,10 @@ import { PostText } from "../ComposTimeLine/UtilsData";
 import { TableElems, TextTablePost } from "./TableElems";
 import { PostCard } from "./PostCard";
 import { format } from "date-fns";
+import { firebase } from "firebase/app";
+import { addDoc, collection, firestore, getDoc, getDocs, onSnapshot } from "firebase/firestore";
+import {DB} from "../../config/firebase-config"
+import { AuthContext } from "../../contexte/authContext";
 
 export const Cards = () => {
   // l'etat du Modal par defaut
@@ -20,12 +24,11 @@ export const Cards = () => {
     setImageUrl("");
     setDescript("");
   };
-
   // l'etat du Bouton Post Text par defaut
   const [afficheBtn, setAfficheBtn] = useState(false);
 
   // l'etat du Tableau par defaut du Post Card
-  const [postCard, setPostCard] = useState(TableElems);
+  const [postCard, setPostCard] = useState([]);
   const [postCardText, setPostCardText] = useState(TextTablePost);
   const DeletePost = (cardId) => {
     setPostCard((carte) => carte.filter((card) => card.id !== cardId));
@@ -53,15 +56,16 @@ export const Cards = () => {
       setAfficheBtn(false);
     }
   };
-  //______ L'evenement onClick sur le bouron Publier __
+  // L'evenement onClick sur le bouron Publier __
   const handleSubmit = () => {
     const newPostText = {
       id: new Date(),
       likes: 0,
-      profile: <FaRegUser />,
+      profile: user.profilPic,
       nom: "Recuperer Le nom",
-      date: format(new Date(), "dd / MM / yyyy"),
+      date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
       publication: textPost,
+      description: "",
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
@@ -79,33 +83,48 @@ export const Cards = () => {
     return imageUrlRegex.test(url);
   };
 
-  //_________________________  Ajouter un Post ___
-  const handleAddPost = (e) => {
+  const { user } = useContext(AuthContext);
+
+  const handleAddPost = async (e) => {
     e.preventDefault();
 
     if (imageUrl !== "" && isValidImageUrl(imageUrl)) {
-      const newPost = {
-        id: postCard[postCard.length - 1]?.id + 1 ?? 0,
-        likes: 0,
-        profile: <FaRegUser />,
-        nom: "Recuperer Le nom",
-        date: format(new Date(), "dd / MM / yyyy"),
-        publication: imageUrl,
-        description: descript,
-      };
+      try {
+        const docRef = await addDoc(collection(DB, "posts"), {
+          userID: user.uid,
+          likes: 0,
+          profile: "<FaRegUser />",
+          nom: "user.prenom", // après on va enlever les griff('')
+          date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
+          publication: imageUrl,
+          description: descript,
+        });
 
-      //Destructurer le tableau, puis ajouter un nouveau post
-      setPostCard([...postCard, newPost]);
+        const newPost = {
+          userID: user.uid,
+          likes: 0,
+          profile: "user.profilPic", // après on va enlever les griff('')
+          nom: "user.nom", // après on va enlever les griff('')
+          date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
+          publication: imageUrl,
+          description: descript,
+        };
 
-      setImageUrl("");
-      setDescript("");
-      setModalOpen(false);
-      setErrorMessage(""); // Réinitialiser le message d'erreur
+        // Destructurer le tableau, puis ajouter un nouveau post
+        setPostCard([...postCard, newPost]);
+
+        setImageUrl("");
+        setDescript("");
+        setModalOpen(false);
+        setErrorMessage(""); // Réinitialiser le message d'erreur
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     } else {
-      setErrorMessage("Ajouter l'adresse de l'image");
+      setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
     }
   };
-
+  //==============================================================================
   // Fonction pour comparer les dates de deux publications
   const compareDates = (postA, postB) => {
     const dateA = new Date(postA.date);
@@ -113,6 +132,22 @@ export const Cards = () => {
 
     return dateB - dateA; // Tri décroissant
   };
+
+  //useEffect pour effectuer une requête Firestore lors du montage du composant
+  useEffect(() => {
+    const UnePublication = onSnapshot(collection(DB, "posts"), (snapshot) => {
+      const posts = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      // Tri décroissant des publications par date
+      const sortedPosts = posts.slice().sort(compareDates);
+      setPostCard(sortedPosts);
+    });
+    // Nettoyer l'abonnement lorsque le composant est démonté
+    return () => UnePublication();
+  }, []);
+  //===========================================================================
 
   // La Methode short Pour trier le tab
   const sortedPosts = postCard.slice().sort(compareDates);
@@ -147,7 +182,7 @@ export const Cards = () => {
                   name=""
                   id="text-aria"
                   className="w-100"
-                  placeholder="What's your mind ?"
+                  placeholder="À quoi penses-tu ?"
                 ></textarea>
               </div>
             </div>
@@ -173,29 +208,28 @@ export const Cards = () => {
 
       {/*_________L'affichage Carte DEBUT  _____________________*/}
 
+      {/* L'affichage des données de Firestore */}
       <div className="milieu">
-        {sortedPosts.map((card) => {
-          return (
-            <PostCard
-              key={card.id}
-              id={card.id}
-              likes={card.likes}
-              profile={card.profile}
-              nom={card.nom}
-              date={card.date}
-              suppression={card.suppression}
-              publication={card.publication}
-              description={card.description}
-              addLikes={() => card.likes}
-              hadleDelete={(id) => {
-                DeletePost(card.id);
-              }}
-              handleEdit={() => {
-                alert(card.id);
-              }}
-            />
-          );
-        })}
+        {postCard.map((card) => (
+          <PostCard
+            key={card.id}
+            id={card.id}
+            likes={card.likes}
+            profile={card.profile}
+            nom={card.nom}
+            date={card.date}
+            suppression={card.suppression}
+            publication={card.publication}
+            description={card.description}
+            addLikes={() => card.likes}
+            hadleDelete={(id) => {
+              DeletePost(card.id);
+            }}
+            handleEdit={() => {
+              alert(card.id);
+            }}
+          />
+        ))}
       </div>
       {/*_________L'affichage Carte FIN___________________________________ */}
 
@@ -208,32 +242,33 @@ export const Cards = () => {
 
             <div className=" d-flex flex-column mb-5">
               <label htmlFor="imageUrl" className="ms-2 fs-4 text-start">
-                * Image URL
+                * Image / Vidéo URL
               </label>
               <input
                 type="text"
                 id="imageUrl"
-                placeholder="image URL ..."
+                placeholder="image / Vidéo URL ..."
                 className="px-3 mt-3"
                 name="nom"
                 value={imageUrl}
                 onChange={handleChangeImageUrl}
               />
-              <small className="text-danger">{errorMessage}</small>
+              <small className="text-danger BlsSmall">{errorMessage}</small>
             </div>
 
             <div className="  d-flex flex-column mb-5">
               <label htmlFor="aria-modal" className="ms-2 fs-4 text-start">
-                * Add a description
+                * Ajouter Une Description
               </label>
               <textarea
                 cols=""
                 id="aria-modal"
                 rows="5"
-                className="area-modal"
+                className="area-modal ps-3  "
                 name="description"
                 value={descript}
                 onChange={handleChangeDescription}
+                placeholder="La description..."
               ></textarea>
             </div>
 

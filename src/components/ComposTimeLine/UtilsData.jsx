@@ -11,7 +11,7 @@ export const PostText = ({ handleSubmit }) => {
   const TableCards = [
     {
       icone: <FiEdit3 className="fs-2" />,
-      text1: "Create Post",
+      text1: "Ajouter une publication",
       container1: (
         <div className="icone-profile">
           <FaRegUser className="text-2xl" />

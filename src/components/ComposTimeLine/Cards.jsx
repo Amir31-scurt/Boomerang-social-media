@@ -10,6 +10,7 @@ import { firebase } from "firebase/app";
 import { addDoc, collection, firestore, getDoc, getDocs, onSnapshot } from "firebase/firestore";
 import {DB} from "../../config/firebase-config"
 import { AuthContext } from "../../contexte/authContext";
+import { auth } from "../../config/firebase-config";
 
 export const Cards = () => {
   // l'etat du Modal par defaut
@@ -83,7 +84,7 @@ export const Cards = () => {
     return imageUrlRegex.test(url);
   };
 
-  const { user } = useContext(AuthContext);
+  const { user, displayName } = useContext(AuthContext);
 
   const handleAddPost = async (e) => {
     e.preventDefault();
@@ -93,8 +94,8 @@ export const Cards = () => {
         const docRef = await addDoc(collection(DB, "posts"), {
           userID: user.uid,
           likes: 0,
-          profile: "<FaRegUser />",
-          nom: "user.prenom", // après on va enlever les griff('')
+          profile: "P.P",
+          nom: user.displayName, 
           date: format(new Date(), "dd / MM / yyyy / HH:mm:ss"),
           publication: imageUrl,
           description: descript,

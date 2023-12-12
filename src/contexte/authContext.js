@@ -23,27 +23,27 @@ export function AuthContextProvider(props) {
       await addDoc(collection(db, 'users'), {
         uid: user.uid,
         email: user.email,
-        prenom,
-        nom,
+        prenom : prenom,
+        nom : nom,
         profilPic,
       });
       user.displayName = prenom + ' ' + nom;
-      console.log(user);
     } catch (error) {
       console.error('Error signing up:', error);
     }
   };
   
   const signIn = (email, password) =>
-    signInWithEmailAndPassword(auth, email, password);
-
-    const [user, setUser] = useState();
+  signInWithEmailAndPassword(auth, email, password);
+  
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
+      console.log(user);
     });
     return unsubscribe;
   }, []);

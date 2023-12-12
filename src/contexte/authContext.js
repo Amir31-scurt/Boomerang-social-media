@@ -23,8 +23,8 @@ export function AuthContextProvider(props) {
       await addDoc(collection(db, 'users'), {
         uid: user.uid,
         email: user.email,
-        prenom,
-        nom,
+        prenom: prenom,
+        nom: nom,
         profilPic,
       });
       user.displayName = prenom + ' ' + nom;
@@ -33,11 +33,11 @@ export function AuthContextProvider(props) {
       console.error('Error signing up:', error);
     }
   };
-  
+
   const signIn = (email, password) =>
     signInWithEmailAndPassword(auth, email, password);
 
-    const [user, setUser] = useState();
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

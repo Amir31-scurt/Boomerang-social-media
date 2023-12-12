@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { PiShareNetworkBold } from "react-icons/pi";
-import { FcLike } from "react-icons/fc";
-import { DropDown } from "./DropDown";
+import React, { useState } from 'react';
+import { PiShareNetworkBold } from 'react-icons/pi';
+import { FcLike } from 'react-icons/fc';
+import { DropDown } from './DropDown';
 
 export const PostCard = ({
   publication,
@@ -15,37 +15,36 @@ export const PostCard = ({
   hadleDelete,
   handleEdit,
 }) => {
-
   const isYouTubeLink =
-  publication &&
-  (publication.toLowerCase().includes("youtube.com") ||
-  publication.toLowerCase().includes("youtu.be"));
+    publication &&
+    (publication.toLowerCase().includes('youtube.com') ||
+      publication.toLowerCase().includes('youtu.be'));
 
-  const isMP4Link = publication && publication.toLowerCase().endsWith(".mp4");
+  const isMP4Link = publication && publication.toLowerCase().endsWith('.mp4');
 
   const isParagraphe =
     publication &&
-    !publication.toLowerCase().includes("youtube.com") &&
-    !publication.toLowerCase().includes("youtu.be") &&
-    !publication.toLowerCase().includes(".mp4") &&
-    !publication.toLowerCase().includes(".jpg") &&
-    !publication.toLowerCase().includes(".png");
+    !publication.toLowerCase().includes('youtube.com') &&
+    !publication.toLowerCase().includes('youtu.be') &&
+    !publication.toLowerCase().includes('.mp4') &&
+    !publication.toLowerCase().includes('.jpg') &&
+    !publication.toLowerCase().includes('.png');
 
-  const [isLiked, setIsLiked] = useState(false);//State Like
+  const [isLiked, setIsLiked] = useState(false); //State Like
 
-    const handleFacebookShare = () => {
-      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        publication
-      )}`;
-      window.open(url, "_blank");
-    };
+  const handleFacebookShare = () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      publication
+    )}`;
+    window.open(url, '_blank');
+  };
 
-    const handleLinkedInShare = () => {
-      const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-        publication
-      )}`;
-      window.open(url, "_blank");
-    };
+  const handleLinkedInShare = () => {
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      publication
+    )}`;
+    window.open(url, '_blank');
+  };
 
   return (
     <div className="">
@@ -53,7 +52,11 @@ export const PostCard = ({
         <div className="contenu-carte1">
           <div className="d-flex align-items-center justifier-content-between">
             <div className="PartieProfil">
-              <div className="icone-carte me-3">{profile}</div>
+              <input
+                alt="PhotoProfile"
+                className="icone-carte me-3"
+                src={profile}
+              />
               <div className="ms-0">
                 <p className="fw-bold text-secondary mt-2">
                   {nom} <br />
@@ -116,7 +119,7 @@ export const PostCard = ({
                   setIsLiked(!isLiked); // Basculez l'état du like
                 }}
               >
-                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : "vide"}`} />
+                <FcLike className={`fs-2 me-2 ${isLiked ? 'liked' : 'vide'}`} />
                 <h1 className="fw-bold pt-2 fs-6">
                   {likes + (isLiked ? 1 : 0)}
                 </h1>

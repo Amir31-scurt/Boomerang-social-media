@@ -99,7 +99,7 @@ export const Cards = () => {
         const docRef = await addDoc(collection(DB, 'posts'), {
           userID: user.uid,
           likes: 0,
-          profile: user.profilPic,
+          profile: user.photoURL,
           nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
@@ -109,7 +109,7 @@ export const Cards = () => {
         const newPost = {
           userID: user.uid,
           likes: 0,
-          profile: user.profilPic, // après on va enlever les griff('')
+          profile: user.photoURL, // après on va enlever les griff('')
           nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,

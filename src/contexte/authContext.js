@@ -32,6 +32,8 @@ export function AuthContextProvider(props) {
       // Set the displayName
       await updateProfile(user, {
         displayName: prenom + ' ' + nom,
+        photoURL:
+          'https://cdn.pixabay.com/photo/2018/05/22/14/00/girl-3421489_640.jpg',
       });
 
       console.log(user);

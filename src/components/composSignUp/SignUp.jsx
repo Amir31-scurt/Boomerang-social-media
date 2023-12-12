@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
+import icon from '../../assets/images/User.png';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -64,9 +65,24 @@ function SignUp() {
     try {
       const cred = await signUp(
         inputs.current[2].value,
-        inputs.current[3].value
+        inputs.current[3].value,
+        inputs.current[0].value,
+        inputs.current[1].value,
+        icon
       );
+      toast.success('Inscription valide avec succès', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
+      // console.log(auth);
       console.log(cred);
+
       // retourner vide les inputs
       
       formRef.current.reset();

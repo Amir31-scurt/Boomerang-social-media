@@ -78,10 +78,9 @@ export default function Signin() {
                   <i className="bi bi-x-lg "></i>
                 </Link> */}
               </div>
-              <h2 class="fw-bold text-dark mb-5">Connection</h2>
-     
-              <form action="" onSubmit={handleSignIn} ref={formRef}>         
-      
+
+              <h2 class="fw-bold text-dark mb-5">Connexion</h2>
+              <form action="" onSubmit={handleSignIn} ref={formRef}>
                 {/* Email input */}
                 <div class="form-outline text-start mb-4">
                   <input

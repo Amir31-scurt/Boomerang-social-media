@@ -5,12 +5,36 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from '../config/firebase-config'; 
+import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Import Firestore functions
+
 
 export const AuthContext = createContext();
 
 export function AuthContextProvider(props) {
-  const signUp = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password);
+  const signUp = async (email, password, prenom, nom, profilPic) => {
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      // Add user information to Firestore
+      const db = getFirestore();
+      await addDoc(collection(db, 'users'), {
+        uid: user.uid,
+        email: user.email,
+        prenom: prenom,
+        nom: nom,
+        profilPic,
+      });
+      user.displayName = prenom + ' ' + nom;
+      console.log(user);
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
+  };
+
   const signIn = (email, password) =>
     signInWithEmailAndPassword(auth, email, password);
 
@@ -24,19 +48,6 @@ export function AuthContextProvider(props) {
     });
     return unsubscribe;
   }, []);
-
-  // const Email = "utilisateur@example.com";
-  //  await.
-  //     .then(() => {
-
-  //       // Password reset email sent!
-  //       console.log("E-mail de réinitialisation envoyé avec succès");
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       // ..
-  //     });
 
   return (
     <AuthContext.Provider value={{ signIn, user, signUp }}>

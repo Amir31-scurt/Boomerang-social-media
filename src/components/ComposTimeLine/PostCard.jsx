@@ -53,12 +53,13 @@ export const PostCard = ({
           <div className="d-flex align-items-center justifier-content-between">
             <div className="PartieProfil">
               <input
+                type="image"
                 alt="PhotoProfile"
                 className="icone-carte me-3"
                 src={profile}
               />
               <div className="ms-0">
-                <p className="fw-bold text-secondary mt-2">
+                <p className="fw-bold text-secondary mt-2 d-flex flex-column m-0 p-0 align-items-start fs-6">
                   {nom} <br />
                   <span className="text-secondary dato mb-0">{date}</span>
                 </p>

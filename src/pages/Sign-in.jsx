@@ -8,6 +8,8 @@ import { AuthContext } from '../contexte/authContext';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
+import { ClipLoader } from 'react-spinners';
 // import ModalOubli from './ModalOubli';
 
 export default function Signin() {
@@ -22,7 +24,7 @@ export default function Signin() {
     }
   };
   const formRef = useRef();
-
+  const [loading, setLoading] = useState(false)
   const handleSignIn = async (f) => {
     f.preventDefault();
     try {
@@ -34,7 +36,12 @@ export default function Signin() {
       // retourner vide les inputs
       formRef.current.reset();
       setValidation('');
-      navigate('/Timeline');
+      setLoading(true)
+      setTimeout(()=> {
+        setLoading(false)
+        navigate('/Timeline');
+      },3000)
+      
     } catch {
       // Si y'a erreur dans la connection du form
       toast.error("L'email et / ou le mot de passe n'est pas correcte", {
@@ -48,8 +55,10 @@ export default function Signin() {
         theme: 'colored',
       });
     }
+   
   };
-
+ 
+      
   // state pour le modal mot de pass oublier
   const [showModal, setShowModal] = useState(false);
 
@@ -59,6 +68,7 @@ export default function Signin() {
   return (
     <div className="">
       {/* <ModalOubli/> */}
+     
       <div className="container text-center">
         <div className="row  justify-content-center align-items-center">
           <div class="col-lg-6 FormSignIn mb-lg-0 ">
@@ -69,7 +79,9 @@ export default function Signin() {
                 </Link> */}
               </div>
               <h2 class="fw-bold text-dark mb-5">Connection</h2>
-              <form action="" onSubmit={handleSignIn} ref={formRef}>
+     
+              <form action="" onSubmit={handleSignIn} ref={formRef}>         
+      
                 {/* Email input */}
                 <div class="form-outline text-start mb-4">
                   <input
@@ -104,12 +116,17 @@ export default function Signin() {
                   </div>
                 </div>
                 {/* <!-- Submit button --> */}
+
                 <button
                   type="submit"
-                  className="btn fs-5 w-100 but mb-3 text-white"
-                >
+                  className="btn fs-5 w-100 but mb-3 text-white d-flex align-items-center justify-content-center gap-3"
+                > 
                   Se connecter
+                {loading && <ClipLoader
+                  color={'#8bcbf9'}
+                  size={25}/>}
                 </button>
+          
                 {/* <!-- Register buttons --> */}
                 <div className="mb-2">
                   <p className="text-dark">Je n'ai pas de compte?</p>

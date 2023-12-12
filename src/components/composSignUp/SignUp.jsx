@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ClipLoader } from 'react-spinners';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -31,6 +32,7 @@ function SignUp() {
   // Authentifiaction
   const formRef = useRef();
   const [validation, setValidation] = useState('');
+  const [loading, setLoading] = useState(false)
   const handleSubmit = async (event) => {
     event.preventDefault();
     const firstName = event.target.firstName.value;
@@ -66,9 +68,15 @@ function SignUp() {
       );
       console.log(cred);
       // retourner vide les inputs
+      
       formRef.current.reset();
       setValidation('');
-      navigate('/Connexion');
+      setLoading(true)
+      setTimeout(()=> {
+        setLoading(false)
+        navigate('/Connexion');
+      },3000)
+      
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err);
@@ -213,10 +221,13 @@ function SignUp() {
               {/* Submit button */}
               <div className="d-grid gap-2 col-6 mx-auto w-75 mt-4">
                 <button
-                  className="btn text-white rounded-2 fs-5 but"
+                  className="btn text-white rounded-2 fs-5 but d-flex align-items-center justify-content-center gap-3"
                   type="submit"
                 >
                   S’inscrire
+                  {loading && <ClipLoader
+                  color={'#8bcbf9'}
+                  size={25}/>}
                 </button>
               </div>
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">

@@ -69,7 +69,7 @@ export default function ModalOubli() {
               {/* <!-- Submit button --> */}
               <div className="text-end justify-content-between">
                 <button type="button" class="btn btn-block  btn-secondary ">
-                  <Link to="/connexion">Fermer</Link>
+                  <Link to="/connexion" className='text-decoration-none text-white'>Fermer</Link>
                 </button>
                 <button type="submit" className="btn but btn-block  text-white">
                   Envoyer

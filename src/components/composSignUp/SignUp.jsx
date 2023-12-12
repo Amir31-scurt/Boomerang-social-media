@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { auth } from '../../config/firebase-config';
 import icon from '../../assets/images/User.png';
 
 function SignUp() {
@@ -69,13 +68,23 @@ function SignUp() {
         inputs.current[1].value,
         icon
       );
+      toast.success('Inscription valide avec succès', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       // console.log(auth);
       console.log(cred);
 
       // retourner vide les inputs
       formRef.current.reset();
       setValidation('');
-      navigate('/Connexion');
+      setTimeout(navigate('/Connexion'), 5000);
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err);

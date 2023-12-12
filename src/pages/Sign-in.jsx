@@ -30,7 +30,7 @@ export default function Signin() {
         inputs.current[0].value,
         inputs.current[1].value
       );
-      // console.log(cred);
+      console.log(cred);
       // retourner vide les inputs
       formRef.current.reset();
       setValidation('');

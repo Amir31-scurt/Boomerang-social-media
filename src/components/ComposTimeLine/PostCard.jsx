@@ -99,11 +99,12 @@ export const PostCard = ({
                 />
               )}
             </div>
-          <textarea
+            <p className="OverfParag">{description}</p>
+            {/* <textarea
             value={description}
             id="text-aria2"
             className="w-100"
-          ></textarea>
+          ></textarea> */}
           </div>
           {/* Les icônes d'action */}
           <div className="w-100 justifier-content-between d-flex pb-2 px-2">
@@ -115,18 +116,18 @@ export const PostCard = ({
                   setIsLiked(!isLiked); // Basculez l'état du like
                 }}
               >
-                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : ""}`} />
+                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : "vide"}`} />
                 <h1 className="fw-bold pt-2 fs-6">
                   {likes + (isLiked ? 1 : 0)}
                 </h1>
                 <p className="ms-1 pt-2 pt-3">J'aime</p>
               </button>
             </div>
-            <div className="partager d-flex justifier-content-end ">
+            <div className="partager d-flex justifier-content-end">
               <div class="dropdown border border-0 PatrageReseau">
-                <div className="d-flex contenuPartage"></div>
+                {/* <div className="d-flex contenuPartage"></div> */}
                 <button
-                  className=" border border-0 fs-2 bouton1a partagerBtn px-1"
+                  className=" border border-0 fs-2 bouton1a partagerBtn px-3"
                   data-bs-toggle="dropdown"
                 >
                   <PiShareNetworkBold className="fs-3" />

@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  updateProfile,
 } from 'firebase/auth';
 import { auth } from '../config/firebase-config';
 import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Import Firestore functions
@@ -27,7 +28,12 @@ export function AuthContextProvider(props) {
         nom: nom,
         profilPic,
       });
-      user.displayName = prenom + ' ' + nom;
+
+      // Set the displayName
+      await updateProfile(user, {
+        displayName: prenom + ' ' + nom,
+      });
+
       console.log(user);
     } catch (error) {
       console.error('Error signing up:', error);
@@ -46,6 +52,31 @@ export function AuthContextProvider(props) {
       setLoading(false);
     });
     return unsubscribe;
+  }, []);
+
+  // Get the current user's profile information
+  const getUserProfile = () => {
+    const currentUser = auth.currentUser;
+
+    if (currentUser !== null) {
+      // The user object has basic properties such as display name, email, etc.
+      const displayName = currentUser.displayName;
+      const email = currentUser.email;
+      const photoURL = currentUser.photoURL;
+      const emailVerified = currentUser.emailVerified;
+
+      // The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
+      const uid = currentUser.uid;
+
+      console.log(displayName, email, photoURL, emailVerified, uid);
+    }
+  };
+
+  // Call getUserProfile() whenever the page is reloaded or the user signs in
+  useEffect(() => {
+    getUserProfile();
   }, []);
 
   return (

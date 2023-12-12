@@ -19,6 +19,7 @@ import { DB } from '../../config/firebase-config';
 import { AuthContext } from '../../contexte/authContext';
 
 export const Cards = () => {
+  const { user, currentUser } = useContext(AuthContext);
   // l'etat du Modal par defaut
   const [isModalOpen, setModalOpen] = useState(false);
   // Ouverture du Modal
@@ -90,8 +91,6 @@ export const Cards = () => {
     return imageUrlRegex.test(url);
   };
 
-  const { user } = useContext(AuthContext);
-
   const handleAddPost = async (e) => {
     e.preventDefault();
 
@@ -100,8 +99,8 @@ export const Cards = () => {
         const docRef = await addDoc(collection(DB, 'posts'), {
           userID: user.uid,
           likes: 0,
-          profile: '<FaRegUser />',
-          nom: 'user.prenom', // après on va enlever les griff('')
+          profile: user.profilPic,
+          nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
           description: descript,
@@ -110,8 +109,8 @@ export const Cards = () => {
         const newPost = {
           userID: user.uid,
           likes: 0,
-          profile: 'user.profilPic', // après on va enlever les griff('')
-          nom: 'user.nom', // après on va enlever les griff('')
+          profile: user.profilPic, // après on va enlever les griff('')
+          nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
           description: descript,

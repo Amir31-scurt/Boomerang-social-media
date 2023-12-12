@@ -27,6 +27,7 @@ export function AuthContextProvider(props) {
         prenom: prenom,
         nom: nom,
         profilPic,
+        displayName: prenom + ' ' + nom,
       });
 
       // Set the displayName
@@ -51,6 +52,7 @@ export function AuthContextProvider(props) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
+      console.log(user);
     });
     return unsubscribe;
   }, []);

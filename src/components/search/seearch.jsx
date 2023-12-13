@@ -6,7 +6,7 @@ import '../../App.css';
 import { profiles } from './profile.jsx';
 
 export default function Search() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   return (
     <form className="form formSearch">

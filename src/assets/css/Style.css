@@ -1,3 +1,51 @@
+.BoutonFile {
+  width: 98%;
+  margin: auto;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: left;
+}
+.file-input2 {
+  display: none;
+}
+.custom-button1 {
+  padding: 10px 15px;
+  background-color: #1452a8;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 15px;
+}
+.fichierChoisi{
+  margin: 7px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1321ed;
+}
+.Typy{
+  font-size: 19px;
+  font-weight: 400;
+  color: #010326;
+}
+
+.LimitBtnDiv{
+  border-top:2px solid rgb(7, 110, 43) ;
+  padding-top: 15px;
+  border-top-left-radius: 15px;
+  padding-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 .carte1 {
   width: 100%;
   margin: auto;
@@ -197,7 +245,7 @@
   outline: none;
   padding: 10px;
   margin-top: 10px;
-  height: 120px;
+  height: 90px;
 }
 .fontFamily {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -221,7 +269,7 @@
 .liked {
   opacity: 1;
 }
-.vide{
+.vide {
   opacity: 0.3;
 }
 
@@ -242,20 +290,19 @@
 .milieuContenu {
   height: auto;
 }
-.BlsSmall{
-  /* background-color: rgb(89, 0, 255); */
+.BlsSmall {
   height: 40px;
   width: 95%;
   display: flex;
   justify-content: start;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   margin: auto;
   align-items: center;
 }
 
-.OverfParag{
+.OverfParag {
   overflow-wrap: break-word;
   padding: 0px 10px;
-  /* background-color: rgba(255, 0, 0, 0.37); */
+  margin: 10px 0px;
 }

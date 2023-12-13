@@ -5,8 +5,9 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from 'firebase/auth';
-import { auth } from '../config/firebase-config';
+import { auth } from '../config/firebase-config'; 
 import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Import Firestore functions
+
 
 export const AuthContext = createContext();
 
@@ -27,11 +28,13 @@ export function AuthContextProvider(props) {
         prenom: prenom,
         nom: nom,
         profilPic,
+        displayName: prenom + ' ' + nom,
       });
 
       // Set the displayName
       await updateProfile(user, {
         displayName: prenom + ' ' + nom,
+        photoURL: profilPic,
       });
 
       console.log(user);
@@ -50,6 +53,7 @@ export function AuthContextProvider(props) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
+      console.log(user);
     });
     return unsubscribe;
   }, []);

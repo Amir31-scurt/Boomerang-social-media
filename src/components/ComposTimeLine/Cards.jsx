@@ -17,6 +17,8 @@ import {
 } from 'firebase/firestore';
 import { DB } from '../../config/firebase-config';
 import { AuthContext } from '../../contexte/authContext';
+import { auth } from '../../config/firebase-config';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -37,7 +39,6 @@ export const Cards = () => {
 
   // l'etat du Tableau par defaut du Post Card
   const [postCard, setPostCard] = useState([]);
-  const [postCardText, setPostCardText] = useState(TextTablePost);
   const DeletePost = (cardId) => {
     setPostCard((carte) => carte.filter((card) => card.id !== cardId));
   };
@@ -79,6 +80,7 @@ export const Cards = () => {
     //Destructurer le tableau, puis ajouter un nouveau post
     setPostCard([...postCard, newPostText]);
     setTextPost(' ');
+
     setAfficheBtn(false);
   };
 
@@ -90,7 +92,6 @@ export const Cards = () => {
     const imageUrlRegex = /(https?:\/\/.*\.)/i;
     return imageUrlRegex.test(url);
   };
-
   const handleAddPost = async (e) => {
     e.preventDefault();
 
@@ -99,7 +100,7 @@ export const Cards = () => {
         const docRef = await addDoc(collection(DB, 'posts'), {
           userID: user.uid,
           likes: 0,
-          profile: user.profilPic,
+          profile: user.photoURL,
           nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
@@ -109,7 +110,7 @@ export const Cards = () => {
         const newPost = {
           userID: user.uid,
           likes: 0,
-          profile: user.profilPic, // après on va enlever les griff('')
+          profile: user.photoURL, // après on va enlever les griff('')
           nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
@@ -122,6 +123,17 @@ export const Cards = () => {
         setImageUrl('');
         setDescript('');
         setModalOpen(false);
+        toast.success('Publication Reussie !', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+        });
+
         setErrorMessage(''); // Réinitialiser le message d'erreur
       } catch (e) {
         console.error('Error adding document: ', e);
@@ -153,7 +165,8 @@ export const Cards = () => {
     // Nettoyer l'abonnement lorsque le composant est démonté
     return () => UnePublication();
   }, []);
-  //===========================================================================
+
+  //===================================================
 
   // La Methode short Pour trier le tab
   const sortedPosts = postCard.slice().sort(compareDates);
@@ -165,6 +178,24 @@ export const Cards = () => {
   const DisplayTime = {
     display: afficheBtn ? 'block' : 'none',
   };
+
+  //=============== Le bouton Type File===debut=========
+
+  // Ajouter un nouvel état
+  const [selectedFileType, setSelectedFileType] = useState('');
+
+  // Fonction de gestion du changement de fichier
+  const handleFileChange = (e) => {
+    const fileInput = e.target;
+    const selectedFile = fileInput.files[0];
+
+    if (selectedFile) {
+      // Mettre à jour le type de fichier choisi
+      setSelectedFileType(selectedFile.type);
+    }
+  };
+
+  //================ Le bouton Type File===fin=========
 
   return (
     <div>
@@ -246,15 +277,15 @@ export const Cards = () => {
           <div className="modal-contenu">
             {/* Le contenu du Modal */}
 
-            <div className=" d-flex flex-column mb-5">
-              <label htmlFor="imageUrl" className="ms-2 fs-4 text-start">
-                * Image / Vidéo URL
+            <div className=" d-flex flex-column">
+              <label htmlFor="imageUrl" className="ms-2 fs-5 text-start">
+                Image / Vidéo URL *
               </label>
               <input
                 type="text"
                 id="imageUrl"
                 placeholder="image / Vidéo URL ..."
-                className="px-3 mt-3"
+                className="px-3 "
                 name="nom"
                 value={imageUrl}
                 onChange={handleChangeImageUrl}
@@ -262,9 +293,9 @@ export const Cards = () => {
               <small className="text-danger BlsSmall">{errorMessage}</small>
             </div>
 
-            <div className="  d-flex flex-column mb-5">
-              <label htmlFor="aria-modal" className="ms-2 fs-4 text-start">
-                * Ajouter Une Description
+            <div className="  d-flex flex-column mb-4">
+              <label htmlFor="aria-modal" className="ms-2 fs-5 text-start">
+                Ajouter Une Description
               </label>
               <textarea
                 cols=""
@@ -278,11 +309,30 @@ export const Cards = () => {
               ></textarea>
             </div>
 
+            <div className="BoutonFile py-3 mb-2">
+              <div className="d-flex w-100 align-items-center flex-column justify-content-center">
+                <label for="fileInput" class="custom-button1 fs-6">
+                  Choisir Image / vidéo
+                </label>
+                <input
+                  type="file"
+                  id="fileInput"
+                  className="file-input2"
+                  onChange={handleFileChange} //gestion du changement de fichier
+                />
+
+                <p className="fichierChoisi ps-3">
+                  <span className="Typy pe-2">Type de fichier : </span>
+                  {selectedFileType}
+                </p>
+              </div>
+            </div>
+
             {/* Les Ations du Modale */}
 
-            <div className=" d-flex w-100 justify-content-end">
+            <div className=" d-flex w-100 justify-content-end LimitBtnDiv">
               <button className="close me-2" onClick={handleCloseModal}>
-                Anuler
+                Annuler
               </button>
               <MyButton
                 arg1="publish"
@@ -293,7 +343,7 @@ export const Cards = () => {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
       {/*________________________Le Modal_ FIN _______________________*/}
     </div>
   );

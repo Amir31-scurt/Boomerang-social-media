@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom';
 import NavBar from '../components/NavCompos';
 import SideBar from '../components/SidCompos';
 import { Outlet } from 'react-router-dom';
+import Followfriends from '../components/Followfriends';
 
 export default function Template() {
   // User Invocation
@@ -26,15 +27,20 @@ export default function Template() {
           <NavBar />
         </div>
         {/*<!-- Sidebar and Page Component --> */}
-        <div className="d-flex flex-row LOL">
+        <div className="d-flex flex-row LOL ">
           <div className="sidebar">
             {/* <!-- Side navigation --> */}
-            <SideBar />
+            <SideBar/>
             {/* <!-- Page content --> */}
-            <div className="main">
+          </div>
+          <div className="main">
               {/*<!-- TimeLine Component --> */}
               <Outlet />
-            </div>
+          </div>
+            <div className="sidefriend">
+            {/* <!-- Side navigation --> */}
+            <Followfriends />
+            {/* <!-- Page content --> */}
           </div>
         </div>
       </div>

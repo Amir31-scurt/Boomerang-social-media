@@ -13,7 +13,7 @@ export const PostCard = ({
   likes,
   id,
   hadleDelete,
-  handleEdit,
+  handleEdit 
 }) => {
 
   const isYouTubeLink =
@@ -46,6 +46,9 @@ export const PostCard = ({
       )}`;
       window.open(url, "_blank");
     };
+   
+  
+  
 
   return (
     <div className="">
@@ -99,7 +102,12 @@ export const PostCard = ({
                 />
               )}
             </div>
-            <p className="OverfParag">{description}</p>
+          
+        
+            <p 
+            className="OverfParag pt-5"> {description}</p>
+          
+          
             {/* <textarea
             value={description}
             id="text-aria2"

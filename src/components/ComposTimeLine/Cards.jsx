@@ -40,6 +40,8 @@ export const Cards = () => {
   const DeletePost = (cardId) => {
     setPostCard((carte) => carte.filter((card) => card.id !== cardId));
   };
+  // boutton modifier une description
+  
 
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState('');
@@ -101,17 +103,16 @@ export const Cards = () => {
           userID: user.uid,
           likes: 0,
           profile: '<FaRegUser />',
-          nom: 'user.prenom', // après on va enlever les griff('')
+          nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
           description: descript,
         });
-
         const newPost = {
           userID: user.uid,
           likes: 0,
           profile: 'user.profilPic', // après on va enlever les griff('')
-          nom: 'user.nom', // après on va enlever les griff('')
+          nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
           publication: imageUrl,
           description: descript,
@@ -233,7 +234,7 @@ export const Cards = () => {
               DeletePost(card.id);
             }}
             handleEdit={() => {
-              alert(card.id);
+              alert(card.description);
             }}
           />
         ))}
@@ -294,7 +295,6 @@ export const Cards = () => {
           </div>
         </div>
       </div>
-
       {/*________________________Le Modal_ FIN _______________________*/}
     </div>
   );

@@ -16,7 +16,6 @@ import {
 import { DB } from '../../config/firebase-config';
 import { AuthContext } from '../../contexte/authContext';
 import { ToastContainer, toast } from 'react-toastify';
-import icon from '../../assets/images/User.png';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -69,7 +68,15 @@ export const Cards = () => {
     }
   };
   // L'evenement onClick sur le bouron Publier __
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const docRef = await addDoc(collection(DB, 'posts'), {
+      userID: user.uid,
+      likes: 0,
+      profile: user.photoURL,
+      nom: user.displayName,
+      date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
+      publication: textPost,
+    });
     const newPostText = {
       userID: user.uid,
       likes: 0,
@@ -168,7 +175,7 @@ export const Cards = () => {
         } else {
           // If the user hasn't liked the post, consider it as a like
           updatedLikes += 1;
-          updatedUsersLiked.push(user.displayName);
+          updatedUsersLiked.push(user.uid);
         }
 
         // Update Firestore with new likes count and users who liked the post
@@ -321,7 +328,7 @@ export const Cards = () => {
             suppression={card.suppression}
             publication={card.publication}
             description={card.description}
-            hadleDelete={() => {
+            hadleDelete={(id) => {
               DeletePost(card.id);
             }}
             handleEdit={() => {

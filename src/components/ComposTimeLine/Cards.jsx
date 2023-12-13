@@ -1,27 +1,26 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FaRegUser, FaVideo } from 'react-icons/fa';
-import { FaRegImage, FaShareFromSquare } from 'react-icons/fa6';
+import React, { useContext, useEffect, useState } from 'react';
+import { FaRegImage } from 'react-icons/fa6';
 import MyButton from '../ComposTimeLine/MyButton';
 import { PostText } from '../ComposTimeLine/UtilsData';
-import { TableElems, TextTablePost } from './TableElems';
 import { PostCard } from './PostCard';
 import { format } from 'date-fns';
-import { firebase } from 'firebase/app';
 import {
   addDoc,
   collection,
-  firestore,
+  updateDoc,
   getDoc,
-  getDocs,
   onSnapshot,
+  deleteDoc,
+  doc,
 } from 'firebase/firestore';
 import { DB } from '../../config/firebase-config';
 import { AuthContext } from '../../contexte/authContext';
-import { auth } from '../../config/firebase-config';
 import { ToastContainer, toast } from 'react-toastify';
+import icon from '../../assets/images/User.png';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
+  console.log(currentUser.uid);
   // l'etat du Modal par defaut
   const [isModalOpen, setModalOpen] = useState(false);
   // Ouverture du Modal
@@ -34,14 +33,18 @@ export const Cards = () => {
     setImageUrl('');
     setDescript('');
   };
+  // L'etat de like a un poste
+  const [postLikes, setPostLikes] = useState({});
   // l'etat du Bouton Post Text par defaut
   const [afficheBtn, setAfficheBtn] = useState(false);
 
   // l'etat du Tableau par defaut du Post Card
   const [postCard, setPostCard] = useState([]);
-  const DeletePost = (cardId) => {
-    setPostCard((carte) => carte.filter((card) => card.id !== cardId));
+  const DeletePost = async (documentId) => {
+    await deleteDoc(doc(DB, 'posts', documentId));
+    setPostCard((cards) => cards.filter((card) => card.id !== documentId));
   };
+  // boutton modifier une description
 
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState('');
@@ -68,13 +71,12 @@ export const Cards = () => {
   // L'evenement onClick sur le bouron Publier __
   const handleSubmit = () => {
     const newPostText = {
-      id: new Date(),
+      userID: user.uid,
       likes: 0,
-      profile: user.profilPic,
-      nom: 'Recuperer Le nom',
+      profile: user.photoURL,
+      nom: user.displayName,
       date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
       publication: textPost,
-      description: '',
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
@@ -106,7 +108,6 @@ export const Cards = () => {
           publication: imageUrl,
           description: descript,
         });
-
         const newPost = {
           userID: user.uid,
           likes: 0,
@@ -123,7 +124,7 @@ export const Cards = () => {
         setImageUrl('');
         setDescript('');
         setModalOpen(false);
-        toast.success('Publication Reussie !', {
+        toast.success('Publication réussie !', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
@@ -142,6 +143,51 @@ export const Cards = () => {
       setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
     }
   };
+  //===================================================================== Like post const //
+  // Handle like function
+  const handleLikePost = async (postId) => {
+    try {
+      const postDocRef = doc(DB, 'posts', postId);
+      const postDocSnapshot = await getDoc(postDocRef);
+
+      if (postDocSnapshot.exists()) {
+        const postData = postDocSnapshot.data();
+        const currentLikes = postData.likes || 0; // Get current likes count or default to 0
+        const currentUserLiked =
+          postData.usersLiked && postData.usersLiked.includes(user.uid);
+
+        let updatedLikes = currentLikes;
+        let updatedUsersLiked = postData.usersLiked || [];
+
+        if (currentUserLiked) {
+          // If the user has already liked the post, consider it as a dislike
+          updatedLikes -= 1;
+          updatedUsersLiked = updatedUsersLiked.filter(
+            (userId) => userId !== user.uid
+          );
+        } else {
+          // If the user hasn't liked the post, consider it as a like
+          updatedLikes += 1;
+          updatedUsersLiked.push(user.displayName);
+        }
+
+        // Update Firestore with new likes count and users who liked the post
+        await updateDoc(postDocRef, {
+          likes: updatedLikes,
+          usersLiked: updatedUsersLiked,
+        });
+
+        // Update local state to reflect the new likes count
+        setPostLikes((prevLikes) => ({
+          ...prevLikes,
+          [postId]: updatedLikes,
+        }));
+      }
+    } catch (error) {
+      console.error('Error toggling like/dislike: ', error);
+    }
+  };
+
   //==============================================================================
   // Fonction pour comparer les dates de deux publications
   const compareDates = (postA, postB) => {
@@ -170,6 +216,22 @@ export const Cards = () => {
 
   // La Methode short Pour trier le tab
   const sortedPosts = postCard.slice().sort(compareDates);
+
+  // Effet de liker
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const likesData = {};
+
+      sortedPosts.forEach(async (post) => {
+        // ... Fetch likes from Firestore and populate likesData
+        // Inside the loop, populate likesData for each post ID
+      });
+
+      setPostLikes(likesData);
+    };
+
+    fetchLikes();
+  }, [sortedPosts]);
 
   const modalStyle = {
     display: isModalOpen ? 'block' : 'none',
@@ -247,24 +309,25 @@ export const Cards = () => {
 
       {/* L'affichage des données de Firestore */}
       <div className="milieu">
-        {postCard.map((card) => (
+        {sortedPosts.map((card) => (
           <PostCard
             key={card.id}
-            id={card.id}
+            id={card.userID}
             likes={card.likes}
+            addLikes={() => handleLikePost(card.id)}
             profile={card.profile}
             nom={card.nom}
             date={card.date}
             suppression={card.suppression}
             publication={card.publication}
             description={card.description}
-            addLikes={() => card.likes}
-            hadleDelete={(id) => {
+            hadleDelete={() => {
               DeletePost(card.id);
             }}
             handleEdit={() => {
-              alert(card.id);
+              alert(card.description);
             }}
+            currentUser={currentUser}
           />
         ))}
       </div>

@@ -20,7 +20,6 @@
   font-size: 28px;
   color: #727272;
   cursor: pointer;
-
 }
 .feather-settings {
   font-size: 38px;
@@ -112,7 +111,7 @@
   transition: all 0.5s ease;
 }
 .menu-icon {
-  background-color: rgb(226, 227, 230,0.6);
+  background-color: rgb(226, 227, 230, 0.6);
   border-radius: 50%;
   padding: 10px;
   color: black;
@@ -246,8 +245,7 @@ textarea {
 
 .sidebar {
   width: 80%;
- background-color:rgb(226, 227, 230,0.6);
- 
+  background-color: #f1f1f1;
 }
 
 .sidebar ul {
@@ -264,7 +262,7 @@ textarea {
 }
 .LOL {
   padding-top: 70px;
-  background-color: rgb(226, 227, 230,0.6);
+  background-color: #e2e3e699;
 }
 .sidebar li a:hover {
   color: #145da0;
@@ -377,12 +375,11 @@ textarea {
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */ /* Stay at the top */
   left: 0;
-  background-color: rgb(226, 227, 230,0.6);
+  background-color: rgb(226, 227, 230, 0.6);
   padding: 0px 15px; /* Black */
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
 }
-
 
 /* The navigation menu links */
 .sidenav a {
@@ -405,7 +402,7 @@ textarea {
   width: 100%;
   overflow: hidden;
   padding-right: 15px;
-
+  background-color: #f1f1f1;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */

@@ -16,6 +16,7 @@ import {
 import { DB } from '../../config/firebase-config';
 import { AuthContext } from '../../contexte/authContext';
 import { ToastContainer, toast } from 'react-toastify';
+import icon from '../../assets/images/User.png';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -320,7 +321,7 @@ export const Cards = () => {
             suppression={card.suppression}
             publication={card.publication}
             description={card.description}
-            hadleDelete={(id) => {
+            hadleDelete={() => {
               DeletePost(card.id);
             }}
             handleEdit={() => {

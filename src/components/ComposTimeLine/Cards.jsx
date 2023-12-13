@@ -68,13 +68,12 @@ export const Cards = () => {
   // L'evenement onClick sur le bouron Publier __
   const handleSubmit = () => {
     const newPostText = {
-      id: new Date(),
+      id: user.uid,
       likes: 0,
-      profile: user.profilPic,
-      nom: 'Recuperer Le nom',
+      profile: user.photoURL,
+      nom: user.displayName,
       date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
       publication: textPost,
-      description: '',
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
@@ -123,7 +122,7 @@ export const Cards = () => {
         setImageUrl('');
         setDescript('');
         setModalOpen(false);
-        toast.success('Publication Reussie !', {
+        toast.success('Publication réussie !', {
           position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,

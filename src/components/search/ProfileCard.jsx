@@ -1,17 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './search.css';
 import noire from '../../assets/images/noire.png';
 import{ db} from "../../config/firebase-config";
-import { collection, getDocs, doc, updateDoc, addDoc, query, where } from 'firebase/firestore';
+import { AuthContext } from '../../contexte/authContext';
+// import { updateDoc, doc } from 'firebase/firestore';
+import { collection,doc, updateDoc, addDoc} from 'firebase/firestore';
 
-const ProfileCard = ({ imageSrc, name, email }) => {
+const ProfileCard = ({ imageSrc, name, email, userId }) => {
+  const { user, currentUser } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(false);
 
-  const handleFollowToggle = (event) => {
+  const handleFollowToggle = async (event) => {
     event.preventDefault();
-    setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+    // setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+    try {
+      // Mettez à jour l'état local immédiatement pour une réactivité rapide.
+      setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+
+      // Mettez à jour le suivi dans Firestore.
+      const userDocRef = doc(db, 'users', userId);
+      await updateDoc(userDocRef, { isFollowing: !isFollowing });
+      
+    } catch (error) {
+      console.error('Error updating follow status:', error.indexOf);
+    }
   };
 
+// Exemple de code lors de l'ajout d'un utilisateur à Firestore
+  const addUserToFirestore = async (userData) => {
+    try {
+      const usersCollectionRef = collection(db, 'users');
+      await addDoc(usersCollectionRef, { ...userData, isFollowing: false }); 
+    } catch (error) {
+      console.error('Error adding user to Firestore:', error.indexOf);
+    }
+    return addUserToFirestore();
+  }
+
+ 
 
   return (
     <div className="mb-3 col-md-6">

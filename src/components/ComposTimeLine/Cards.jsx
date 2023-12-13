@@ -42,6 +42,7 @@ export const Cards = () => {
   const DeletePost = (cardId) => {
     setPostCard((carte) => carte.filter((card) => card.id !== cardId));
   };
+  // boutton modifier une description
 
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState('');
@@ -105,7 +106,6 @@ export const Cards = () => {
           publication: imageUrl,
           description: descript,
         });
-
         const newPost = {
           userID: user.uid,
           likes: 0,
@@ -262,7 +262,7 @@ export const Cards = () => {
               DeletePost(card.id);
             }}
             handleEdit={() => {
-              alert(card.id);
+              alert(card.description);
             }}
           />
         ))}

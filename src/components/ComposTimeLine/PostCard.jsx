@@ -14,6 +14,7 @@ export const PostCard = ({
   id,
   hadleDelete,
   handleEdit,
+  currentUser,
 }) => {
   const isYouTubeLink =
     publication &&
@@ -66,9 +67,11 @@ export const PostCard = ({
                 </p>
               </div>
             </div>
-            <button className="icone-actions">
-              <DropDown handleDelete={hadleDelete} handleEdit={handleEdit} />
-            </button>
+            {currentUser.uid === id && (
+              <button className="icone-actions">
+                <DropDown handleDelete={hadleDelete} handleEdit={handleEdit} />
+              </button>
+            )}
           </div>
           <div className="mt-4 milieuContenu">
             {/* le texte à publié */}
@@ -117,10 +120,8 @@ export const PostCard = ({
                 }}
               >
                 <FcLike className={`fs-2 me-2 ${isLiked ? 'liked' : 'vide'}`} />
-                <h1 className="fw-bold pt-2 fs-6">
-                  {likes + (isLiked ? 1 : 0)}
-                </h1>
-                <p className="ms-1 pt-2 pt-3">J'aime</p>
+                <h1 className="fw-bold pt-2 fs-6">{likes}</h1>
+                <p className="ms-1 pt-2 pt-3">Like</p>
               </button>
             </div>
             <div className="partager d-flex justifier-content-end">

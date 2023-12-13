@@ -5,9 +5,8 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from 'firebase/auth';
-import { auth } from '../config/firebase-config'; 
+import { auth } from '../config/firebase-config';
 import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Import Firestore functions
-
 
 export const AuthContext = createContext();
 
@@ -58,10 +57,9 @@ export function AuthContextProvider(props) {
     return unsubscribe;
   }, []);
 
+  const currentUser = auth.currentUser;
   // Get the current user's profile information
   const getUserProfile = () => {
-    const currentUser = auth.currentUser;
-
     if (currentUser !== null) {
       // The user object has basic properties such as display name, email, etc.
       const displayName = currentUser.displayName;
@@ -84,7 +82,7 @@ export function AuthContextProvider(props) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ signIn, user, signUp }}>
+    <AuthContext.Provider value={{ signIn, user, currentUser, signUp }}>
       {!loading && props.children}
     </AuthContext.Provider>
   );

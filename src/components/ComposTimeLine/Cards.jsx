@@ -1,24 +1,26 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FaRegUser, FaVideo } from 'react-icons/fa';
-import { FaRegImage, FaShareFromSquare } from 'react-icons/fa6';
+import React, { useContext, useEffect, useState } from 'react';
+import { FaRegImage } from 'react-icons/fa6';
 import MyButton from '../ComposTimeLine/MyButton';
 import { PostText } from '../ComposTimeLine/UtilsData';
-import { TableElems, TextTablePost } from './TableElems';
 import { PostCard } from './PostCard';
 import { format } from 'date-fns';
 import { firebase } from 'firebase/app';
 import {
   addDoc,
   collection,
-  firestore,
   getDoc,
-  getDocs,
   onSnapshot,
+  deleteDoc,
+  doc,
+  query,
+  orderBy,
+  getDocs,
+  updateDoc,
 } from 'firebase/firestore';
-import { DB } from '../../config/firebase-config';
-import { AuthContext } from '../../contexte/authContext';
-import { auth } from '../../config/firebase-config';
 import { ToastContainer, toast } from 'react-toastify';
+import { DB, auth } from '../../config/firebase-config';
+import { AuthContext } from '../../contexte/authContext';
+import { TableElems, TextTablePost } from './TableElems';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -34,13 +36,16 @@ export const Cards = () => {
     setImageUrl('');
     setDescript('');
   };
+  // L'etat de like a un poste
+  const [postLikes, setPostLikes] = useState({});
   // l'etat du Bouton Post Text par defaut
   const [afficheBtn, setAfficheBtn] = useState(false);
 
   // l'etat du Tableau par defaut du Post Card
   const [postCard, setPostCard] = useState([]);
-  const DeletePost = (cardId) => {
-    setPostCard((carte) => carte.filter((card) => card.id !== cardId));
+  const DeletePost = async (documentId) => {
+    await deleteDoc(doc(DB, 'posts', documentId));
+    setPostCard((cards) => cards.filter((card) => card.id !== documentId));
   };
   // boutton modifier une description
 
@@ -67,19 +72,37 @@ export const Cards = () => {
     }
   };
   // L'evenement onClick sur le bouron Publier __
-  const handleSubmit = () => {
-    const newPostText = {
-      id: user.uid,
+  const handleSubmit = async () => {
+    const docRef = await addDoc(collection(DB, 'posts'), {
+      userID: user.uid,
       likes: 0,
       profile: user.photoURL,
       nom: user.displayName,
-      date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
+      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
+      publication: textPost,
+    });
+    const newPostText = {
+      userID: user.uid,
+      likes: 0,
+      profile: user.photoURL,
+      nom: user.displayName,
+      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
       publication: textPost,
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
-    setPostCard([...postCard, newPostText]);
+    setPostCard([newPostText, ...postCard]);
     setTextPost(' ');
+    toast.success('Publication réussie !', {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
 
     setAfficheBtn(false);
   };
@@ -92,18 +115,45 @@ export const Cards = () => {
     const imageUrlRegex = /(https?:\/\/.*\.)/i;
     return imageUrlRegex.test(url);
   };
+
+  //=============== Le bouton Type File===debut=========
+
+  // Ajouter un nouvel état
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleFileChange = (e) => {
+    const fileInput = e.target;
+    const file = fileInput.files[0];
+
+    if (file) {
+      setSelectedFile(file);
+      setImageUrl(''); // Réinitialiser l'URL de l'image
+    }
+  };
+
+  //================ Le bouton Type File===fin=========
+
   const handleAddPost = async (e) => {
     e.preventDefault();
 
-    if (imageUrl !== '' && isValidImageUrl(imageUrl)) {
+    if (
+      (imageUrl !== '' && isValidImageUrl(imageUrl)) ||
+      selectedFile ||
+      selectedImage
+    ) {
       try {
         const docRef = await addDoc(collection(DB, 'posts'), {
           userID: user.uid,
           likes: 0,
           profile: user.photoURL,
           nom: user.displayName, // après on va enlever les griff('')
-          date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
-          publication: imageUrl,
+          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
+          publication: selectedFile
+            ? URL.createObjectURL(selectedFile)
+            : selectedImage
+            ? URL.createObjectURL(selectedImage)
+            : imageUrl,
           description: descript,
         });
         const newPost = {
@@ -111,13 +161,17 @@ export const Cards = () => {
           likes: 0,
           profile: user.photoURL, // après on va enlever les griff('')
           nom: user.displayName, // après on va enlever les griff('')
-          date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
-          publication: imageUrl,
+          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
+          publication: selectedFile
+            ? URL.createObjectURL(selectedFile)
+            : selectedImage // Utiliser l'image sélectionnée
+            ? selectedImage
+            : imageUrl,
           description: descript,
         };
 
         // Destructurer le tableau, puis ajouter un nouveau post
-        setPostCard([...postCard, newPost]);
+        setPostCard([newPost, ...postCard]);
 
         setImageUrl('');
         setDescript('');
@@ -134,6 +188,8 @@ export const Cards = () => {
         });
 
         setErrorMessage(''); // Réinitialiser le message d'erreur
+        setSelectedFile(null); // Réinitialiser le fichier sélectionné
+        setSelectedImage(null); // Réinitialiser l'image sélectionnée
       } catch (e) {
         console.error('Error adding document: ', e);
       }
@@ -141,6 +197,51 @@ export const Cards = () => {
       setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
     }
   };
+  //===================================================================== Like post const //
+  // Handle like function
+  const handleLikePost = async (postId) => {
+    try {
+      const postDocRef = doc(DB, 'posts', postId);
+      const postDocSnapshot = await getDoc(postDocRef);
+
+      if (postDocSnapshot.exists()) {
+        const postData = postDocSnapshot.data();
+        const currentLikes = postData.likes || 0; // Get current likes count or default to 0
+        const currentUserLiked =
+          postData.usersLiked && postData.usersLiked.includes(user.uid);
+
+        let updatedLikes = currentLikes;
+        let updatedUsersLiked = postData.usersLiked || [];
+
+        if (currentUserLiked) {
+          // If the user has already liked the post, consider it as a dislike
+          updatedLikes -= 1;
+          updatedUsersLiked = updatedUsersLiked.filter(
+            (userId) => userId !== user.uid
+          );
+        } else {
+          // If the user hasn't liked the post, consider it as a like
+          updatedLikes += 1;
+          updatedUsersLiked.push(user.uid);
+        }
+
+        // Update Firestore with new likes count and users who liked the post
+        await updateDoc(postDocRef, {
+          likes: updatedLikes,
+          usersLiked: updatedUsersLiked,
+        });
+
+        // Update local state to reflect the new likes count
+        setPostLikes((prevLikes) => ({
+          ...prevLikes,
+          [postId]: updatedLikes,
+        }));
+      }
+    } catch (error) {
+      console.error('Error toggling like/dislike: ', error);
+    }
+  };
+
   //==============================================================================
   // Fonction pour comparer les dates de deux publications
   const compareDates = (postA, postB) => {
@@ -152,23 +253,42 @@ export const Cards = () => {
 
   //useEffect pour effectuer une requête Firestore lors du montage du composant
   useEffect(() => {
-    const UnePublication = onSnapshot(collection(DB, 'posts'), (snapshot) => {
-      const posts = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      // Tri décroissant des publications par date
-      const sortedPosts = posts.slice().sort(compareDates);
-      setPostCard(sortedPosts);
-    });
-    // Nettoyer l'abonnement lorsque le composant est démonté
-    return () => UnePublication();
+    const unsubscribe = onSnapshot(
+      query(collection(DB, 'posts'), orderBy('date', 'desc')), // Ordering by 'date' field in descending order
+      (snapshot) => {
+        const posts = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPostCard(posts);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   //===================================================
 
-  // La Methode short Pour trier le tab
+  // La Methode sort Pour trier le tab
+
+  // Effet de liker
   const sortedPosts = postCard.slice().sort(compareDates);
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const likesData = {};
+
+      sortedPosts.forEach(async (post) => {
+        // ... Fetch likes from Firestore and populate likesData
+        // Inside the loop, populate likesData for each post ID
+      });
+
+      setPostLikes(likesData);
+    };
+
+    fetchLikes();
+  }, []);
 
   const modalStyle = {
     display: isModalOpen ? 'block' : 'none',
@@ -178,23 +298,28 @@ export const Cards = () => {
     display: afficheBtn ? 'block' : 'none',
   };
 
-  //=============== Le bouton Type File===debut=========
+  //================ Le bouton Modifier Funtions===DEBUT=========
+  const handleEdit = (postId, newDescription) => {
+    // Mettez à jour la description du post dans le tableau state
+    setPostCard((posts) =>
+      posts.map((post) =>
+        post.id === postId ? { ...post, description: newDescription } : post
+      )
+    );
 
-  // Ajouter un nouvel état
-  const [selectedFileType, setSelectedFileType] = useState('');
-
-  // Fonction de gestion du changement de fichier
-  const handleFileChange = (e) => {
-    const fileInput = e.target;
-    const selectedFile = fileInput.files[0];
-
-    if (selectedFile) {
-      // Mettre à jour le type de fichier choisi
-      setSelectedFileType(selectedFile.type);
-    }
+    // Mettre à jour la description du post dans Firestore
+    const postRef = doc(DB, 'posts', postId);
+    updateDoc(postRef, {
+      description: newDescription,
+    })
+      .then(() => {
+        console.log('Document successfully updated!');
+      })
+      .catch((error) => {
+        console.error('Error updating document: ', error);
+      });
   };
-
-  //================ Le bouton Type File===fin=========
+  //================ Le bouton Modifier Funtions===DEBUT=========
 
   return (
     <div>
@@ -246,24 +371,23 @@ export const Cards = () => {
 
       {/* L'affichage des données de Firestore */}
       <div className="milieu">
-        {postCard.map((card) => (
+        {sortedPosts.map((card) => (
           <PostCard
             key={card.id}
-            id={card.id}
+            id={card.userID}
             likes={card.likes}
+            addLikes={() => handleLikePost(card.id)}
             profile={card.profile}
             nom={card.nom}
             date={card.date}
             suppression={card.suppression}
             publication={card.publication}
             description={card.description}
-            addLikes={() => card.likes}
             hadleDelete={(id) => {
               DeletePost(card.id);
             }}
-            handleEdit={() => {
-              alert(card.description);
-            }}
+            currentUser={currentUser}
+            handleEdit={(newDescription) => handleEdit(card.id, newDescription)}
           />
         ))}
       </div>
@@ -317,13 +441,25 @@ export const Cards = () => {
                   type="file"
                   id="fileInput"
                   className="file-input2"
-                  onChange={handleFileChange} //gestion du changement de fichier
+                  onChange={(e) => {
+                    handleFileChange(e);
+                    setSelectedImage(e.target.files[0]); // gérer l'image localement
+                  }}
                 />
 
-                <p className="fichierChoisi ps-3">
-                  <span className="Typy pe-2">Type de fichier : </span>
-                  {selectedFileType}
-                </p>
+                {selectedFile && (
+                  <div>
+                    <p className="fichierChoisi ps-3">
+                      <span className="Typy pe-2">Type de fichier :</span>
+                      {selectedFile.type}
+                    </p>
+                    <img
+                      src={URL.createObjectURL(selectedFile)}
+                      alt="Aperçu du fichier sélectionné"
+                      className="preview-image"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 

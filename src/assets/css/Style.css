@@ -34,7 +34,45 @@
   border-top-left-radius: 15px;
   padding-right: 10px;
 }
+.ModifierParent{
+  justify-content: center;
+}
+.AreaModifDesc{
+  margin-top: 20px;
+  width:60%;
+  min-height: 70px;
+  border: 2px solid rgba(176, 64, 64, 0.667);
+  border-radius: 15px;
+  resize: none;
+  padding:12px;
+}
+.AreaModifDesc:focus{
+  outline: none;
+  border: 2px solid #066e41ca;
 
+}
+.SaveBtnModif{
+  background-color: #ffffffca;
+  border: none;
+  border-radius: 15px;
+  margin-top: 5px;
+  margin-left: 20px;
+  color: #01bd7b;
+  height: 40px;
+  display: flex;align-items: center;
+}
+.cancelBtnModif{
+  background-color: #ffffffca;
+  border: none;
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-left: 20px;
+  color: #fff;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 
@@ -305,4 +343,10 @@
   overflow-wrap: break-word;
   padding: 0px 10px;
   margin: 10px 0px;
+  justify-content: center;
+}
+.ContainerDESC{
+  width: 98%;
+  margin: auto;
+  justify-content: center;
 }

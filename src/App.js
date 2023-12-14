@@ -10,6 +10,7 @@ import './assets/css/Style.css';
 import ModalOubli from './pages/ModalOubli';
 import AutreProfile from './components/AutreProfile/AutreProfile';
 import './assets/css/Yaya.css';
+import Followfriends from './components/Followfriends';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="chercher" element={<Search />} />
           <Route path="user-page" element={<UserPage />} />
           <Route path="autre-profile" element={<AutreProfile />} />
+          <Route path="suivre-profile" element={<Followfriends />} />
         </Route>
         <Route path="/Modal" element={<ModalOubli />} />
       </Routes>

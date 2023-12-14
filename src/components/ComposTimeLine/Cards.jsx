@@ -8,7 +8,6 @@ import { firebase } from 'firebase/app';
 import {
   addDoc,
   collection,
-  updateDoc,
   getDoc,
   onSnapshot,
   deleteDoc,
@@ -18,15 +17,9 @@ import {
   getDocs,
   updateDoc,
 } from 'firebase/firestore';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FaRegUser, FaVideo } from 'react-icons/fa';
-import { FaRegImage, FaShareFromSquare } from 'react-icons/fa6';
 import { ToastContainer, toast } from 'react-toastify';
 import { DB, auth } from '../../config/firebase-config';
 import { AuthContext } from '../../contexte/authContext';
-import MyButton from '../ComposTimeLine/MyButton';
-import { PostText } from '../ComposTimeLine/UtilsData';
-import { PostCard } from './PostCard';
 import { TableElems, TextTablePost } from './TableElems';
 
 export const Cards = () => {

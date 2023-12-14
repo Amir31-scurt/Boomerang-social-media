@@ -12,6 +12,8 @@ import {
   onSnapshot,
   deleteDoc,
   doc,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 import { DB } from '../../config/firebase-config';
 import { AuthContext } from '../../contexte/authContext';
@@ -19,7 +21,6 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
-  console.log(currentUser.uid);
   // l'etat du Modal par defaut
   const [isModalOpen, setModalOpen] = useState(false);
   // Ouverture du Modal
@@ -74,7 +75,7 @@ export const Cards = () => {
       likes: 0,
       profile: user.photoURL,
       nom: user.displayName,
-      date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
+      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
       publication: textPost,
     });
     const newPostText = {
@@ -82,13 +83,23 @@ export const Cards = () => {
       likes: 0,
       profile: user.photoURL,
       nom: user.displayName,
-      date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
+      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
       publication: textPost,
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
-    setPostCard([...postCard, newPostText]);
+    setPostCard([newPostText, ...postCard]);
     setTextPost(' ');
+    toast.success('Publication réussie !', {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
 
     setAfficheBtn(false);
   };
@@ -111,7 +122,7 @@ export const Cards = () => {
           likes: 0,
           profile: user.photoURL,
           nom: user.displayName, // après on va enlever les griff('')
-          date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
+          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
           publication: imageUrl,
           description: descript,
         });
@@ -120,13 +131,13 @@ export const Cards = () => {
           likes: 0,
           profile: user.photoURL, // après on va enlever les griff('')
           nom: user.displayName, // après on va enlever les griff('')
-          date: format(new Date(), 'dd / MM / yyyy / HH:mm:ss'),
+          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
           publication: imageUrl,
           description: descript,
         };
 
         // Destructurer le tableau, puis ajouter un nouveau post
-        setPostCard([...postCard, newPost]);
+        setPostCard([newPost, ...postCard]);
 
         setImageUrl('');
         setDescript('');
@@ -206,25 +217,28 @@ export const Cards = () => {
 
   //useEffect pour effectuer une requête Firestore lors du montage du composant
   useEffect(() => {
-    const UnePublication = onSnapshot(collection(DB, 'posts'), (snapshot) => {
-      const posts = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      // Tri décroissant des publications par date
-      const sortedPosts = posts.slice().sort(compareDates);
-      setPostCard(sortedPosts);
-    });
-    // Nettoyer l'abonnement lorsque le composant est démonté
-    return () => UnePublication();
+    const unsubscribe = onSnapshot(
+      query(collection(DB, 'posts'), orderBy('date', 'desc')), // Ordering by 'date' field in descending order
+      (snapshot) => {
+        const posts = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPostCard(posts);
+      }
+    );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   //===================================================
 
-  // La Methode short Pour trier le tab
-  const sortedPosts = postCard.slice().sort(compareDates);
+  // La Methode sort Pour trier le tab
 
   // Effet de liker
+  const sortedPosts = postCard.slice().sort(compareDates);
   useEffect(() => {
     const fetchLikes = async () => {
       const likesData = {};
@@ -238,7 +252,7 @@ export const Cards = () => {
     };
 
     fetchLikes();
-  }, [sortedPosts]);
+  }, []);
 
   const modalStyle = {
     display: isModalOpen ? 'block' : 'none',

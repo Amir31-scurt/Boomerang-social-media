@@ -14,15 +14,15 @@ export default function Search() {
       {/* Use the reusable SearchForm component */}
       <div className="container flex-column d-flex ">
         <div className="row">
-          {profiles
+          {/* {profiles
             .filter((index) => {
               return search.toLowerCase() === ''
                 ? index
                 : index.name.toLowerCase().includes(search);
             })
-            .map((profile, index) => (
-              <ProfileCard key={index} {...profile} />
-            ))}
+            .map((profile, index) => ( */}
+              <ProfileCard />
+            {/* ))} */}
         </div>
       </div>
     </form>

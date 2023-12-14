@@ -3,99 +3,105 @@ import './search.css';
 import noire from '../../assets/images/noire.png';
 import { AuthContext } from '../../contexte/authContext';
 import {
-  addDoc,
   collection,
+  getDocs,
+  doc,
   setDoc,
   getDoc,
-  doc,
-  onSnapshot,
 } from 'firebase/firestore';
 import { db } from '../../config/firebase-config';
 
-
-
-const ProfileCard = ({ imageSrc, name, email}) => {
+const ProfileCard = ({ imageSrc }) => {
   const { user, currentUser } = useContext(AuthContext);
-  const [isFollowing, setIsFollowing] = useState(false);
-
-  // const handleFollowToggle = async (event) => {
-  //   event.preventDefault();
-  //   setIsFollowing((prevIsFollowing) => !prevIsFollowing)
-  // }
-
-
-
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchFollowStatus = async () => {
+    const fetchUsers = async () => {
       try {
-        const userDocRef = doc(db, 'users', user.uid);
-        const userDocSnapshot = await getDoc(userDocRef);
-        console.log(userDocRef);
+        const usersCollection = collection(db, 'users');
+        const usersSnapshot = await getDocs(usersCollection);
+        const usersData = [];
 
-        if (userDocSnapshot.exists()) {
-          const userData = userDocSnapshot.data();
-          setIsFollowing(userData.isFollowing || true);
-        } else {
-          setIsFollowing(true);
-        }
+        usersSnapshot.forEach((userDoc) => {
+          const userData = userDoc.data();
+          usersData.push(userData);
+        });
+
+        setUsers(usersData);
       } catch (error) {
-        console.error('Error getting follow status from Firestore:', error);
+        console.error('Error fetching users from Firestore:', error);
       }
     };
 
-    fetchFollowStatus();
-  }, [user.uid]); // Include user.uid in the dependency array to re-fetch when the user changes
+    fetchUsers();
+  }, []);
 
-  const handleFollowToggle = async (event) => {
-    event.preventDefault();
-    const newFollowStatus = !isFollowing;
+  const renderProfile = (userData) => {
+    const { uid, displayName, email, isFollowing, photoURL } = userData;
 
-    // Update the state immediately
-    setIsFollowing(newFollowStatus);
+    const updateFollowStatusInFirestore = async (newFollowStatus) => {
+      try {
+        const userDocRef = doc(db, 'users', uid);
+        await setDoc(userDocRef, { isFollowing: newFollowStatus }, { merge: true });
+      } catch (error) {
+        console.error('Error updating follow status in Firestore:', error);
+      }
+    };
 
-    // Update Firestore
-    try {
-      const userDocRef = doc(db, 'users', user.uid);
-      await setDoc(userDocRef, { isFollowing: newFollowStatus }, { merge: true });
-    } catch (error) {
-      console.error('Error updating follow status in Firestore:', error);
-    }
-  };
+    const handleFollowToggle = async (event) => {
+      event.preventDefault();
+      const newFollowStatus = !isFollowing;
+      // setUsers((prevIsFollowing) => !prevIsFollowing)
+
+      // Update Firestore
+      updateFollowStatusInFirestore(newFollowStatus);
+    };
+
   
-  return (
-    <div className="mb-3 col-md-6">
-      <div className="card w-100  position-relative">
-        <div className="imageProfile">
-          <img src={imageSrc} alt="" className="img-fluid w-100" />
-        </div>
-        <div className="mx-4 mt-3 d-flex justify-content-between cardConte">
-          <div className="d-flex">
-            <div className="rounded searchRounded rounded-circle ms-2">
-              {/* Assuming noire is a static image, you can replace it with a dynamic prop */}
-              <img src={noire} alt="" className="image" />
-            </div>
-            <div className="paraTest ms-3">
-              <h6 className="fw-bold">{user.uid}</h6>
-              <p className="ml-1">{email}</p>
-            </div>
+   
+
+    return (
+      <div className="mb-3 col-md-6">
+        <div className="card w-100  position-relative">
+          <div className="imageProfile">
+            <img src={imageSrc} alt="" className="img-fluid w-100" />
           </div>
-          <div className="">
-            <button
-              onClick={handleFollowToggle}
-              style={{
-                background: isFollowing ? 'blue' : 'gray',
-                color: isFollowing ? 'white' : 'white',
-              }}
-              className="w-20 btn btn-primary btn-sm rounded-5 mt-2 border:active-none"
-              id="button"
-            >
-              {isFollowing ? 'Suivre' : 'Suivi(s)'}
-            </button>
+          <div className="mx-4 mt-3 d-flex justify-content-between cardConte">
+            <div className="d-flex">
+              <div className="rounded searchRounded rounded-circle ms-2">
+                <img src={photoURL} alt="" className="image" />
+              </div>
+              <div className="paraTest ms-3">
+                <h6 className="fw-bold">{displayName}</h6>
+                <p className="ml-1">{email}</p>
+              </div>
+            </div>
+            <div className="">
+              <button
+                onClick={handleFollowToggle}
+                style={{
+                  background: isFollowing ? 'gray' : 'blue',
+                  color: 'white',
+                }}
+                className="w-20 btn btn-primary btn-sm rounded-5 mt-2 border:active-none"
+                id="button"
+              >
+                {isFollowing ? 'Suivi(s)' : 'Suivre'}
+              </button>
+            </div>
           </div>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div className="container flex-column d-flex">
+    <div className="row">
+      {users.map((userData) => renderProfile(userData))}
+    </div>
     </div>
   );
 };
+
 export default ProfileCard;

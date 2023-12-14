@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { PiShareNetworkBold } from 'react-icons/pi';
 import { FcLike } from 'react-icons/fc';
+import { PiShareNetworkBold } from 'react-icons/pi';
 import { DropDown } from './DropDown';
+import { FiEdit3 } from 'react-icons/fi';
+import { FaCircleXmark } from 'react-icons/fa6';
+import { BsFillCheckCircleFill } from 'react-icons/bs';
+import { toast } from 'react-toastify';
+import { is } from 'date-fns/locale';
 
 export const PostCard = ({
   publication,
@@ -48,6 +53,11 @@ export const PostCard = ({
     window.open(url, '_blank');
   };
 
+  // Moddifications du descriptions
+  const [isEditing, setIsEditing] = useState(false);
+  const handleEditDesc = () => {
+    setIsEditing(true);
+  };
   return (
     <div className="">
       <div className="carte1 mb-4">
@@ -69,7 +79,10 @@ export const PostCard = ({
             </div>
             {currentUser.uid === id && (
               <button className="icone-actions">
-                <DropDown handleDelete={hadleDelete} handleEdit={handleEdit} />
+                <DropDown
+                  handleDelete={hadleDelete}
+                  handleEditDesc={handleEditDesc}
+                />
               </button>
             )}
           </div>
@@ -107,10 +120,52 @@ export const PostCard = ({
                 />
               )}
             </div>
-            <p className="OverfParag mt-3">{description}</p>
+            <div
+              className={`ModifierParent ${isEditing ? 'd-flex' : 'd-none'}`}
+            >
+              <textarea
+                className="AreaModifDesc"
+                name="area"
+                id="ModifArea"
+                value={description} // Utilisez la valeur de la description du post
+                onChange={(e) => handleEdit(e.target.value)}
+              ></textarea>
+              <div className="d-flex flex-column">
+                <button
+                  className="cancelBtnModif p-2"
+                  onClick={() => setIsEditing(false)}
+                >
+                  <FaCircleXmark
+                    className="text-danger fs-1"
+                    onClick={() => setIsEditing(false)}
+                  />
+                </button>
+                <button
+                  className="SaveBtnModif p-2"
+                  onClick={() => {
+                    setIsEditing(false);
+                    toast.success('Modification Reussie !', {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'colored',
+                    });
+                  }}
+                >
+                  <BsFillCheckCircleFill className="fs-1" />
+                </button>
+              </div>
+            </div>
+            <div className={`ContainerDESC ${isEditing ? 'd-none' : 'd-flex'}`}>
+              <p className="OverfParag mt-3 text-break">{description}</p>
+            </div>
           </div>
           {/* Les icônes d'action */}
-          <div className="w-100 justifier-content-between d-flex pb-2 px-2">
+          <div className="w-100 justify-content-between d-flex pb-2 px-2">
             <div className="">
               <button
                 className="icone-actions d-flex align-items-center"
@@ -124,7 +179,7 @@ export const PostCard = ({
                 <p className="ms-1 pt-2 pt-3">Like</p>
               </button>
             </div>
-            <div className="partager d-flex justifier-content-end">
+            <div className="partager d-flex justify-content-end">
               <div class="dropdown border border-0 PatrageReseau">
                 {/* <div className="d-flex contenuPartage"></div> */}
                 <button

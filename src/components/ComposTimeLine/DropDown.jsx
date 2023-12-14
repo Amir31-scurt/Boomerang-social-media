@@ -1,9 +1,9 @@
+import { React } from "react";
 import { FiEdit3 } from "react-icons/fi";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { PiDotsThreeOutline } from "react-icons/pi";
-import {React} from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
-export const DropDown = ({ handleDelete, handleEdit }) => {
+export const DropDown = ({ handleDelete, handleEditDesc, }) => {
   return (
     <div className="">
       <div class="dropdown border border-0">
@@ -18,8 +18,8 @@ export const DropDown = ({ handleDelete, handleEdit }) => {
         <ul class="dropdown-menu dropDownMenu">
           <li>
             <button
-              class="dropdown-item d-flex align-items-center"
-              onClick={handleEdit}
+              className="dropdown-item d-flex align-items-center"
+              onClick={handleEditDesc}
             >
               <FiEdit3 className="fs-5 text-primary me-2" />
               Modifier

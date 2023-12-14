@@ -1,10 +1,10 @@
-
-import React, { useState } from "react";
-import { IoLinkOutline } from "react-icons/io5";
-import { BiMessageDots } from "react-icons/bi";
-import { BsFillGridFill } from "react-icons/bs";
-import { MdOutlinePlayCircleFilled } from "react-icons/md";
-import { BiSolidUserPin } from "react-icons/bi";
+import React, { useState } from 'react';
+import { IoLinkOutline } from 'react-icons/io5';
+import { BiMessageDots } from 'react-icons/bi';
+import { BsFillGridFill } from 'react-icons/bs';
+import { MdOutlinePlayCircleFilled } from 'react-icons/md';
+import { BiSolidUserPin } from 'react-icons/bi';
+import BoutonSuivre from './BoutonSuivre';
 
 const ContenuA = () => (
   <div className="container py-4 rounded-3 imagespublié mt-3 ">
@@ -124,21 +124,30 @@ const ContenuB = () => (
 );
 const ContenuC = () => <div>Contenu C</div>;
 
-const AutreProfile= () => {
-  const [contenuId, setContenuId] = useState("contenuA");
+const AutreProfile = () => {
+
+  const [contenuId, setContenuId] = useState('contenuA');
+
+   const [estSuivi, setEstSuivi] = useState(false);
+
+   const handleClickSuivre = () => {
+     // Mettez à jour l'état de suivi lors du clic sur le bouton
+     setEstSuivi(!estSuivi);
+   };
 
   const afficherContenu = (id) => {
     setContenuId(id);
   };
 
   return (
-    <div className="container">
-      <div className="position-relative bg-white w-100 justify-content-center align-items-center blanc  rounded-3 mt-5 p-4 shadow-lg">
+    <div className="container my-4">
+      <div className="position-relative bg-white w-100 justify-content-center align-items-center blanc  rounded-3  p-4">
         <div className="">
           <div className="plan bg-white  p-1">
             <img
               src="https://cdn.pixabay.com/photo/2020/12/26/13/19/christmas-background-5861438_640.jpg"
               className="w-100 haut rounded-4 img-fluid"
+              alt=""
             />
           </div>
           <div>
@@ -152,39 +161,39 @@ const AutreProfile= () => {
                       alt=""
                     />
                   </div>
-                  <div className="nom-utilisateur flex-column text-center ms-4">
+                  <div className="nom-utilisateur flex-column text-center ms-4 mt-2">
                     <h5>Christina Gomez</h5>
-                    <p>chrisz@gmail.com</p>
+                    <div className="d-flex justify-content-center">
+                      <div className="me-2">
+                        <IoLinkOutline />
+                      </div>
+                      <p>chrisz@gmail.com</p>
+                    </div>
                   </div>
                 </div>
-                <div className="d-flex separe justify-content-center flex-wrap">
-                  <div className="me-4">
+                <div className="d-flex separe justify-content-center gap-4 flex-wrap">
+                  <div className="">
                     <h3>521</h3>
                     <p>Post</p>
                   </div>
                   <div className="border border-secondary  h-50 me-2"></div>
-                  <div className="me-4">
+                  <div className="">
                     <h3>13.6K</h3>
                     <p>Followers</p>
                   </div>
                   <div className="border border-secondary h-50 me-2"></div>
-                  <div className="me-4">
+                  <div className="">
                     <h3>2K</h3>
                     <p>Following</p>
                   </div>
                 </div>
               </div>
-              <div className="d-flex align-items-center gap-3 me-5">
+              <div className="d-flex justify-content-center gap-4 mt-2">
                 <div>
-                  <button
-                    type="button"
-                    className="btn d-flex align-items-center message btn-info text-white py-2 rounded-5 "
-                  >
-                    <div className="pe-3">
-                      <IoLinkOutline />
-                    </div>
-                    Suivre
-                  </button>
+                  <BoutonSuivre
+                    estSuivi={estSuivi}
+                    onClick={handleClickSuivre}
+                  />
                 </div>
                 <div>
                   <button

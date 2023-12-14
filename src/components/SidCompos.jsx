@@ -1,0 +1,92 @@
+import { FiUser } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import { PiTelevisionSimpleBold } from 'react-icons/pi';
+import { AiOutlineThunderbolt } from 'react-icons/ai';
+import { RiLogoutBoxLine } from 'react-icons/ri';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../config/firebase-config';
+
+export default function SideBar() {
+  // state///////////
+  // SignOut state
+  const navigate = useNavigate();
+
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const SideElem = [
+    {
+      id: 1,
+      icon: (
+        <div className="TvIcon">
+          <PiTelevisionSimpleBold className="fw-normal" />
+        </div>
+      ),
+      title: 'Actualité',
+      link: '/Timeline',
+    },
+    {
+      id: 2,
+      icon: (
+        <div className="UserIcon">
+          <FiUser className="fw-bold" />
+        </div>
+      ),
+      title: 'Paramètre',
+      link: 'autre-profile',
+    },
+    {
+      id: 3,
+      icon: (
+        <div className="ThunderIcon">
+          <AiOutlineThunderbolt className="fw-bold" />
+        </div>
+      ),
+      title: 'View',
+      link: '#',
+    },
+    {
+      id: 4,
+      icon: (
+        <div className="LogOutIcon">
+          <RiLogoutBoxLine />
+        </div>
+      ),
+      onclick: logOut,
+      title: 'Déconnexion',
+    },
+  ];
+  const SideMenu = () => {
+    return SideElem.map((item, index) => {
+      return (
+        <li className="nav-item" key={item.id}>
+          <Link
+            className="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 link"
+            to={item.link}
+            onClick={item.onclick}
+          >
+            <h4 className="SideIcon">{item.icon}</h4>
+            <h5 className="SideTitle">{item.title}</h5>
+          </Link>
+        </li>
+      );
+    });
+  };
+  // affichage //////////////
+  return (
+    <div>
+      {/* <!-- Side navigation --> */}
+      <div className="sidenav">
+        <ul>
+          <SideMenu />
+        </ul>
+      </div>
+    </div>
+  );
+}

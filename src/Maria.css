@@ -1,0 +1,73 @@
+.style {
+  background: hsla(0, 0%, 100%, 0.55);
+  backdrop-filter: blur(30px);
+}
+#password,
+#email {
+  background-color: #f5f5f5;
+  border-color: #b7b7b7;
+  text-align: center;
+}
+.FormSignIn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+.first {
+  background-color: #f5f5f5;
+  box-shadow: 2px 0px 10px 2px grey;
+  border-radius: 15px;
+  color: black;
+  height: fit-content;
+}
+.but {
+  border: 1px solid #145da0;
+  background: #2e8bc0;
+}
+.but:hover,
+.but:active {
+  background: #145da0;
+  color: white;
+}
+.X {
+  padding-bottom: 10px;
+}
+.scale-up-right {
+  -webkit-animation: scale-up-right 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: scale-up-right 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+@-webkit-keyframes scale-up-right {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+  }
+}
+@keyframes scale-up-right {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+  }
+}
+.modal {
+  width: 50%;
+  margin: 20px auto;
+  background-color: red;
+}

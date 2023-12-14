@@ -4,20 +4,23 @@ import MyButton from '../ComposTimeLine/MyButton';
 import { PostText } from '../ComposTimeLine/UtilsData';
 import { PostCard } from './PostCard';
 import { format } from 'date-fns';
+import { firebase } from 'firebase/app';
 import {
   addDoc,
   collection,
-  updateDoc,
   getDoc,
   onSnapshot,
   deleteDoc,
   doc,
   query,
   orderBy,
+  getDocs,
+  updateDoc,
 } from 'firebase/firestore';
-import { DB } from '../../config/firebase-config';
-import { AuthContext } from '../../contexte/authContext';
 import { ToastContainer, toast } from 'react-toastify';
+import { DB, auth } from '../../config/firebase-config';
+import { AuthContext } from '../../contexte/authContext';
+import { TableElems, TextTablePost } from './TableElems';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -112,10 +115,33 @@ export const Cards = () => {
     const imageUrlRegex = /(https?:\/\/.*\.)/i;
     return imageUrlRegex.test(url);
   };
+
+  //=============== Le bouton Type File===debut=========
+
+  // Ajouter un nouvel état
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleFileChange = (e) => {
+    const fileInput = e.target;
+    const file = fileInput.files[0];
+
+    if (file) {
+      setSelectedFile(file);
+      setImageUrl(''); // Réinitialiser l'URL de l'image
+    }
+  };
+
+  //================ Le bouton Type File===fin=========
+
   const handleAddPost = async (e) => {
     e.preventDefault();
 
-    if (imageUrl !== '' && isValidImageUrl(imageUrl)) {
+    if (
+      (imageUrl !== '' && isValidImageUrl(imageUrl)) ||
+      selectedFile ||
+      selectedImage
+    ) {
       try {
         const docRef = await addDoc(collection(DB, 'posts'), {
           userID: user.uid,
@@ -123,7 +149,11 @@ export const Cards = () => {
           profile: user.photoURL,
           nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
-          publication: imageUrl,
+          publication: selectedFile
+            ? URL.createObjectURL(selectedFile)
+            : selectedImage
+            ? URL.createObjectURL(selectedImage)
+            : imageUrl,
           description: descript,
         });
         const newPost = {
@@ -132,7 +162,11 @@ export const Cards = () => {
           profile: user.photoURL, // après on va enlever les griff('')
           nom: user.displayName, // après on va enlever les griff('')
           date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
-          publication: imageUrl,
+          publication: selectedFile
+            ? URL.createObjectURL(selectedFile)
+            : selectedImage // Utiliser l'image sélectionnée
+            ? selectedImage
+            : imageUrl,
           description: descript,
         };
 
@@ -154,6 +188,8 @@ export const Cards = () => {
         });
 
         setErrorMessage(''); // Réinitialiser le message d'erreur
+        setSelectedFile(null); // Réinitialiser le fichier sélectionné
+        setSelectedImage(null); // Réinitialiser l'image sélectionnée
       } catch (e) {
         console.error('Error adding document: ', e);
       }
@@ -262,23 +298,28 @@ export const Cards = () => {
     display: afficheBtn ? 'block' : 'none',
   };
 
-  //=============== Le bouton Type File===debut=========
+  //================ Le bouton Modifier Funtions===DEBUT=========
+  const handleEdit = (postId, newDescription) => {
+    // Mettez à jour la description du post dans le tableau state
+    setPostCard((posts) =>
+      posts.map((post) =>
+        post.id === postId ? { ...post, description: newDescription } : post
+      )
+    );
 
-  // Ajouter un nouvel état
-  const [selectedFileType, setSelectedFileType] = useState('');
-
-  // Fonction de gestion du changement de fichier
-  const handleFileChange = (e) => {
-    const fileInput = e.target;
-    const selectedFile = fileInput.files[0];
-
-    if (selectedFile) {
-      // Mettre à jour le type de fichier choisi
-      setSelectedFileType(selectedFile.type);
-    }
+    // Mettre à jour la description du post dans Firestore
+    const postRef = doc(DB, 'posts', postId);
+    updateDoc(postRef, {
+      description: newDescription,
+    })
+      .then(() => {
+        console.log('Document successfully updated!');
+      })
+      .catch((error) => {
+        console.error('Error updating document: ', error);
+      });
   };
-
-  //================ Le bouton Type File===fin=========
+  //================ Le bouton Modifier Funtions===DEBUT=========
 
   return (
     <div>
@@ -345,10 +386,8 @@ export const Cards = () => {
             hadleDelete={(id) => {
               DeletePost(card.id);
             }}
-            handleEdit={() => {
-              alert(card.description);
-            }}
             currentUser={currentUser}
+            handleEdit={(newDescription) => handleEdit(card.id, newDescription)}
           />
         ))}
       </div>
@@ -402,13 +441,25 @@ export const Cards = () => {
                   type="file"
                   id="fileInput"
                   className="file-input2"
-                  onChange={handleFileChange} //gestion du changement de fichier
+                  onChange={(e) => {
+                    handleFileChange(e);
+                    setSelectedImage(e.target.files[0]); // gérer l'image localement
+                  }}
                 />
 
-                <p className="fichierChoisi ps-3">
-                  <span className="Typy pe-2">Type de fichier : </span>
-                  {selectedFileType}
-                </p>
+                {selectedFile && (
+                  <div>
+                    <p className="fichierChoisi ps-3">
+                      <span className="Typy pe-2">Type de fichier :</span>
+                      {selectedFile.type}
+                    </p>
+                    <img
+                      src={URL.createObjectURL(selectedFile)}
+                      alt="Aperçu du fichier sélectionné"
+                      className="preview-image"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 

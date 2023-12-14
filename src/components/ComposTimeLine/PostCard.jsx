@@ -1,7 +1,12 @@
-import React, { useState } from "react";
-import { PiShareNetworkBold } from "react-icons/pi";
-import { FcLike } from "react-icons/fc";
-import { DropDown } from "./DropDown";
+import React, { useState } from 'react';
+import { FcLike } from 'react-icons/fc';
+import { PiShareNetworkBold } from 'react-icons/pi';
+import { DropDown } from './DropDown';
+import { FiEdit3 } from 'react-icons/fi';
+import { FaCircleXmark } from 'react-icons/fa6';
+import { BsFillCheckCircleFill } from 'react-icons/bs';
+import { toast } from 'react-toastify';
+import { is } from 'date-fns/locale';
 
 export const PostCard = ({
   publication,
@@ -14,56 +19,72 @@ export const PostCard = ({
   id,
   hadleDelete,
   handleEdit,
+  currentUser,
 }) => {
-
   const isYouTubeLink =
-  publication &&
-  (publication.toLowerCase().includes("youtube.com") ||
-  publication.toLowerCase().includes("youtu.be"));
+    publication &&
+    (publication.toLowerCase().includes('youtube.com') ||
+      publication.toLowerCase().includes('youtu.be'));
 
-  const isMP4Link = publication && publication.toLowerCase().endsWith(".mp4");
+  const isMP4Link = publication && publication.toLowerCase().endsWith('.mp4');
 
   const isParagraphe =
     publication &&
-    !publication.toLowerCase().includes("youtube.com") &&
-    !publication.toLowerCase().includes("youtu.be") &&
-    !publication.toLowerCase().includes(".mp4") &&
-    !publication.toLowerCase().includes(".jpg") &&
-    !publication.toLowerCase().includes(".png");
+    !publication.toLowerCase().includes('youtube.com') &&
+    !publication.toLowerCase().includes('youtu.be') &&
+    !publication.toLowerCase().includes('.mp4') &&
+    !publication.toLowerCase().includes('.jpg') &&
+    !publication.toLowerCase().includes('.jpeg') &&
+    !publication.toLowerCase().includes('.png');
 
-  const [isLiked, setIsLiked] = useState(false);//State Like
+  const [isLiked, setIsLiked] = useState(false); //State Like
 
-    const handleFacebookShare = () => {
-      const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        publication
-      )}`;
-      window.open(url, "_blank");
-    };
+  const handleFacebookShare = () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      publication
+    )}`;
+    window.open(url, '_blank');
+  };
 
-    const handleLinkedInShare = () => {
-      const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-        publication
-      )}`;
-      window.open(url, "_blank");
-    };
+  const handleLinkedInShare = () => {
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      publication
+    )}`;
+    window.open(url, '_blank');
+  };
 
+  // Moddifications du descriptions
+  const [isEditing, setIsEditing] = useState(false);
+  const handleEditDesc = () => {
+    setIsEditing(true);
+  };
   return (
     <div className="">
       <div className="carte1 mb-4">
         <div className="contenu-carte1">
           <div className="d-flex align-items-center justifier-content-between">
             <div className="PartieProfil">
-              <div className="icone-carte me-3">{profile}</div>
+              <input
+                type="image"
+                alt="PhotoProfile"
+                className="icone-carte me-3"
+                src={profile}
+              />
               <div className="ms-0">
-                <p className="fw-bold text-secondary mt-2">
+                <p className="fw-bold text-secondary mt-2 d-flex flex-column m-0 p-0 align-items-start fs-6">
                   {nom} <br />
                   <span className="text-secondary dato mb-0">{date}</span>
                 </p>
               </div>
             </div>
-            <button className="icone-actions">
-              <DropDown handleDelete={hadleDelete} handleEdit={handleEdit} />
-            </button>
+            {currentUser.uid === id && (
+              <button className="icone-actions">
+                <DropDown
+                  handleDelete={hadleDelete}
+                  handleEditDesc={handleEditDesc}
+                />
+              </button>
+            )}
           </div>
           <div className="mt-4 milieuContenu">
             {/* le texte à publié */}
@@ -99,15 +120,52 @@ export const PostCard = ({
                 />
               )}
             </div>
-            <p className="OverfParag">{description}</p>
-            {/* <textarea
-            value={description}
-            id="text-aria2"
-            className="w-100"
-          ></textarea> */}
+            <div
+              className={`ModifierParent ${isEditing ? 'd-flex' : 'd-none'}`}
+            >
+              <textarea
+                className="AreaModifDesc"
+                name="area"
+                id="ModifArea"
+                value={description} // Utilisez la valeur de la description du post
+                onChange={(e) => handleEdit(e.target.value)}
+              ></textarea>
+              <div className="d-flex flex-column">
+                <button
+                  className="cancelBtnModif p-2"
+                  onClick={() => setIsEditing(false)}
+                >
+                  <FaCircleXmark
+                    className="text-danger fs-1"
+                    onClick={() => setIsEditing(false)}
+                  />
+                </button>
+                <button
+                  className="SaveBtnModif p-2"
+                  onClick={() => {
+                    setIsEditing(false);
+                    toast.success('Modification Reussie !', {
+                      position: 'top-right',
+                      autoClose: 3000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: 'colored',
+                    });
+                  }}
+                >
+                  <BsFillCheckCircleFill className="fs-1" />
+                </button>
+              </div>
+            </div>
+            <div className={`ContainerDESC ${isEditing ? 'd-none' : 'd-flex'}`}>
+              <p className="OverfParag mt-3 text-break">{description}</p>
+            </div>
           </div>
           {/* Les icônes d'action */}
-          <div className="w-100 justifier-content-between d-flex pb-2 px-2">
+          <div className="w-100 justify-content-between d-flex pb-2 px-2">
             <div className="">
               <button
                 className="icone-actions d-flex align-items-center"
@@ -116,14 +174,12 @@ export const PostCard = ({
                   setIsLiked(!isLiked); // Basculez l'état du like
                 }}
               >
-                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : "vide"}`} />
-                <h1 className="fw-bold pt-2 fs-6">
-                  {likes + (isLiked ? 1 : 0)}
-                </h1>
-                <p className="ms-1 pt-2 pt-3">J'aime</p>
+                <FcLike className={`fs-2 me-2 ${isLiked ? 'liked' : 'vide'}`} />
+                <h1 className="fw-bold pt-2 fs-6">{likes}</h1>
+                <p className="ms-1 pt-2 pt-3">Like</p>
               </button>
             </div>
-            <div className="partager d-flex justifier-content-end">
+            <div className="partager d-flex justify-content-end">
               <div class="dropdown border border-0 PatrageReseau">
                 {/* <div className="d-flex contenuPartage"></div> */}
                 <button

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
@@ -31,18 +30,18 @@ const Navbar = () => {
             >
               <FiHome className="feather-home feathers" />
             </Link>
-            <div
-              href="default-group.html"
+            <Link
+              to="suivre-profile"
               className="p-2 text-center ms-0 menu-icon center-menu-icon"
             >
               <FaRegUser className="feather-user feathers" />
-            </div>
-            <NavLink
+            </Link>
+            <Link
               to="chercher"
               className="p-2 text-center ms-0 menu-icon icon-input"
             >
               <FaMagnifyingGlass className="feathers" />
-            </NavLink>
+            </Link>
           </div>
         </div>
 

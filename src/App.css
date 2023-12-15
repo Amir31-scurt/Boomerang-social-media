@@ -246,6 +246,7 @@ textarea {
 .sidebar {
   width: 19%;
   position: fixed;
+  padding-left: 10px;
 }
 .sidefriend {
   width: 40%;
@@ -256,6 +257,15 @@ textarea {
   list-style: none;
   margin-top: 20px;
   padding: 16px;
+}
+.sidefriend ul {
+  list-style: none;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  height: fit-content;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  opacity: 0.9;
 }
 
 .sidebar ul {
@@ -276,7 +286,7 @@ textarea {
   padding: 5px;
 }
 .LOL {
-  padding-top: 70px;
+  padding-top: 60px;
   background-color: rgb(226, 227, 230, 0.6);
 }
 .sidebar li a:hover {
@@ -341,6 +351,12 @@ textarea {
   grid-gap: 10px;
   place-items: center;
 }
+.sideComp {
+  height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 30px;
+  opacity: 0.9;
+}
 .imagesPublished img {
   width: 100%;
   height: 15vw;
@@ -396,7 +412,7 @@ textarea {
   padding-top: 20px;
 }  */
 .sidenavfriend {
-  height: 100%;
+  height: fit-content;
   width: 20%;
   position: fixed;
   right: 0;
@@ -420,7 +436,7 @@ textarea {
 
 /* Style page content */
 .main {
-  margin-left: 22%; /* Same as the width of the sidebar */
+  margin-left: 21%; /* Same as the width of the sidebar */
   /* padding: 0px 10px; */
   width: 100%;
   overflow: hidden;
@@ -442,14 +458,18 @@ textarea {
     margin: 0;
     overflow: hidden;
     position: fixed;
-    bottom: 0;
-    height: 65px;
+    bottom: -2em;
+    height: fit-content;
     width: 100%;
+  }
+  .sidefriend {
+    display: none;
   }
   .sidenav ul {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    padding: 0;
   }
   .main {
     margin: 0;

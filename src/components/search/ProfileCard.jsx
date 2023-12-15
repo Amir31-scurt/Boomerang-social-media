@@ -1,36 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './search.css';
 import noire from '../../assets/images/noire.png';
+import { db } from '../../config/firebase-config.js';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 
-const ProfileCard = ({ imageSrc, name, email }) => {
+const ProfileCard = ({ userId, photoURL, displayName, email }) => {
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followers, setFollowers] = useState([]);
 
-  const handleFollowToggle = (event) => {
-    event.preventDefault();
-    setIsFollowing((prevIsFollowing) => !prevIsFollowing);
-  };
-
-      // Update Firestore
-      updateFollowStatusInFirestore(newFollowStatus);
+  // Utilisez useEffect pour récupérer la liste des followers à chaque chargement du composant
+  useEffect(() => {
+    const fetchFollowers = async () => {
+      try {
+        const userDocRef = doc(db, 'users', email);
+        const userDocSnapshot = await getDocs(userDocRef);
+        if (userDocSnapshot.exists()) {
+          const userData = userDocSnapshot.data();
+          if (userData.followers) {
+            setFollowers(userData.followers);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching followers:', error);
+      }
     };
-
-  
    
+
+
+    fetchFollowers();
+  }, [email]);
+  // console.log(email);
+  console.log(followers);
+
+  const handleFollowToggle = async (event) => {
+  event.preventDefault();
+  
+  
+
+   
+    // Toggle isFollowing state
+    setIsFollowing((prevIsFollowing) => !prevIsFollowing);
+    
+
+    try {
+      const userDocRef = doc(db, 'users', email);
+
+      // Si l'utilisateur suit actuellement, retirez-le de la liste des followers
+      if (isFollowing) {
+        await updateDoc(userDocRef, {
+          followers: followers.filter((follower) => follower !== email),
+        });
+      } else {
+        // Sinon, ajoutez-le à la liste des followers
+        await updateDoc(userDocRef, {
+          followers: [...followers, email],
+          
+         
+        });
+      }
+     
+    } catch (error) {
+      console.error('Error updating followers:', error);
+    }
+   
+   
+  };
 
   return (
     <div className="mb-3 col-md-6">
       <div className="card w-100  position-relative">
         <div className="imageProfile">
-          <img src={imageSrc} alt="" className="img-fluid w-100" />
+          <img src={photoURL} alt="" className="img-fluid w-100" />
         </div>
         <div className="mx-4 mt-3 d-flex justify-content-between cardConte">
           <div className="d-flex">
             <div className="rounded searchRounded rounded-circle ms-2">
-              {/* Assuming noire is a static image, you can replace it with a dynamic prop */}
               <img src={noire} alt="" className="image" />
             </div>
             <div className="paraTest ms-3">
-              <h6 className="fw-bold">{name}</h6>
+              <h6 className="fw-bold">{displayName}</h6>
               <p className="ml-1">{email}</p>
             </div>
           </div>

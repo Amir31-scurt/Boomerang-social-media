@@ -7,11 +7,10 @@ const SearchForm = ({ search, setSearch }) => {
   const handleFilterChange = (event) => {
     setSearch(event.target.value);
 
-const SearchForm = ({ func,filter }) => {
+const SearchForm = ({ func, filter }) => {
   // const handleFilterChange = (event) => {
   //   setSearch(event.target.value);
   // };
-}
 
   return (
     <div className="px-5 mx-2 contenu d-flex">
@@ -43,6 +42,7 @@ const SearchForm = ({ func,filter }) => {
       </div>
     </div>
   );
-};
-
+}
+}
+}
 export default SearchForm;

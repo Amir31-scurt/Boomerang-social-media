@@ -74,6 +74,7 @@ function ProfilPage() {
                 <input
                   src={currentUser.Banner}
                   alt=""
+                  type="image"
                   className="img-fluid rounded-5 w-100 banner"
                 />
               </div>

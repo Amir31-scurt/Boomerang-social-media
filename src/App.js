@@ -11,6 +11,7 @@ import ModalOubli from './pages/ModalOubli';
 import AutreProfile from './components/AutreProfile/AutreProfile';
 import './assets/css/Yaya.css';
 import Followfriends from './components/Followfriends';
+import ProfilPage from './components/UserProfile/ProfilPage';
 
 function App() {
   return (
@@ -22,9 +23,9 @@ function App() {
         <Route path="/timeline" element={<Template />}>
           <Route index element={<Home />} />
           <Route path="chercher" element={<Search />} />
-          <Route path="user-page" element={<UserPage />} />
           <Route path="autre-profile" element={<AutreProfile />} />
           <Route path="suivre-profile" element={<Followfriends />} />
+          <Route path="User-Page" element={<ProfilPage />} />
         </Route>
         <Route path="/Modal" element={<ModalOubli />} />
       </Routes>

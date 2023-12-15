@@ -9,7 +9,6 @@ import Search from './components/search/seearch';
 import './assets/css/Style.css';
 import ModalOubli from './pages/ModalOubli';
 import AutreProfile from './components/AutreProfile/AutreProfile';
-import './assets/css/Yaya.css';
 import Followfriends from './components/Followfriends';
 
 function App() {

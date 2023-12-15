@@ -21,7 +21,6 @@ export default function Search() {
       setSearchResults(profiles);
       console.log(profiles)
     };
-
     fetchProfiles();
   }, []);
 

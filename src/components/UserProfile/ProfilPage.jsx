@@ -81,9 +81,9 @@ function ProfilPage() {
             </div>
             <div className="btn-profil d-flex align-items-center Btn-Group">
               <input type="file" accept="image/*" className="d-none" id="profileImageInput" onChange={handleChangeProfileImage} />
-              <button htmlFor="profileImageInput" className="btn btn-primary btn-sm me-2 w-100 rounded-5">
+              <label htmlFor="profileImageInput" className="btn btn-primary btn-sm me-2 w-100 rounded-5">
                 modifier le profil
-              </button>
+              </label>
               <button type="button" className="btn btn-primary btn-sm rounded-5 w-75">
                 <CgMore className='fs-2' />
               </button>

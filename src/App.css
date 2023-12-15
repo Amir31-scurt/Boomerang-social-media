@@ -265,7 +265,7 @@ textarea {
   border-radius: 15px;
   height: fit-content;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  opacity: 0.9;
+  /* opacity: 0.9; */
 }
 
 .sidebar ul {
@@ -291,7 +291,7 @@ textarea {
 }
 .sidebar li a:hover {
   color: #145da0;
-  opacity: 0.7;
+  /* opacity: 0.7; */
 }
 
 /* Css de Started */
@@ -439,6 +439,7 @@ textarea {
     bottom: -2em;
     height: fit-content;
     width: 100%;
+    z-index: 100;
   }
   .sidefriend {
     display: none;

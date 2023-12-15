@@ -85,13 +85,13 @@ export default function SideBar() {
   return (
     <div>
       {/* <!-- Side navigation --> */}
-      <div className="sidenav sideComp">
+      <div className="sidenav sideComp z-3">
         <ul>
           <SideMenu />
         </ul>
-        <ul>
+        {/* <ul>
           <SideMenu />
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

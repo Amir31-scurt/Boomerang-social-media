@@ -36,6 +36,11 @@ export const PostCard = ({
     !publication.toLowerCase().includes('.jpg') &&
     !publication.toLowerCase().includes('.jpeg') &&
     !publication.toLowerCase().includes('.png');
+  
+  const isFirebaseVideo =
+    publication &&
+    publication.toLowerCase().includes("https://firebasestorage.googleapis.com") &&
+    publication.toLowerCase().includes(".mp4");
 
   const [isLiked, setIsLiked] = useState(false); //State Like
 
@@ -98,7 +103,7 @@ export const PostCard = ({
                   border-radius="15px"
                   className="w-100 rounded-3 videoo ParantText2"
                 />
-              ) : isMP4Link ? (
+              ) : isMP4Link || isFirebaseVideo ? (
                 <video
                   src={publication}
                   controls
@@ -121,7 +126,7 @@ export const PostCard = ({
               )}
             </div>
             <div
-              className={`ModifierParent ${isEditing ? 'd-flex' : 'd-none'}`}
+              className={`ModifierParent ${isEditing ? "d-flex" : "d-none"}`}
             >
               <textarea
                 className="AreaModifDesc"
@@ -144,15 +149,15 @@ export const PostCard = ({
                   className="SaveBtnModif p-2"
                   onClick={() => {
                     setIsEditing(false);
-                    toast.success('Modification Reussie !', {
-                      position: 'top-right',
+                    toast.success("Modification Reussie !", {
+                      position: "top-right",
                       autoClose: 3000,
                       hideProgressBar: false,
                       closeOnClick: true,
                       pauseOnHover: true,
                       draggable: true,
                       progress: undefined,
-                      theme: 'colored',
+                      theme: "colored",
                     });
                   }}
                 >
@@ -160,7 +165,7 @@ export const PostCard = ({
                 </button>
               </div>
             </div>
-            <div className={`ContainerDESC ${isEditing ? 'd-none' : 'd-flex'}`}>
+            <div className={`ContainerDESC ${isEditing ? "d-none" : "d-flex"}`}>
               <p className="OverfParag mt-3 text-break">{description}</p>
             </div>
           </div>
@@ -174,7 +179,7 @@ export const PostCard = ({
                   setIsLiked(!isLiked); // Basculez l'état du like
                 }}
               >
-                <FcLike className={`fs-2 me-2 ${isLiked ? 'liked' : 'vide'}`} />
+                <FcLike className={`fs-2 me-2 ${isLiked ? "liked" : "vide"}`} />
                 <h1 className="fw-bold pt-2 fs-6">{likes}</h1>
                 <p className="ms-1 pt-2 pt-3">Like</p>
               </button>

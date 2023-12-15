@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { IoLinkOutline } from 'react-icons/io5';
 import { BiMessageDots } from 'react-icons/bi';
 import { BsFillGridFill } from 'react-icons/bs';
 import { MdOutlinePlayCircleFilled } from 'react-icons/md';
 import { BiSolidUserPin } from 'react-icons/bi';
+import { db } from '../../config/firebase-config.js';
+import { collection,getDocs } from 'firebase/firestore';
+import FindProfil from '../../pages/FindProfil.jsx';
 
 const ContenuA = () => (
   <div className="container py-4 rounded-3 imagespublié mt-3 ">
@@ -67,69 +70,36 @@ const ContenuA = () => (
 );
 const ContenuB = () => <div>Contenu B</div>;
 const ContenuC = () => <div>Contenu C</div>;
-
 const AutreProfile = () => {
   const [contenuId, setContenuId] = useState('contenuA');
-
+ 
   const afficherContenu = (id) => {
     setContenuId(id);
   };
+  const [ProfilResults, setProfilResults] = useState([]);
+
+  useEffect(() => {
+    const fetchFind = async () => {
+      const users = collection(db, 'users');
+      const querySnapshot = await getDocs(users);
+
+      const profiles = querySnapshot.docs.map((doc) => doc.data());
+      setProfilResults(profiles);
+      console.log(profiles)
+    };
+
+    fetchFind();
+  }, []);
 
   return (
     <div className="container">
-      <div className="position-relative bg-white w-100 justify-content-center align-items-center blanc  rounded-3 mt-5 p-4">
-        <div className="">
-          <div className="plan bg-white  p-4">
-            <img
-              src="https://cdn.pixabay.com/photo/2020/12/26/13/19/christmas-background-5861438_640.jpg"
-              className="w-100 haut rounded-4 img-fluid"
-              alt=""
-            />
-          </div>
-          <div>
-            <div className="d-flex flex-wrap justify-content-around">
-              <div className="bloc d-flex flex wrap">
-                <div className="profil ms-5 ">
-                  <img
-                    src="https://cdn.pixabay.com/photo/2018/01/24/00/13/woman-3102823_640.jpg"
-                    className="cursor-pointer border-4 border-white"
-                    alt=""
-                  />
-                </div>
-                <div className="nom-utilisateur flex-column text-center ms-4">
-                  <h5>Christina Gomez</h5>
-                  <p>chrisz@gmail.com</p>
-                </div>
-              </div>
-              <div className="d-flex align-items-center gap-3 me-5">
-                <div>
-                  <button
-                    type="button"
-                    className="btn d-flex align-items-center message btn-info text-white py-2 rounded-5 "
-                  >
-                    <div className="pe-3">
-                      <IoLinkOutline />
-                    </div>
-                    Suivre
-                  </button>
-                </div>
-                <div>
-                  <button
-                    type="button"
-                    className="btn d-flex align-items-center message btn-outline-info text-info py-2 rounded-5"
-                  >
-                    <div className="pe-3">
-                      <BiMessageDots />
-                    </div>
-                    Message
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="d-flex bg-white py-4 justify-content-around flex-wrap mt-3">
+       {ProfilResults.map((profile, index) => (
+        <FindProfil key={index} 
+        displayName={profile.displayName}
+        email={profile.email}
+        photoURL={profile.photoURL} />
+            ))};
+     <div className="d-flex bg-white py-4 justify-content-around flex-wrap mt-3">
         <button
           type="button"
           className="btn d-flex align-items-center  btn-info text-white rounded-5"

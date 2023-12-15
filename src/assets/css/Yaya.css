@@ -47,7 +47,8 @@
 /* Profil */
 .profil {
   position: relative;
-  bottom: 40px;
+  bottom: 50px;
+  right:100px;
 }
 .profil img {
   border: 5px solid rgb(230, 230, 219) !important;

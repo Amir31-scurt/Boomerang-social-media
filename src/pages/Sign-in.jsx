@@ -123,7 +123,7 @@ export default function Signin() {
                   Se connecter
                 {loading && <ClipLoader
                   color={'#8bcbf9'}
-                  size={25}/>}
+                  size={20}/>}
                 </button>
           
                 {/* <!-- Register buttons --> */}

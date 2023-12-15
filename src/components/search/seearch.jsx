@@ -33,7 +33,7 @@ export default function Search() {
 
   
   return (
-    <form className="form formSearch">
+    <div className="form formSearch">
       <SearchForm filter={search} func={(e)=> setSearch(e.target.value)} />{' '}
       {/* Use the reusable SearchForm component */}
       <div className="container flex-column d-flex ">
@@ -52,6 +52,6 @@ export default function Search() {
             ))}
         </div>
       </div>
-    </form>
+    </div>
   );
 }

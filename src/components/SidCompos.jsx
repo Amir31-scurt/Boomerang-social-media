@@ -40,7 +40,7 @@ export default function SideBar() {
         </div>
       ),
       title: 'Compte',
-      link: 'autre-profile',
+      link: 'User-Page',
     },
     {
       id: 3,

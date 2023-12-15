@@ -111,7 +111,7 @@
   transition: all 0.5s ease;
 }
 .menu-icon {
-  background-color: lightgray;
+  background-color: rgb(226, 227, 230, 0.6);
   border-radius: 50%;
   padding: 10px;
   color: black;
@@ -244,15 +244,31 @@ textarea {
 }
 
 .sidebar {
-  width: 80%;
+  width: 19%;
+  position: fixed;
+}
+.sidefriend {
+  width: 40%;
+  margin-top: 32px;
+  margin-right: 5px;
+}
+.sidefriend ul li {
+  list-style: none;
+  margin-top: 20px;
+  padding: 16px;
 }
 
 .sidebar ul {
   list-style: none;
+  margin-top: 20px;
   background-color: #ffffff;
-  padding: 10px;
+  padding: 20px;
   border-radius: 15px;
+  height: fit-content;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+.sidebar li {
+  padding: 10px;
 }
 
 .sidebar li a {
@@ -261,7 +277,7 @@ textarea {
 }
 .LOL {
   padding-top: 70px;
-  background-color: #c7cad0;
+  background-color: rgb(226, 227, 230, 0.6);
 }
 .sidebar li a:hover {
   color: #145da0;
@@ -353,15 +369,23 @@ textarea {
 /*  */
 
 /* The sidebar menu */
-.sidenav {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 19%; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */ /* Stay at the top */
+/* .sidenav {
+  height: 100%; 
+  width: 19%; 
+  position: fixed; 
+  z-index: 1; 
   left: 0;
-  background-color: #f7f8fa;
-  padding: 0px 15px; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
+  background-color: rgb(226, 227, 230,0.6);
+  padding: 0px 15px; 
+  overflow-x: hidden; 
+  padding-top: 20px;
+}  */
+.sidenavfriend {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  right: 0;
+  overflow-x: hidden;
   padding-top: 20px;
 }
 
@@ -381,7 +405,7 @@ textarea {
 
 /* Style page content */
 .main {
-  margin-left: 25%; /* Same as the width of the sidebar */
+  margin-left: 22%; /* Same as the width of the sidebar */
   /* padding: 0px 10px; */
   width: 100%;
   overflow: hidden;

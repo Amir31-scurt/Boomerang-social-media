@@ -1,10 +1,10 @@
 // SearchForm.js²
 import { CiSearch } from 'react-icons/ci';
 
-const SearchForm = ({ search, setSearch }) => {
-  const handleFilterChange = (event) => {
-    setSearch(event.target.value);
-  };
+const SearchForm = ({ func,filter }) => {
+  // const handleFilterChange = (event) => {
+  //   setSearch(event.target.value);
+  // };
 
   return (
     <div className="px-5 mx-2 contenu d-flex">
@@ -20,7 +20,8 @@ const SearchForm = ({ search, setSearch }) => {
             <div className="d-flex search-form-2 ms-0 ms-lg-auto mb-2">
               <div className="col-9">
                 <input
-                  onChange={handleFilterChange}
+                value={filter}
+                  onChange={func}
                   type="text"
                   name="search"
                   className="mb-0 bg-opacity-25 border-0 bg-secondary input form-control text-grey-500 "

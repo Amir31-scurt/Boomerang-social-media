@@ -74,6 +74,7 @@ function ProfilPage() {
                 <input
                   src={currentUser.Banner}
                   alt=""
+                  type="image"
                   className="img-fluid rounded-5 w-100 banner"
                 />
               </div>
@@ -99,7 +100,6 @@ function ProfilPage() {
             <div className="btn-profil d-flex align-items-center Btn-Group">
               <input
                 type="file"
-                readOnly
                 accept="image/*"
                 className="d-none"
                 id="profileImageInput"

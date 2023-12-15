@@ -99,6 +99,7 @@ function ProfilPage() {
             <div className="btn-profil d-flex align-items-center Btn-Group">
               <input
                 type="file"
+                readOnly
                 accept="image/*"
                 className="d-none"
                 id="profileImageInput"

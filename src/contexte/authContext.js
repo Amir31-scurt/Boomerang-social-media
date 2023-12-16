@@ -11,7 +11,7 @@ import { getFirestore, collection, addDoc } from 'firebase/firestore'; // Import
 export const AuthContext = createContext();
 
 export function AuthContextProvider(props) {
-  const signUp = async (email, password, prenom, nom, profilPic) => {
+  const signUp = async (email, password, prenom, nom, profilPic, Banner) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
@@ -28,6 +28,11 @@ export function AuthContextProvider(props) {
         nom: nom,
         profilPic,
         displayName: prenom + ' ' + nom,
+        Nbfollowers: 0,
+        NbFollowing: 0,
+        Followers: [],
+        Following: [],
+        Banner,
       });
 
       // Set the displayName

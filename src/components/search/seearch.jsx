@@ -42,6 +42,10 @@ export default function Search() {
 
   const handleFollowUser = async (userIdToFollow) => {
     try {
+      if (userIdToFollow === currentUser.uid) {
+        console.error('Error: Cannot follow yourself');
+        return;
+      }
       const userToFollowDocRef = doc(DB, 'users', userIdToFollow);
       const userToFollowDocSnapshot = await getDoc(userToFollowDocRef);
 
@@ -56,11 +60,13 @@ export default function Search() {
           userToFollowData.followers.includes(currentUser.uid);
 
         let newFollowState = { ...isFollowing };
+        const filteredFollowers = updatedUserToFollowFollowers.filter(
+          (followerUserId) => followerUserId !== currentUser.uid
+        );
 
         if (currentUserFollowing) {
-          updatedUserToFollowFollowers = updatedUserToFollowFollowers.filter(
-            (userId) => userId !== currentUser.uid
-          );
+          updatedUserToFollowFollowers = updatedUserToFollowFollowers =
+            filteredFollowers;
           updatedNumberfollowers -= 1;
           newFollowState[userIdToFollow] = false;
         } else {
@@ -87,14 +93,21 @@ export default function Search() {
         const users = collection(DB, 'users');
         const querySnapshot = await getDocs(users);
 
-        const profiles = querySnapshot.docs.map((doc) => ({
+        let profiles = querySnapshot.docs.map((doc) => ({
           ...doc.data(),
           userId: doc.id,
         }));
+
+        // Filter out the current user's profile immediately after fetching.
+        profiles = profiles.filter(
+          (profile) => profile.uid !== currentUser.uid
+        );
+
         const initialFollowingState = profiles.reduce((acc, profile) => {
           acc[profile.userId] = false; // Initialize isFollowing state for each user
           return acc;
         }, {});
+
         setIsFollowing(initialFollowingState);
         setSearchResults(profiles);
       } catch (error) {
@@ -102,8 +115,10 @@ export default function Search() {
       }
     };
 
-    fetchProfiles();
-  }, []);
+    if (currentUser && currentUser.uid) {
+      fetchProfiles();
+    }
+  }, [currentUser]);
 
   return (
     <div className="form formSearch">
@@ -113,12 +128,14 @@ export default function Search() {
           {searchResults &&
             searchResults
               .filter((profile) => {
+                // Exclude the current user's profile from the search results
                 return (
-                  search.trim() === '' ||
-                  (profile.displayName &&
-                    profile.displayName
-                      .toLowerCase()
-                      .includes(search.toLowerCase()))
+                  profile.userId !== currentUser.uid &&
+                  (search.trim() === '' ||
+                    (profile.displayName &&
+                      profile.displayName
+                        .toLowerCase()
+                        .includes(search.toLowerCase())))
                 );
               })
               .map((profile, index) => {
@@ -141,21 +158,24 @@ export default function Search() {
                           </div>
                         </div>
                         <div className="">
-                          <button
-                            onClick={() => handleFollowUser(profile.userId)}
-                            style={{
-                              background: isFollowing[profile.userId]
-                                ? 'gray'
-                                : 'blue',
-                              color: 'white',
-                            }}
-                            className="btn btn-primary btn-md rounded-5 mt-2 border:active-none"
-                            id="button"
-                          >
-                            {isFollowing[profile.userId]
-                              ? 'Suivi(e)'
-                              : 'Suivre'}
-                          </button>
+                          {/* Conditionally render follow button only if the profile is not the current user */}
+                          {profile.userId !== currentUser.uid && (
+                            <button
+                              onClick={() => handleFollowUser(profile.userId)}
+                              style={{
+                                background: isFollowing[profile.userId]
+                                  ? 'gray'
+                                  : 'blue',
+                                color: 'white',
+                              }}
+                              className="btn btn-primary btn-md rounded-5 mt-2 border:active-none"
+                              id="button"
+                            >
+                              {isFollowing[profile.userId]
+                                ? 'Suivi(e)'
+                                : 'Suivre'}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>

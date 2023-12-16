@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FaRegImage } from "react-icons/fa6";
-import MyButton from "../ComposTimeLine/MyButton";
-import { PostText } from "../ComposTimeLine/UtilsData";
-import { PostCard } from "./PostCard";
-import { format } from "date-fns";
-import { ToastContainer, toast } from "react-toastify";
-import { AuthContext } from "../../contexte/authContext";
+import React, { useContext, useEffect, useState } from 'react';
+import { FaRegImage } from 'react-icons/fa6';
+import MyButton from '../ComposTimeLine/MyButton';
+import { PostText } from '../ComposTimeLine/UtilsData';
+import { PostCard } from './PostCard';
+import { format } from 'date-fns';
+import { ToastContainer, toast } from 'react-toastify';
+import { AuthContext } from '../../contexte/authContext';
 import {
   addDoc,
   collection,
@@ -16,11 +16,11 @@ import {
   query,
   orderBy,
   updateDoc,
-} from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { DB, auth } from "../../config/firebase-config";
-import { storage } from "../../config/firebase-config";
-import { ClipLoader, PulseLoader } from "react-spinners";
+} from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { DB, auth } from '../../config/firebase-config';
+import { storage } from '../../config/firebase-config';
+import { ClipLoader, PulseLoader } from 'react-spinners';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -35,8 +35,8 @@ export const Cards = () => {
   //Fermeture du Modal
   const handleCloseModal = () => {
     setModalOpen(false);
-    setImageUrl("");
-    setDescript("");
+    setImageUrl('');
+    setDescript('');
     setSelectedFile(null); // Réinitialiser la sélection de fichier
   };
   // L'etat de like a un poste
@@ -46,29 +46,46 @@ export const Cards = () => {
 
   // l'etat du Tableau par defaut du Post Card
   const [postCard, setPostCard] = useState([]);
-  const DeletePost = async (documentId) => {
-    await deleteDoc(doc(DB, "posts", documentId));
-    setPostCard((cards) => cards.filter((card) => card.id !== documentId));
+
+  // Poste Delete
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
+
+  // ... other state and function definitions
+
+  const DeletePost = (documentId) => {
+    setPostToDelete(documentId);
+    setConfirmModalOpen(true);
   };
+
+  const handleConfirmDelete = async () => {
+    if (postToDelete) {
+      await deleteDoc(doc(DB, 'posts', postToDelete));
+      setPostCard((cards) => cards.filter((card) => card.id !== postToDelete));
+      setConfirmModalOpen(false);
+      setPostToDelete(null);
+    }
+  };
+
   // boutton modifier une description
 
   // l'etat de l'input  de l'image
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
   const handleChangeImageUrl = (e) => {
     setImageUrl(e.target.value);
   };
 
   // l'etat de du text Area de l'la Description
-  const [descript, setDescript] = useState("");
+  const [descript, setDescript] = useState('');
   const handleChangeDescription = (e) => {
     setDescript(e.target.value);
   };
 
   // l'etat de du text Area du Creat Post
-  const [textPost, setTextPost] = useState("");
+  const [textPost, setTextPost] = useState('');
   const Changement = (e) => {
     setTextPost(e.target.value);
-    if (textPost !== "") {
+    if (textPost !== '') {
       setAfficheBtn(true);
     } else {
       setAfficheBtn(false);
@@ -76,12 +93,12 @@ export const Cards = () => {
   };
   // L'evenement onClick sur le bouron Publier __
   const handleSubmit = async () => {
-    const docRef = await addDoc(collection(DB, "posts"), {
+    const docRef = await addDoc(collection(DB, 'posts'), {
       userID: user.uid,
       likes: 0,
       profile: user.photoURL,
       nom: user.displayName,
-      date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
       publication: textPost,
     });
     const newPostText = {
@@ -89,29 +106,29 @@ export const Cards = () => {
       likes: 0,
       profile: user.photoURL,
       nom: user.displayName,
-      date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
       publication: textPost,
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
     setPostCard([newPostText, ...postCard]);
-    setTextPost(" ");
-    toast.success("Publication réussie !", {
-      position: "top-right",
+    setTextPost(' ');
+    toast.success('Publication réussie !', {
+      position: 'top-right',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "colored",
+      theme: 'colored',
     });
 
     setAfficheBtn(false);
   };
 
   //etat message d'erreur
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const isValidImageUrl = (url) => {
     // Utilisez une expression régulière pour valider l'URL de l'image
@@ -129,7 +146,7 @@ export const Cards = () => {
     if (files && files.length > 0) {
       const selectedFile = files[0];
       setSelectedFile(selectedFile);
-      setLoading(true)
+      setLoading(true);
 
       // Stockage local du fichier
       const storageRef = ref(storage, `ImagesDePost/${selectedFile.name}`);
@@ -161,26 +178,26 @@ export const Cards = () => {
         fileRef.getDownloadURL().then((url) => {});
       });
       // Ajoutez le fichier à la publication dans Firestore
-      await addDoc(collection(DB, "posts"), {
+      await addDoc(collection(DB, 'posts'), {
         userID: user.uid,
         likes: 0,
         profile: user.photoURL,
         nom: user.displayName,
-        date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+        date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
         publication: imageUrl || URL.createObjectURL(selectedFile), // Utilisez l'URL de l'image si disponible
         description: descript,
       });
-      setErrorMessage("");
-    } else if ((imageUrl !== "" && isValidImageUrl(imageUrl)) || selectedFile) {
+      setErrorMessage('');
+    } else if ((imageUrl !== '' && isValidImageUrl(imageUrl)) || selectedFile) {
       // Si une URL d'image est fournie
       // Ajoutez l'URL de l'image à la publication dans Firestore
       try {
-        await addDoc(collection(DB, "posts"), {
+        await addDoc(collection(DB, 'posts'), {
           userID: user.uid,
           likes: 0,
           profile: user.photoURL,
           nom: user.displayName, // après on va enlever les griff('')
-          date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
           publication: imageUrl || URL.createObjectURL(selectedFile),
           description: descript,
         });
@@ -189,7 +206,7 @@ export const Cards = () => {
           likes: 0,
           profile: user.photoURL,
           nom: user.displayName,
-          date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
           publication: imageUrl || URL.createObjectURL(selectedFile),
           description: descript,
         };
@@ -197,25 +214,25 @@ export const Cards = () => {
         // Destructurer le tableau, puis ajouter un nouveau post
         setPostCard([newPost, ...postCard]);
 
-        setImageUrl("");
-        setDescript("");
+        setImageUrl('');
+        setDescript('');
         setModalOpen(false);
-        toast.success("Publication réussie !", {
-          position: "top-right",
+        toast.success('Publication réussie !', {
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: 'colored',
         });
 
-        setErrorMessage(""); // Réinitialiser le message d'erreur
+        setErrorMessage(''); // Réinitialiser le message d'erreur
         setSelectedFile(null); // Réinitialiser le fichier sélectionné
-        setImageUrl("");
+        setImageUrl('');
       } catch (e) {
-        console.error("Error adding document: ", e);
+        console.error('Error adding document: ', e);
       }
     } else {
       // Gérez le cas où aucun fichier ou URL n'est fourni
@@ -227,7 +244,7 @@ export const Cards = () => {
   // Handle like function
   const handleLikePost = async (postId) => {
     try {
-      const postDocRef = doc(DB, "posts", postId);
+      const postDocRef = doc(DB, 'posts', postId);
       const postDocSnapshot = await getDoc(postDocRef);
 
       if (postDocSnapshot.exists()) {
@@ -264,7 +281,7 @@ export const Cards = () => {
         }));
       }
     } catch (error) {
-      console.error("Error toggling like/dislike: ", error);
+      console.error('Error toggling like/dislike: ', error);
     }
   };
 
@@ -280,7 +297,7 @@ export const Cards = () => {
   //useEffect pour effectuer une requête Firestore lors du montage du composant
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      query(collection(DB, "posts"), orderBy("date", "desc")), // Ordering by 'date' field in descending order
+      query(collection(DB, 'posts'), orderBy('date', 'desc')), // Ordering by 'date' field in descending order
       (snapshot) => {
         const posts = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -312,11 +329,11 @@ export const Cards = () => {
   }, []);
 
   const modalStyle = {
-    display: isModalOpen ? "block" : "none",
+    display: isModalOpen ? 'block' : 'none',
   };
 
   const DisplayTime = {
-    display: afficheBtn ? "block" : "none",
+    display: afficheBtn ? 'block' : 'none',
   };
 
   //================ Le bouton Modifier Funtions===DEBUT=========
@@ -329,15 +346,15 @@ export const Cards = () => {
     );
 
     // Mettre à jour la description du post dans Firestore
-    const postRef = doc(DB, "posts", postId);
+    const postRef = doc(DB, 'posts', postId);
     updateDoc(postRef, {
       description: newDescription,
     })
       .then(() => {
-        console.log("Document successfully updated!");
+        console.log('Document successfully updated!');
       })
       .catch((error) => {
-        console.error("Error updating document: ", error);
+        console.error('Error updating document: ', error);
       });
   };
   //================ Le bouton Modifier Funtions===DEBUT=========
@@ -385,6 +402,13 @@ export const Cards = () => {
               </div>
             </div>
           </div>
+          <ConfirmationModal
+            isOpen={isConfirmModalOpen}
+            onClose={() => setConfirmModalOpen(false)}
+            onConfirm={handleConfirmDelete}
+          >
+            <p>Are you sure you want to delete this post?</p>
+          </ConfirmationModal>
         </div>
       ))}
 
@@ -466,10 +490,12 @@ export const Cards = () => {
                     onChange={handleFileChange}
                   />
                   {/*=============== Loading Code =============== */}
-                  {loading && <PulseLoader className="m-4" color={"#128"} size={18} />}
+                  {loading && (
+                    <PulseLoader className="m-4" color={'#128'} size={18} />
+                  )}
                   {/*=============== Loading Code Fin=============== */}
 
-                  {imageUrl === "" && selectedFile ? (
+                  {imageUrl === '' && selectedFile ? (
                     <div className="imgPreview">
                       <p className="fichierChoisi ps-3">
                         <span className="Typy pe-2">Type de fichier :</span>
@@ -503,6 +529,38 @@ export const Cards = () => {
       </div>
       <ToastContainer />
       {/*________________________Le Modal_ FIN _______________________*/}
+    </div>
+  );
+};
+const ConfirmationModal = ({ isOpen, onClose, onConfirm, children }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-wrapper">
+        <div className="modal-M">
+          <div className="modal-header">
+            <span className="close-button" onClick={onClose}>
+              &times;
+            </span>
+          </div>
+          <div className="modal-body">
+            <h2>Êtes-vous sûr?</h2>
+            <p>
+              Voulez-vous vraiment supprimer ce poste ? Ce processus ne peut pas
+              être annulé.
+            </p>
+          </div>
+          <div className="modal-footer">
+            <button className="btn cancel" onClick={onClose}>
+              Annuler
+            </button>
+            <button className="btn delete" onClick={onConfirm}>
+              Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

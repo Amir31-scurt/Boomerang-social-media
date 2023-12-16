@@ -28,10 +28,6 @@ export function AuthContextProvider(props) {
         nom: nom,
         profilPic,
         displayName: prenom + ' ' + nom,
-        Nbfollowers: 0,
-        NbFollowing: 0,
-        Followers: [],
-        Following: [],
         Banner,
       });
 

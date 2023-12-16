@@ -2,7 +2,6 @@ import React from 'react';
 import { IoLinkOutline } from 'react-icons/io5';
 import { BiMessageDots } from 'react-icons/bi';
 import { ImUserPlus } from "react-icons/im";
-import BoutonSuivre from './BoutonSuivre';
 import ObtenirDonnee from './ObtenirDonnee';
 import './Yaya.css';
 
@@ -125,7 +124,7 @@ import './Yaya.css';
 // );
 // const ContenuC = () => <div>Contenu C</div>;
 
-function AutreProfile ( estSuivi) {
+function AutreProfile ( handleClickSuivre) {
 
   // const [contenuId, setContenuId] = useState('contenuA');
 
@@ -168,12 +167,15 @@ function AutreProfile ( estSuivi) {
             <div className="d-flex flex-wrap justify-content-around">
               <div className="colonne">
                 <div className="bloc d-flex flex wrap justify-content-center">
-                  <div className="profil "></div>
+                  <div className="profil ">
+                  <img src="https://cdn.pixabay.com/photo/2020/12/26/13/19/christmas-background-5861438_640.jpg" alt="" />
+                  </div>
                   <div className="nom-utilisateur flex-column text-center ms-4 mt-2">
                     <div className="d-flex justify-content-center">
                       <div className="me-2">
                         <IoLinkOutline />
                       </div>
+                      <h5></h5>
                     </div>
                   </div>
                 </div>
@@ -196,10 +198,11 @@ function AutreProfile ( estSuivi) {
               </div>
               <div className="d-flex justify-content-center gap-4 mt-2">
                 <div>
-                  <button
+                  <button onClick={handleClickSuivre}
                     type="button"
                     className="btn d-flex align-items-center message btn-info text-white py-2 px-4 rounded-5 "
                   >
+                  
                     <div className="pe-3">
                       <ImUserPlus />
                     </div>

@@ -3,23 +3,13 @@ import React  from "react";
 import { ImUserPlus } from "react-icons/im";
 
 
-const BoutonSuivre = ({
-
-}) => {
-  const [estSuivi, setEstSuivi] = useState(false);
+const BoutonSuivre = () => {
+   const [estSuivi, setEstSuivi] = useState(false);
 
    const handleClickSuivre = () => {
      // Mettez à jour l'état de suivi lors du clic sur le bouton
      setEstSuivi(!estSuivi);
    };
-//   const [contenuId, setContenuId] = useState("contenuA");
-
-//    const [estSuivi, setEstSuivi] = useState(false);
-
-//    const handleClickSuivre = () => {
-//      // Mettez à jour l'état de suivi lors du clic sur le bouton
-//      setEstSuivi(!estSuivi);
-//    };
 
 //   const afficherContenu = (id) => {
 //     setContenuId(id);

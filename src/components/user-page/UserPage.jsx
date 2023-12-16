@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CgMore } from 'react-icons/cg';
 // import { AiOutlineEdit } from 'react-icons/ai';
 // import { PostImageProfile } from './PostImageProfile';
 import { Banner } from '../user-page/Banner';
+import { AuthContext } from '../../contexte/authContext';
 
 export function UserPage() {
+  const { user, currentUser } = useContext(AuthContext);
   return (
     <div>
       <div className="d-flex flex-column gap-0 gap-lg-5 align-items-center justify-content-center py-0 py-lg-3">
@@ -15,15 +17,18 @@ export function UserPage() {
             <div className="d-flex px-5 z-5 position-absolute position-lg-relative w-50 w-lg-auto max-lg:top-52 max-lg:rounded-xl max-lg:mt-0 max-lg:bg-gray-100 max-lg:flex-col items-center max-lg:justify-center justify-around mt-4">
               <div className="d-flex flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-start gap-4 position-absolute max-lg:-top-16 col-10 col-lg-7">
                 <div className="">
-                  <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  <input
+                    type="image"
+                    src={currentUser.photoURL}
+                    alt="#"
                     className="cursor-pointer rounded photo_Profile rounded-circle border border-4 border-white"
-                    alt=""
                   />
                 </div>
                 <div className="d-flex flex-column text-center text-lg-start w-50 col-lg-9">
-                  <h1 className="fs-3 fw-bold text-dark">Becky Lynch</h1>
-                  <h2 className="fs-6 text-secondary">example@gmail.com</h2>
+                  <h1 className="fs-3 fw-bold text-dark">
+                    {currentUser.displayName}
+                  </h1>
+                  <h2 className="fs-6 text-secondary">{currentUser.email}</h2>
                 </div>
               </div>
               <div className="d-flex z-5 align-items-center justify-content-center justify-contet-lg-end gap-4 w-100 position-absolute position-lg-relative max-lg:top-48">

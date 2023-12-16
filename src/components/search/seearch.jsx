@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
-import SearchForm from './SearchForm.jsx';
-import '../../App.css';
+import SearchForm from '../search/SearchForm.jsx';
+import './search.css';
 import { db, DB } from '../../config/firebase-config.js';
 import { collection, getDocs } from 'firebase/firestore';
 import { AuthContext } from '../../contexte/authContext.js';
 
-export default function Search() {
+export default function Search(searchResults, isFollowing, userId) {
+  
   const { currentUser } = useContext(AuthContext);
   const [search, setSearch] = useState('');
+  
+  const handleFollowUser = async (userIdToFollow) => {
   return (
     <div className="form formSearch">
       <SearchForm filter={search} func={(e) => setSearch(e.target.value)} />
@@ -71,3 +74,5 @@ export default function Search() {
     </div>
   );
 }
+}
+

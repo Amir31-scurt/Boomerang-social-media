@@ -1,6 +1,6 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
-import Chat from "../components/Chat";
+import Sidebar from "../components/myChatComponents/Sidebar";
+import Chat from "../components/myChatComponents/Chat";
 
 export default function MyChatHome() {
   return (

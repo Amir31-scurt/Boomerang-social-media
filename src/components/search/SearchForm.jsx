@@ -2,8 +2,6 @@
 import { CiSearch } from 'react-icons/ci';
 import '../search/search.css';
 
-
-
 const SearchForm = ({ search, setSearch }) => {
   
   const handleFilterChange = (event) => {

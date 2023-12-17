@@ -1,7 +1,6 @@
 import { FiUser } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { PiTelevisionSimpleBold } from 'react-icons/pi';
-import { AiOutlineThunderbolt } from 'react-icons/ai';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -50,6 +49,7 @@ export default function SideBar() {
         </div>
       ),
       title: 'Poster',
+      link: '/Timeline',
       onclick: () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
@@ -85,8 +85,8 @@ export default function SideBar() {
   return (
     <div>
       {/* <!-- Side navigation --> */}
-      <div className="sidenav sideComp z-3">
-        <ul>
+      <div className="sidenav sideComp">
+        <ul className="Cloning">
           <SideMenu />
         </ul>
         {/* <ul>

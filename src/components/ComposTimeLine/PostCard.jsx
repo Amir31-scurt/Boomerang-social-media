@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { FcLike } from 'react-icons/fc';
 import { PiShareNetworkBold } from 'react-icons/pi';
 import { DropDown } from './DropDown';
-import { FiEdit3 } from 'react-icons/fi';
 import { FaCircleXmark } from 'react-icons/fa6';
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
-import { is } from 'date-fns/locale';
 
 export const PostCard = ({
   publication,
@@ -80,7 +78,7 @@ export const PostCard = ({
               <div className="ms-0">
                 <p className="fw-bold text-secondary mt-2 d-flex flex-column m-0 p-0 align-items-start fs-6">
                   {nom} <br />
-                  <span className="text-secondary dato mb-0 z-1">{date}</span>
+                  <span className="text-secondary dato mb-0">{date}</span>
                 </p>
               </div>
             </div>

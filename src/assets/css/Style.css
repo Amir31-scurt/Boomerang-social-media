@@ -333,7 +333,7 @@
   height: 40px;
   width: 95%;
   display: flex;
-  justify-content: start;
+  justify-content: left;
   font-size: 15px;
   font-weight: bold;
   margin: auto;

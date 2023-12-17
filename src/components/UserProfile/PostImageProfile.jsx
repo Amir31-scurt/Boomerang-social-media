@@ -1,47 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { DB } from '../../config/firebase-config';
+import { PostCard } from '../ComposTimeLine/PostCard';
 
-export function PostImageProfile() {
+export function PostImageProfile({
+  userId,
+  currentUser,
+  handleLikePost,
+  DeletePost,
+  handleEdit,
+}) {
+  const [userPosts, setUserPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      const postsRef = collection(DB, 'posts');
+      const q = query(postsRef, where('userID', '==', userId));
+
+      try {
+        const querySnapshot = await getDocs(q);
+        const posts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setUserPosts(posts);
+      } catch (error) {
+        console.error('Error fetching user posts: ', error);
+      }
+    };
+
+    if (userId) {
+      fetchUserPosts();
+    }
+  }, [userId]);
+
   return (
-    <div>
-      <div className="imagesSec w-full">
-        <div className="">
-          <div className="imagesPublished p-3">
-            <img
-              src="https://i.ytimg.com/vi/uh2_Cuddsbw/maxresdefault.jpg"
-              alt=""
-            />
-            <img
-              src="https://images.unsplash.com/photo-1543328874-afb1164619bb?q=80&w=1520&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
-            />
-            <img
-              src="https://th.bing.com/th/id/OIP.5MedXij5c_qwIxOGz_TefwAAAA?rs=1&pid=ImgDetMain"
-              alt=""
-            />
-            <img
-              src="https://images.unsplash.com/photo-1580210231555-177bf86a3002?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
-            />
-            <img
-              src="https://images.unsplash.com/photo-1587368062478-e804f5e2a55a?q=80&w=1623&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt=""
-            />
-            <img
-              src="https://e00-marca.uecdn.es/assets/multimedia/imagenes/2018/10/28/15407534067095.jpg"
-              alt=""
-            />
-            <img
-              src="https://th.bing.com/th/id/R.f33f4e4cd9cb19eb26806b95ae8ac942?rik=6WSCqUnCrFsueQ&pid=ImgRaw&r=0"
-              alt=""
-            />
-            <img
-              src="https://th.bing.com/th/id/R.baabd8e60763712265db1480dfcfb7a1?rik=ARAmvUSo40gJFA&pid=ImgRaw&r=0"
-              alt=""
-            />
-            
-          </div>
-        </div>
-      </div>
+    <div className="milieu">
+      {userPosts.map((card) => (
+        <PostCard
+          key={card.id}
+          id={card.userID}
+          likes={card.likes}
+          addLikes={() => handleLikePost(card.userID)}
+          profile={card.profile}
+          nom={card.nom}
+          date={card.date}
+          suppression={card.suppression}
+          publication={card.publication}
+          description={card.description}
+          handleDelete={(id) => DeletePost(card.userID)}
+          currentUser={currentUser}
+          handleEdit={(newDescription) =>
+            handleEdit(card.userID, newDescription)
+          }
+        />
+      ))}
     </div>
   );
 }

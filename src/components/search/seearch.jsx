@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import SearchForm from './SearchForm.jsx';
 import '../../App.css';
-import { db, DB } from '../../config/firebase-config.js';
+import { DB } from '../../config/firebase-config.js';
 import { collection, getDocs } from 'firebase/firestore';
 import { AuthContext } from '../../contexte/authContext.js';
 
@@ -143,18 +143,17 @@ export default function Search() {
                   <div key={index} className="mb-3 col-12">
                     <div className="card w-100  position-relative">
                       <div className="mx-4 my-3 d-flex justify-content-between align-items-center cardConte">
-                        <div className="d-flex align-items-center">
+                        <div className="d-flex align-items-center justify-content-center">
                           <div className="rounded rounded-circle ms-2">
-                            <input
-                              type="image"
-                              alt=""
+                            <img
+                              alt={`${profile.displayName}'s profile`}
                               className="icone-carte me-3 image rounded rounded-circle ms-2"
-                              src={profile.photoURL}
+                              src={profile.profilPic}
                             />
                           </div>
-                          <div className="paraTest ms-3 text-start">
+                          <div className="paraTest ms-3 text-start d-flex flex-column align-items-start">
                             <h6 className="fw-bold">{profile.displayName}</h6>
-                            <p className="ml-1">{profile.email}</p>
+                            <p className="m-0 p-0">{profile.email}</p>
                           </div>
                         </div>
                         <div className="">

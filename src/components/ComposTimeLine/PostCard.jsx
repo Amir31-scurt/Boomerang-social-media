@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { FcLike } from 'react-icons/fc';
 import { PiShareNetworkBold } from 'react-icons/pi';
 import { DropDown } from './DropDown';
-import { FiEdit3 } from 'react-icons/fi';
 import { FaCircleXmark } from 'react-icons/fa6';
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
-import { is } from 'date-fns/locale';
 
 export const PostCard = ({
   publication,

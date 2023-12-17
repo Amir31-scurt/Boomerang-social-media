@@ -29,10 +29,19 @@
   position: relative;
   bottom: 16vh;
 }
-
+.bt {
+  background-color: #145da0;
+}
+.bt:hover {
+  background-color: #0c3861;
+}
+.bt2 {
+  border: 1px solid #145da0;
+  color: #145da0;
+}
 .Btn-Group {
   position: relative;
-  bottom: 8vh;
+  bottom: 7vh;
 }
 
 .Btn-Group button,
@@ -44,6 +53,7 @@ label {
 
 .Btn-Group button:hover {
   background-color: #145da0;
+  border: none;
 }
 
 .Publications {
@@ -54,7 +64,6 @@ label {
   /* padding: 10px 20px; */
   color: #145da0;
   font-weight: 600;
-  border-radius: 15px;
 }
 .Publications .act,
 .Publications button:hover {
@@ -62,7 +71,6 @@ label {
   padding: 10px 20px;
   color: white;
   font-weight: 600;
-  border-radius: 35px;
 }
 
 .imagesPublished {
@@ -82,7 +90,7 @@ label {
   box-shadow: -1px 1px 26px -1px rgba(171, 171, 171, 0.76);
 }
 
-@media (max-width: 768px) and (max-width: 1024px) {
+@media (max-width: 1024px) {
   .imagesPublished {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -101,12 +109,11 @@ label {
   }
 
   .page-profil {
-    height: 40vh;
+    height: fit-content;
   }
 
   .this-profil {
     position: relative;
-    bottom: 12vh;
   }
 
   .image-display-before,
@@ -138,5 +145,11 @@ label {
     display: flex;
     flex-direction: column;
     line-height: 5px;
+  }
+  .Btn-Group button,
+  label {
+    padding: 0 30px;
+    font-weight: 600;
+    line-height: 15px;
   }
 }

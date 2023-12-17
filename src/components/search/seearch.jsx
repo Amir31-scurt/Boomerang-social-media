@@ -6,10 +6,12 @@ import { db, DB } from '../../config/firebase-config.js';
 import { collection, getDocs } from 'firebase/firestore';
 import { AuthContext } from '../../contexte/authContext.js';
 
-export default function Search(searchResults, isFollowing, userId) {
+export default function Search() {
   
   const { currentUser } = useContext(AuthContext);
   const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [isFollowing, setIsFollowing] = useState({});
   
   const handleFollowUser = async (userIdToFollow) => {
     try {
@@ -51,7 +53,8 @@ export default function Search(searchResults, isFollowing, userId) {
           Numberfollowers: updatedNumberfollowers,
         });
 
-        setIsFollowing(newFollowState); // Update isFollowing state
+        setIsFollowing(newFollowState);
+        console.log(); // Update isFollowing state
       }
     } catch (error) {
       console.error('Error toggling follow/unfollow: ', error);

@@ -1,31 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FaRegImage } from 'react-icons/fa6';
-import MyButton from '../ComposTimeLine/MyButton';
-import { PostText } from '../ComposTimeLine/UtilsData';
-import { PostCard } from './PostCard';
-import { format } from 'date-fns';
-import { firebase } from 'firebase/app';
+import React, { useContext, useEffect, useState } from "react";
+import { FaRegImage } from "react-icons/fa6";
+import MyButton from "../ComposTimeLine/MyButton";
+import { PostText } from "../ComposTimeLine/UtilsData";
+import { PostCard } from "./PostCard";
+import { format } from "date-fns";
+import { ToastContainer, toast } from "react-toastify";
+import { AuthContext } from "../../contexte/authContext";
 import {
   addDoc,
   collection,
-  getDoc,
-  onSnapshot,
   deleteDoc,
   doc,
+  getDoc,
+  onSnapshot,
   query,
   orderBy,
-  getDocs,
   updateDoc,
-} from 'firebase/firestore';
-import { ToastContainer, toast } from 'react-toastify';
-import { DB, auth } from '../../config/firebase-config';
-import { AuthContext } from '../../contexte/authContext';
-import { TableElems, TextTablePost } from './TableElems';
+} from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { DB, auth } from "../../config/firebase-config";
+import { storage } from "../../config/firebase-config";
+import { ClipLoader, PulseLoader } from "react-spinners";
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
   // l'etat du Modal par defaut
   const [isModalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   // Ouverture du Modal
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -33,8 +35,9 @@ export const Cards = () => {
   //Fermeture du Modal
   const handleCloseModal = () => {
     setModalOpen(false);
-    setImageUrl('');
-    setDescript('');
+    setImageUrl("");
+    setDescript("");
+    setSelectedFile(null); // Réinitialiser la sélection de fichier
   };
   // L'etat de like a un poste
   const [postLikes, setPostLikes] = useState({});
@@ -44,28 +47,28 @@ export const Cards = () => {
   // l'etat du Tableau par defaut du Post Card
   const [postCard, setPostCard] = useState([]);
   const DeletePost = async (documentId) => {
-    await deleteDoc(doc(DB, 'posts', documentId));
+    await deleteDoc(doc(DB, "posts", documentId));
     setPostCard((cards) => cards.filter((card) => card.id !== documentId));
   };
   // boutton modifier une description
 
   // l'etat de l'input  de l'image
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
   const handleChangeImageUrl = (e) => {
     setImageUrl(e.target.value);
   };
 
   // l'etat de du text Area de l'la Description
-  const [descript, setDescript] = useState('');
+  const [descript, setDescript] = useState("");
   const handleChangeDescription = (e) => {
     setDescript(e.target.value);
   };
 
   // l'etat de du text Area du Creat Post
-  const [textPost, setTextPost] = useState('');
+  const [textPost, setTextPost] = useState("");
   const Changement = (e) => {
     setTextPost(e.target.value);
-    if (textPost !== '') {
+    if (textPost !== "") {
       setAfficheBtn(true);
     } else {
       setAfficheBtn(false);
@@ -73,12 +76,12 @@ export const Cards = () => {
   };
   // L'evenement onClick sur le bouron Publier __
   const handleSubmit = async () => {
-    const docRef = await addDoc(collection(DB, 'posts'), {
+    const docRef = await addDoc(collection(DB, "posts"), {
       userID: user.uid,
       likes: 0,
       profile: user.photoURL,
       nom: user.displayName,
-      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
+      date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
       publication: textPost,
     });
     const newPostText = {
@@ -86,29 +89,29 @@ export const Cards = () => {
       likes: 0,
       profile: user.photoURL,
       nom: user.displayName,
-      date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
+      date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
       publication: textPost,
     };
 
     //Destructurer le tableau, puis ajouter un nouveau post
     setPostCard([newPostText, ...postCard]);
-    setTextPost(' ');
-    toast.success('Publication réussie !', {
-      position: 'top-right',
+    setTextPost(" ");
+    toast.success("Publication réussie !", {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'colored',
+      theme: "colored",
     });
 
     setAfficheBtn(false);
   };
 
   //etat message d'erreur
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const isValidImageUrl = (url) => {
     // Utilisez une expression régulière pour valider l'URL de l'image
@@ -120,88 +123,111 @@ export const Cards = () => {
 
   // Ajouter un nouvel état
   const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleFileChange = (e) => {
-    const fileInput = e.target;
-    const file = fileInput.files[0];
+    const { files } = e.target;
+    if (files && files.length > 0) {
+      const selectedFile = files[0];
+      setSelectedFile(selectedFile);
+      setLoading(true)
 
-    if (file) {
-      setSelectedFile(file);
-      setImageUrl(''); // Réinitialiser l'URL de l'image
+      // Stockage local du fichier
+      const storageRef = ref(storage, `ImagesDePost/${selectedFile.name}`);
+
+      // Ajout du fichier dans le stockage Firebase
+      uploadBytes(storageRef, selectedFile).then(() => {
+        // Obtenir l'URL de téléchargement du fichier stocké dans le stockage Firebase
+        getDownloadURL(storageRef).then((url) => {
+          // Ajouter le fichier à la publication dans Firestore
+          setImageUrl(url);
+          setSelectedFile(null); // Réinitialiser la sélection de fichier
+          setLoading(false);
+        });
+      });
     }
   };
 
   //================ Le bouton Type File===fin=========
 
-  const handleAddPost = async (e) => {
-    e.preventDefault();
+  const handleAddPost = async () => {
+    if (selectedFile) {
+      // Stockage local du fichier
+      const storage = getStorage();
+      const storageRef = storage.ref();
+      const fileRef = storageRef.child(selectedFile.name);
 
-    if (
-      (imageUrl !== '' && isValidImageUrl(imageUrl)) ||
-      selectedFile ||
-      selectedImage
-    ) {
+      // Obtenir l'URL de téléchargement du fichier stocké localement
+      fileRef.put(selectedFile).then(() => {
+        fileRef.getDownloadURL().then((url) => {});
+      });
+      // Ajoutez le fichier à la publication dans Firestore
+      await addDoc(collection(DB, "posts"), {
+        userID: user.uid,
+        likes: 0,
+        profile: user.photoURL,
+        nom: user.displayName,
+        date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+        publication: imageUrl || URL.createObjectURL(selectedFile), // Utilisez l'URL de l'image si disponible
+        description: descript,
+      });
+      setErrorMessage("");
+    } else if ((imageUrl !== "" && isValidImageUrl(imageUrl)) || selectedFile) {
+      // Si une URL d'image est fournie
+      // Ajoutez l'URL de l'image à la publication dans Firestore
       try {
-        const docRef = await addDoc(collection(DB, 'posts'), {
+        await addDoc(collection(DB, "posts"), {
           userID: user.uid,
           likes: 0,
           profile: user.photoURL,
           nom: user.displayName, // après on va enlever les griff('')
-          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
-          publication: selectedFile
-            ? URL.createObjectURL(selectedFile)
-            : selectedImage
-            ? URL.createObjectURL(selectedImage)
-            : imageUrl,
+          date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+          publication: imageUrl || URL.createObjectURL(selectedFile),
           description: descript,
         });
         const newPost = {
           userID: user.uid,
           likes: 0,
-          profile: user.photoURL, // après on va enlever les griff('')
-          nom: user.displayName, // après on va enlever les griff('')
-          date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
-          publication: selectedFile
-            ? URL.createObjectURL(selectedFile)
-            : selectedImage // Utiliser l'image sélectionnée
-            ? selectedImage
-            : imageUrl,
+          profile: user.photoURL,
+          nom: user.displayName,
+          date: format(new Date(), "dd/MM/yyyy - HH:mm:ss"),
+          publication: imageUrl || URL.createObjectURL(selectedFile),
           description: descript,
         };
 
         // Destructurer le tableau, puis ajouter un nouveau post
         setPostCard([newPost, ...postCard]);
 
-        setImageUrl('');
-        setDescript('');
+        setImageUrl("");
+        setDescript("");
         setModalOpen(false);
-        toast.success('Publication réussie !', {
-          position: 'top-right',
+        toast.success("Publication réussie !", {
+          position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: 'colored',
+          theme: "colored",
         });
 
-        setErrorMessage(''); // Réinitialiser le message d'erreur
+        setErrorMessage(""); // Réinitialiser le message d'erreur
         setSelectedFile(null); // Réinitialiser le fichier sélectionné
-        setSelectedImage(null); // Réinitialiser l'image sélectionnée
+        setImageUrl("");
       } catch (e) {
-        console.error('Error adding document: ', e);
+        console.error("Error adding document: ", e);
       }
     } else {
+      // Gérez le cas où aucun fichier ou URL n'est fourni
       setErrorMessage("Ajouter l'adresse de l'image ou de la vidéo");
     }
   };
+
   //===================================================================== Like post const //
   // Handle like function
   const handleLikePost = async (postId) => {
     try {
-      const postDocRef = doc(DB, 'posts', postId);
+      const postDocRef = doc(DB, "posts", postId);
       const postDocSnapshot = await getDoc(postDocRef);
 
       if (postDocSnapshot.exists()) {
@@ -238,7 +264,7 @@ export const Cards = () => {
         }));
       }
     } catch (error) {
-      console.error('Error toggling like/dislike: ', error);
+      console.error("Error toggling like/dislike: ", error);
     }
   };
 
@@ -254,7 +280,7 @@ export const Cards = () => {
   //useEffect pour effectuer une requête Firestore lors du montage du composant
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      query(collection(DB, 'posts'), orderBy('date', 'desc')), // Ordering by 'date' field in descending order
+      query(collection(DB, "posts"), orderBy("date", "desc")), // Ordering by 'date' field in descending order
       (snapshot) => {
         const posts = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -279,23 +305,18 @@ export const Cards = () => {
     const fetchLikes = async () => {
       const likesData = {};
 
-      sortedPosts.forEach(async (post) => {
-        // ... Fetch likes from Firestore and populate likesData
-        // Inside the loop, populate likesData for each post ID
-      });
-
+      sortedPosts.forEach(async (post) => {});
       setPostLikes(likesData);
     };
-
     fetchLikes();
   }, []);
 
   const modalStyle = {
-    display: isModalOpen ? 'block' : 'none',
+    display: isModalOpen ? "block" : "none",
   };
 
   const DisplayTime = {
-    display: afficheBtn ? 'block' : 'none',
+    display: afficheBtn ? "block" : "none",
   };
 
   //================ Le bouton Modifier Funtions===DEBUT=========
@@ -308,15 +329,15 @@ export const Cards = () => {
     );
 
     // Mettre à jour la description du post dans Firestore
-    const postRef = doc(DB, 'posts', postId);
+    const postRef = doc(DB, "posts", postId);
     updateDoc(postRef, {
       description: newDescription,
     })
       .then(() => {
-        console.log('Document successfully updated!');
+        console.log("Document successfully updated!");
       })
       .catch((error) => {
-        console.error('Error updating document: ', error);
+        console.error("Error updating document: ", error);
       });
   };
   //================ Le bouton Modifier Funtions===DEBUT=========
@@ -437,29 +458,31 @@ export const Cards = () => {
                 <label for="fileInput" class="custom-button1 fs-6">
                   Choisir Image / vidéo
                 </label>
-                <input
-                  type="file"
-                  id="fileInput"
-                  className="file-input2"
-                  onChange={(e) => {
-                    handleFileChange(e);
-                    setSelectedImage(e.target.files[0]); // gérer l'image localement
-                  }}
-                />
+                <div className="w-100 mb-4">
+                  <input
+                    type="file"
+                    id="fileInput"
+                    className="file-input2"
+                    onChange={handleFileChange}
+                  />
+                  {/*=============== Loading Code =============== */}
+                  {loading && <PulseLoader className="m-4" color={"#128"} size={18} />}
+                  {/*=============== Loading Code Fin=============== */}
 
-                {selectedFile && (
-                  <div>
-                    <p className="fichierChoisi ps-3">
-                      <span className="Typy pe-2">Type de fichier :</span>
-                      {selectedFile.type}
-                    </p>
-                    <img
-                      src={URL.createObjectURL(selectedFile)}
-                      alt="Aperçu du fichier sélectionné"
-                      className="preview-image"
-                    />
-                  </div>
-                )}
+                  {imageUrl === "" && selectedFile ? (
+                    <div className="imgPreview">
+                      <p className="fichierChoisi ps-3">
+                        <span className="Typy pe-2">Type de fichier :</span>
+                        {selectedFile.type}
+                      </p>
+                      <img
+                        src={URL.createObjectURL(selectedFile)}
+                        alt=""
+                        className="previewIimage img-fluid"
+                      />
+                    </div>
+                  ) : null}
+                </div>
               </div>
             </div>
 

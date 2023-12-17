@@ -1,14 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react';
-import './search.css';
-import noire from '../../assets/images/noire.png';
+
+import React, { useState, useEffect, useContext } from 'react';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase-config.js';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { AuthContext } from '../../contexte/authContext.js';
+import { Link } from 'react-router-dom';
 
-const ProfileCard = ({ photoURL, displayName, email }) => {
-  const { user } = useContext(AuthContext);
+const ProfileCard = ({ photoURL, displayName, email, userId, onProfileClick }) => {
+  const { user, currentUser } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followersCount, setFollowersCount] = useState(0);
+  const [followClicked, setFollowClicked] = useState(false);
 
+  
   useEffect(() => {
     const fetchFollowStatus = async () => {
       try {
@@ -43,7 +46,7 @@ const ProfileCard = ({ photoURL, displayName, email }) => {
           updatedFollows -= 1;
           updatedUserFollowing = updatedUserFollowing.filter(
             (followedId) => followedId !== user.uid
-          );
+          ); 
         } else {
           updatedFollows += 1;
           updatedUserFollowing.push(user.uid);
@@ -64,15 +67,19 @@ const ProfileCard = ({ photoURL, displayName, email }) => {
   return (
     <div className="mb-3 col-md-6">
       <div className="card w-100 position-relative">
-        <div className="imageProfile">
-          <img src={photoURL} alt="" className="img-fluid w-100" />
+        <div className="imageProfile"> 
+          {/* <img src={noire} alt="" className="image" /> */}
+
         </div>
         <div className="mx-4 mt-3 d-flex justify-content-between cardConte">
           <div className="d-flex">
             <div className="rounded searchRounded rounded-circle ms-2">
-              <img src={noire} alt="" className="image" />
+            <Link to={"/autre-profile"} >
+          <img     src={photoURL}  alt="" className="img-fluid w-100" />
+          </Link>
+         
             </div>
-            <div className="paraTest ms-3">
+            <div className="paraTest ms-3 text-start">
               <h6 className="fw-bold">{displayName}</h6>
               <p className="ml-1">{email}</p>
             </div>
@@ -85,9 +92,10 @@ const ProfileCard = ({ photoURL, displayName, email }) => {
                 color: 'white',
               }}
               className="w-20 btn btn-primary btn-sm rounded-5 mt-2 border:active-none"
+
               id="button"
             >
-              {isFollowing ? 'Suivi(s)' : 'Suivre'}
+              {isFollowing ? 'Unfollow' : 'Follow'}
             </button>
           </div>
         </div>

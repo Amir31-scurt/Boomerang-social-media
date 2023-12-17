@@ -7,6 +7,7 @@ import { BiSolidUserPin } from 'react-icons/bi';
 import { db } from '../../config/firebase-config.js';
 import { collection,getDocs } from 'firebase/firestore';
 import FindProfil from '../../pages/FindProfil.jsx';
+import ProfileCard from '../search/ProfileCard.jsx';
 
 const ContenuA = () => (
   <div className="container py-4 rounded-3 imagespublié mt-3 ">
@@ -72,10 +73,13 @@ const ContenuB = () => <div>Contenu B</div>;
 const ContenuC = () => <div>Contenu C</div>;
 const AutreProfile = () => {
   const [contenuId, setContenuId] = useState('contenuA');
- 
+  
+  const [clickedUserId, setClickedUserId] = useState(null); // State to store the clicked user's ID
+
   const afficherContenu = (id) => {
     setContenuId(id);
   };
+
   const [ProfilResults, setProfilResults] = useState([]);
 
   useEffect(() => {
@@ -85,20 +89,35 @@ const AutreProfile = () => {
 
       const profiles = querySnapshot.docs.map((doc) => doc.data());
       setProfilResults(profiles);
-      console.log(profiles)
     };
 
     fetchFind();
   }, []);
 
+  // Callback function to handle profile click
+  const handleProfileClick = (userId) => {
+    setClickedUserId(userId);
+    setContenuId('findProfil'); // Set the content ID to 'findProfil'
+  }
+      
+      
+
+ 
+
   return (
     <div className="container">
-       {ProfilResults.map((profile, index) => (
-        <FindProfil key={index} 
-        displayName={profile.displayName}
-        email={profile.email}
-        photoURL={profile.photoURL} />
-            ))};
+    
+
+      {ProfilResults.map((profile, index) => (
+        <FindProfil
+          key={index}
+          userId={profile.userId}
+          displayName={profile.displayName}
+          email={profile.email}
+          photoURL={profile.photoURL}
+          onProfileClick={handleProfileClick} // Pass the callback function
+        />
+      ))}
      <div className="d-flex bg-white py-4 justify-content-around flex-wrap mt-3">
         <button
           type="button"

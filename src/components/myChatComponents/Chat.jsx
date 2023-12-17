@@ -1,8 +1,8 @@
 import React from "react";
 // import user from "../images/user.png";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
-// import Messages from "./Messages";
-// import Input from "./Input";
+import Input from "./Input";
+import Messages from "./Messages";
 
 export default function Chat() {
   return (
@@ -15,8 +15,8 @@ export default function Chat() {
           <i className="bi bi-three-dots"></i>
         </div>
       </div>
-      {/* <Messages />
-      <Input /> */}
+      <Messages />
+      <Input />
     </div>
   );
 }

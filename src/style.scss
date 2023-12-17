@@ -80,16 +80,16 @@
     .container{
         border: 1px solid #fff;
         border-radius: 10px;
-        width: 65%;
-        height: 80%;
+        width: 95%;
+        height: 95%;
         display: flex;
         overflow: hidden;
     }
     .sidebar{
         flex: 1;
         background-color: #50624F;
-        border-right: 1x solid #000;
-
+        border-right: 1px solid #000;
+        position: inherit;
         .navbar{
             display: flex;
             align-items: center;
@@ -173,7 +173,6 @@
     .chat{
         flex: 2;
         background-color: #688067;
-        //  B0BD9E
 
         .chatInfo{
             height: 50px;

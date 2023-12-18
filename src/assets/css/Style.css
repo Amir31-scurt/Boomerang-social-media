@@ -207,6 +207,7 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(5, 60, 114, 0.826);
+  z-index: 300;
 }
 @media (max-width: 1024px) {
   .modal-parant {

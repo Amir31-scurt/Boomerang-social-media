@@ -31,21 +31,14 @@ function ProfilPage() {
   // Fonction pour gérer le changement de la photo de profil
   const handleChangeProfileImage = async (event) => {
     const file = event.target.files[0];
-
-    // Vérifier si un fichier a été sélectionné
     if (file) {
-      // Création d'une référence vers le stockage Firebase avec un nom unique basé sur UUID
       const storageRef = ref(storage, `profileImages/${uuidv4()}-${file.name}`);
-
       try {
-        // importation du fichier vers le stockage Firebase
         await uploadBytes(storageRef, file);
-
-        // Obtenir l'URL de téléchargement du fichier importer
         const downloadURL = await getDownloadURL(storageRef);
-
-        // Mettre à jour l'état avec la nouvelle URL de l'image
         setProfileImageUrl(downloadURL);
+        currentUser.photoURL = downloadURL;
+        // Here, you should also update the user's profile URL in your database or context
       } catch (error) {
         console.error('Error uploading image to Firebase Storage:', error);
       }
@@ -56,6 +49,8 @@ function ProfilPage() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+
+  // ======================================================= Delete and Modify Posts =================================================
 
   return (
     <div className="ProfilPage mt-4">
@@ -113,6 +108,7 @@ function ProfilPage() {
             </div>
           </div>
         </div>
+
         <div className="my-4 bg-light p-3 shadaw-sm rounded-4">
           <div className="Publications p-3">
             <ul className="d-flex justify-content-around align-items-center list-unstyled">
@@ -126,7 +122,18 @@ function ProfilPage() {
               </li>
             </ul>
           </div>
-          <div className=""></div>
+          <div className="">
+            {activeTab === 'images' && (
+              <PostImageProfile
+                userId={currentUser?.uid}
+                currentUser={currentUser}
+                handleLikePost={handleLikePost}
+                DeletePost={DeletePost}
+                handleEdit={handleEdit}
+                // any other props that PostCard needs
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

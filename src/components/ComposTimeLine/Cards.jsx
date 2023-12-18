@@ -51,7 +51,7 @@ export const Cards = () => {
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
 
-  // ... other state and function definitions
+  // Delete Poste
 
   const DeletePost = (documentId) => {
     setPostToDelete(documentId);
@@ -407,7 +407,7 @@ export const Cards = () => {
             onClose={() => setConfirmModalOpen(false)}
             onConfirm={handleConfirmDelete}
           >
-            <p>Are you sure you want to delete this post?</p>
+            <p>Etes-vous sur de vouloir supprimer cet poste?</p>
           </ConfirmationModal>
         </div>
       ))}
@@ -446,7 +446,7 @@ export const Cards = () => {
             {/* Le contenu du Modal */}
 
             <div className=" d-flex flex-column">
-              <label htmlFor="imageUrl" className="ms-2 fs-5 text-start">
+              <label htmlFor="imageUrl" className="fs-5 text-start mb-2">
                 Image / Vidéo URL *
               </label>
               <input
@@ -462,7 +462,7 @@ export const Cards = () => {
             </div>
 
             <div className="  d-flex flex-column mb-4">
-              <label htmlFor="aria-modal" className="ms-2 fs-5 text-start">
+              <label htmlFor="aria-modal" className="mb-2 fs-5 text-start">
                 Ajouter Une Description
               </label>
               <textarea

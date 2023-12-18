@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
 import icon from '../../assets/images/User.png';
+import banner from '../../assets/images/Banner.jpg';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -33,7 +34,7 @@ function SignUp() {
   // Authentifiaction
   const formRef = useRef();
   const [validation, setValidation] = useState('');
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const firstName = event.target.firstName.value;
@@ -68,7 +69,8 @@ function SignUp() {
         inputs.current[3].value,
         inputs.current[0].value,
         inputs.current[1].value,
-        icon
+        icon,
+        banner
       );
       toast.success('Inscription valide avec succès', {
         position: 'top-right',
@@ -84,15 +86,14 @@ function SignUp() {
       console.log(cred);
 
       // retourner vide les inputs
-      
+
       formRef.current.reset();
       setValidation('');
-      setLoading(true)
-      setTimeout(()=> {
-        setLoading(false)
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
         navigate('/Connexion');
-      },3000)
-      
+      }, 3000);
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err);
@@ -241,9 +242,7 @@ function SignUp() {
                   type="submit"
                 >
                   S’inscrire
-                  {loading && <ClipLoader
-                  color={'#8bcbf9'}
-                  size={25}/>}
+                  {loading && <ClipLoader color={'#8bcbf9'} size={25} />}
                 </button>
               </div>
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">

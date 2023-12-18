@@ -6,6 +6,7 @@ import { RiLogoutBoxLine } from 'react-icons/ri';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../config/firebase-config';
+import { AiFillEdit } from 'react-icons/ai';
 
 export default function SideBar() {
   // state///////////
@@ -38,18 +39,20 @@ export default function SideBar() {
           <FiUser className="fw-bold" />
         </div>
       ),
-      title: 'Paramètre',
+      title: 'Compte',
       link: 'User-Page',
     },
     {
       id: 3,
       icon: (
         <div className="ThunderIcon">
-          <AiOutlineThunderbolt className="fw-bold" />
+          <AiFillEdit className="fw-bold" />
         </div>
       ),
-      title: 'View',
-      link: '#',
+      title: 'Poster',
+      onclick: () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
     },
     {
       id: 4,
@@ -82,10 +85,13 @@ export default function SideBar() {
   return (
     <div>
       {/* <!-- Side navigation --> */}
-      <div className="sidenav">
+      <div className="sidenav sideComp z-3">
         <ul>
           <SideMenu />
         </ul>
+        {/* <ul>
+          <SideMenu />
+        </ul> */}
       </div>
     </div>
   );

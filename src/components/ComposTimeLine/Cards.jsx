@@ -6,6 +6,10 @@ import { PostCard } from './PostCard';
 import { format } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from '../../contexte/authContext';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { DB, auth } from '../../config/firebase-config';
+import { storage } from '../../config/firebase-config';
+import { ClipLoader, PulseLoader } from 'react-spinners';
 import {
   addDoc,
   collection,
@@ -17,10 +21,6 @@ import {
   orderBy,
   updateDoc,
 } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { DB, auth } from '../../config/firebase-config';
-import { storage } from '../../config/firebase-config';
-import { ClipLoader, PulseLoader } from 'react-spinners';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -32,6 +32,7 @@ export const Cards = () => {
   const handleOpenModal = () => {
     setModalOpen(true);
   };
+
   //Fermeture du Modal
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -39,6 +40,7 @@ export const Cards = () => {
     setDescript('');
     setSelectedFile(null); // Réinitialiser la sélection de fichier
   };
+
   // L'etat de like a un poste
   const [postLikes, setPostLikes] = useState({});
   // l'etat du Bouton Post Text par defaut
@@ -52,11 +54,11 @@ export const Cards = () => {
   const [postToDelete, setPostToDelete] = useState(null);
 
   // Delete Poste
-
   const DeletePost = (documentId) => {
     setPostToDelete(documentId);
     setConfirmModalOpen(true);
   };
+
   const handleConfirmDelete = async () => {
     if (postToDelete) {
       await deleteDoc(doc(DB, 'posts', postToDelete));
@@ -66,7 +68,6 @@ export const Cards = () => {
     }
   };
 
-  // boutton modifier une description
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState('');
   const handleChangeImageUrl = (e) => {
@@ -89,8 +90,10 @@ export const Cards = () => {
       setAfficheBtn(false);
     }
   };
+
   // L'evenement onClick sur le bouron Publier Text __
   const handleSubmit = async () => {
+
     const docRef = await addDoc(collection(DB, 'posts'), {
       userID: user.uid,
       likes: 0,
@@ -99,6 +102,7 @@ export const Cards = () => {
       date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
       publication: textPost,
     });
+
     const newPostText = {
       userID: user.uid,
       likes: 0,
@@ -145,6 +149,7 @@ export const Cards = () => {
       const selectedFile = files[0];
       setSelectedFile(selectedFile);
       setLoading(true);
+
       // Stockage local du fichier
       const storageRef = ref(storage, `ImagesDePost/${selectedFile.name}`);
 
@@ -174,6 +179,7 @@ export const Cards = () => {
       fileRef.put(selectedFile).then(() => {
         fileRef.getDownloadURL().then((url) => {});
       });
+
       // Ajoutez le fichier à la publication dans Firestore
       await addDoc(collection(DB, 'posts'), {
         userID: user.uid,
@@ -184,6 +190,7 @@ export const Cards = () => {
         publication: imageUrl || URL.createObjectURL(selectedFile), // Utilisez l'URL de l'image si disponible
         description: descript,
       });
+
       setErrorMessage('');
     } else if ((imageUrl !== '' && isValidImageUrl(imageUrl)) || selectedFile) {
       // Si une URL d'image est fournie
@@ -282,7 +289,7 @@ export const Cards = () => {
     }
   };
 
-  //==============================================================================
+  //====================================================
   // Fonction pour comparer les dates de deux publications
   const compareDates = (postA, postB) => {
     const dateA = new Date(postA.date);
@@ -313,7 +320,6 @@ export const Cards = () => {
 
   // La Methode sort Pour trier le tab
 
-  // Effet de liker
   const sortedPosts = postCard.slice().sort(compareDates);
   useEffect(() => {
     const fetchLikes = async () => {
@@ -333,7 +339,8 @@ export const Cards = () => {
     display: afficheBtn ? 'block' : 'none',
   };
 
-  //================ Le bouton ModifierDescription Funtions===DEBUT=========
+  //================ Le bouton ModifierDescription Funtions===DEBUT===
+  
   const handleEdit = (postId, newDescription) => {
     // Mettez à jour la description du post dans le tableau state
     setPostCard((posts) =>
@@ -448,7 +455,7 @@ export const Cards = () => {
             suppression={card.suppression}
             publication={card.publication}
             description={card.description}
-            hadleDelete={(id) => {
+            hadleDelete={() => {
               DeletePost(card.id);
             }}
             currentUser={currentUser}

@@ -39,6 +39,15 @@
   border: 1px solid #145da0;
   color: #145da0;
 }
+
+.camera-icon {
+  position: relative;
+  bottom: 20vh;
+  left: 20px;
+  color: blue;
+  cursor: pointer;
+  /* margin-right: 5px; */
+}
 .Btn-Group {
   position: relative;
   bottom: 7vh;
@@ -114,6 +123,15 @@ label {
 
   .this-profil {
     position: relative;
+  }
+
+  .camera-icon {
+    position: relative;
+    bottom: 15vh;
+    left: 18px;
+    color: blue;
+    cursor: pointer;
+    /* margin-right: 5px; */
   }
 
   .image-display-before,

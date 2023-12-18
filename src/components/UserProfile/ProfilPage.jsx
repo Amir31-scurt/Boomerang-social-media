@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { storage } from '../../config/firebase-config.js';
 import { AuthContext } from '../../contexte/authContext.js';
 import { usePostActions } from '../ComposTimeLine/postActions/usePostActions';
+import { FiCamera } from 'react-icons/fi';
 
 function ProfilPage() {
   const { handleLikePost, DeletePost, handleEdit } = usePostActions();
@@ -20,6 +21,11 @@ function ProfilPage() {
     return storedImageUrl || 'https://your-default-image-url.jpg';
   });
 
+  const [bannerImageUrl, setBannerImageUrl] = useState(() => {
+    const storedImageUrl = localStorage.getItem('bannerImageUrl');
+    return storedImageUrl || 'https://your-default-banner-image-url.jpg';
+  });
+
   // Utilisation de useState pour gérer l'onglet actif par défaut
   const [activeTab, setActiveTab] = useState('images');
 
@@ -27,6 +33,10 @@ function ProfilPage() {
   useEffect(() => {
     localStorage.setItem('profileImageUrl', profileImageUrl);
   }, [profileImageUrl]);
+
+  useEffect(() => {
+    localStorage.setItem('bannerImageUrl', bannerImageUrl);
+  }, [bannerImageUrl]);
 
   // Fonction pour gérer le changement de la photo de profil
   const handleChangeProfileImage = async (event) => {
@@ -41,6 +51,27 @@ function ProfilPage() {
         // Here, you should also update the user's profile URL in your database or context
       } catch (error) {
         console.error('Error uploading image to Firebase Storage:', error);
+      }
+    }
+  };
+
+  const handleChangeBannerImage = async (event) => {
+    const file = event.target.files[0];
+
+    console.log('handleChangeBannerImage called');
+
+    if (file) {
+      const storageRef = ref(storage, `bannerImages/${uuidv4()}-${file.name}`);
+
+      try {
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+        setBannerImageUrl(downloadURL);
+      } catch (error) {
+        console.error(
+          'Error uploading banner image to Firebase Storage:',
+          error
+        );
       }
     }
   };
@@ -60,9 +91,16 @@ function ProfilPage() {
             <div className="container my-3">
               <div className="rounded-5 bg-white">
                 <input
-                  src={currentUser.Banner}
+                  src={bannerImageUrl}
+                  type="file"
                   alt=""
-                  type="image"
+                  // type="image"
+                  className="img-fluid rounded-5 w-100 banner d-none"
+                  onChange={handleChangeBannerImage}
+                />
+                <img
+                  src={bannerImageUrl}
+                  alt=""
                   className="img-fluid rounded-5 w-100 banner"
                 />
               </div>
@@ -75,6 +113,16 @@ function ProfilPage() {
                   imageUrl={currentUser.photoURL}
                   className="profil-img"
                 />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="d-none"
+                  id="profileImageInput"
+                  onChange={handleChangeProfileImage}
+                />
+                <label htmlFor="profileImageInput">
+                  <FiCamera className="camera-icon" />
+                </label>
               </div>
               <div className="text-profil text-center text-lg-start">
                 <h5 className="fw-bold text-black">
@@ -86,22 +134,15 @@ function ProfilPage() {
               </div>
             </div>
             <div className="btn-profil d-flex align-items-center Btn-Group">
-              <input
-                type="file"
-                accept="image/*"
-                className="d-none"
-                id="profileImageInput"
-                onChange={handleChangeProfileImage}
-              />
-              <label
-                htmlFor="profileImageInput"
-                className="btn bt btn-primary me-2 w-100 rounded-pill"
-              >
+              {/* <input type="file" accept="image/*" className="d-none" id="profileImageInput" onChange={handleChangeProfileImage} />
+              <label htmlFor="profileImageInput" className="btn btn-primary btn-sm me-2 w-100 rounded-5">
+              
+>>>>>>> origin/12_12_2023_Profil-Page
                 modifier le profil
-              </label>
+              </label> */}
               <button
                 type="button"
-                className="btn bt2 btn-outline-primary rounded-5"
+                className="btn btn-primary btn-sm rounded-5 w-100"
               >
                 <CgMore className="fs-2" />
               </button>
@@ -116,6 +157,27 @@ function ProfilPage() {
                 <button
                   className={`border-0 ${activeTab === 'images' ? 'act' : ''}`}
                   onClick={() => handleTabClick('images')}
+                >
+                  Images
+                </button>
+              </li>
+
+              <li>
+                <button
+                  className={`rounded-5 border-0 ${
+                    activeTab === 'videos' ? 'act' : ''
+                  }`}
+                  onClick={() => handleTabClick('videos')}
+                >
+                  Videos
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`rounded-5 border-0 ${
+                    activeTab === 'posts' ? 'act' : ''
+                  }`}
+                  onClick={() => handleTabClick('posts')}
                 >
                   Posts
                 </button>

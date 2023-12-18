@@ -36,6 +36,16 @@ export default function Signin() {
       formRef.current.reset();
       setValidation('');
       setLoading(true);
+      toast.success('Connexion réussie', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
       setTimeout(() => {
         setLoading(false);
         navigate('/Timeline');
@@ -117,10 +127,7 @@ export default function Signin() {
                   className="btn fs-5 w-100 but mb-3 text-white d-flex align-items-center justify-content-center gap-3"
                 >
                   Se connecter
-                {loading && <ClipLoader
-                  color={'#8bcbf9'}
-                  size={20}/>}
-
+                  {loading && <ClipLoader color={'#8bcbf9'} size={20} />}
                 </button>
 
                 {/* <!-- Register buttons --> */}

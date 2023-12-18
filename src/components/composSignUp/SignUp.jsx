@@ -96,7 +96,7 @@ function SignUp() {
       }, 3000);
     } catch (err) {
       // Si y'a erreur dans l'authentification
-      console.log(err);
+      console.log(err.code);
       if (err.code === 'auth/invalid_email') {
         toast.error("L'email n'est pas valide", {
           position: 'top-right',
@@ -242,9 +242,7 @@ function SignUp() {
                   type="submit"
                 >
                   S’inscrire
-                  {loading && <ClipLoader
-                  color={'#8bcbf9'}
-                  size={20}/>}
+                  {loading && <ClipLoader color={'#8bcbf9'} size={20} />}
                 </button>
               </div>
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">

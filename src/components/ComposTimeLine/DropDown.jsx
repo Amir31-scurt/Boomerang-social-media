@@ -2,8 +2,9 @@ import { React } from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { PiDotsThreeOutline } from "react-icons/pi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { HiBarsArrowDown } from "react-icons/hi2";
 
-export const DropDown = ({ handleDelete, handleEditDesc, }) => {
+export const DropDown = ({ handleDelete, ModiferDescriptBouton, ModiferTextBouton }) => {
   return (
     <div className="">
       <div class="dropdown border border-0">
@@ -12,19 +13,12 @@ export const DropDown = ({ handleDelete, handleEditDesc, }) => {
           data-bs-toggle="dropdown"
         >
           <div>
-            <PiDotsThreeOutline />
+            <HiBarsArrowDown className="text-secondary" />
           </div>
         </button>
         <ul class="dropdown-menu dropDownMenu">
-          <li>
-            <button
-              className="dropdown-item d-flex align-items-center"
-              onClick={handleEditDesc}
-            >
-              <FiEdit3 className="fs-5 text-primary me-2" />
-              Modifier
-            </button>
-          </li>
+          <li>{ModiferDescriptBouton}</li>
+          <li>{ModiferTextBouton}</li>
           <li className="mt-2">
             <button
               class="dropdown-item d-flex align-items-center"

@@ -8,7 +8,7 @@ function Profile({ imageUrl }) {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    // Retrieve the image URL from local storage when the component mounts
+    // Récupération l’URL de l’image à partir du stockage
     const storedImageUrl = localStorage.getItem('profileImage');
     if (storedImageUrl) {
       setImage(storedImageUrl);

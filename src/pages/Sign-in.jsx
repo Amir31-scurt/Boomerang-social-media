@@ -117,7 +117,10 @@ export default function Signin() {
                   className="btn fs-5 w-100 but mb-3 text-white d-flex align-items-center justify-content-center gap-3"
                 >
                   Se connecter
-                  {loading && <ClipLoader color={'#8bcbf9'} size={25} />}
+                {loading && <ClipLoader
+                  color={'#8bcbf9'}
+                  size={20}/>}
+
                 </button>
 
                 {/* <!-- Register buttons --> */}

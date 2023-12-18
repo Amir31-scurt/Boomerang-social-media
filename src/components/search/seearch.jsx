@@ -122,7 +122,10 @@ export default function Search() {
 
   return (
     <div className="form formSearch">
-      <SearchForm filter={search} func={(e) => setSearch(e.target.value)} />
+
+      <SearchForm filter={search} func={(e)=> setSearch(e.target.value)} />{' '}
+      {/* Use the reusable SearchForm component */}
+      
       <div className="container flex-column d-flex ">
         <div className="row">
           {searchResults &&

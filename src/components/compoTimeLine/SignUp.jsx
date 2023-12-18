@@ -1,4 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
+import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { AuthContext } from '../../contexte/authContext';
 import '../../assets/css/SignUp.css';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -6,9 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ClipLoader } from 'react-spinners';
-import icon from '../../assets/images/user.png';
-import banner from '../../assets/images/Banner.jpg';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -34,7 +32,6 @@ function SignUp() {
   // Authentifiaction
   const formRef = useRef();
   const [validation, setValidation] = useState('');
-  const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const firstName = event.target.firstName.value;
@@ -66,34 +63,13 @@ function SignUp() {
     try {
       const cred = await signUp(
         inputs.current[2].value,
-        inputs.current[3].value,
-        inputs.current[0].value,
-        inputs.current[1].value,
-        icon,
-        banner
+        inputs.current[3].value
       );
-      toast.success('Inscription valide avec succès', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-      });
-      // console.log(auth);
       console.log(cred);
-
       // retourner vide les inputs
-
       formRef.current.reset();
       setValidation('');
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        navigate('/Connexion');
-      }, 3000);
+      navigate('/Connexion');
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err);
@@ -141,10 +117,13 @@ function SignUp() {
       <div className="p-2">
         <div className="container signUp-form">
           <form action="" onSubmit={handleSubmit} ref={formRef}>
-            <div className="formPage p-lg-2 mx-auto text-dark">
+            <div className="formPage p-lg-2 mx-auto text-white">
               <div className="signup-text mt-3 text-center">
-                <h4 className="fw-bold">Créer un compte</h4>
-                <p>Remplissez vos informations ci-dessous.</p>
+                <h4 className="fw-boold">Créer un compte</h4>
+                <p>
+                  Remplissez vos informations ci-dessous ou inscrivez-vous avec
+                  votre compte{' '}
+                </p>
               </div>
 
               <div className="row this_name g-0 mx-auto">
@@ -152,7 +131,7 @@ function SignUp() {
                   <div className="mb-3 w-75 mx-auto">
                     <input
                       type="text"
-                      className={`form-control text-center p-3 ${
+                      className={`form-control ${
                         firstNameError && 'is-invalid'
                       }`}
                       id="firstName"
@@ -171,7 +150,7 @@ function SignUp() {
                   <div className="mb-3 w-75 mx-auto">
                     <input
                       type="text"
-                      className={`form-control text-center p-3 ${
+                      className={`form-control ${
                         lastNameError && 'is-invalid'
                       }`}
                       id="lastName"
@@ -190,7 +169,7 @@ function SignUp() {
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="email"
-                  className="form-control text-center p-3"
+                  className="form-control"
                   id="email"
                   placeholder="Email"
                   required
@@ -201,56 +180,81 @@ function SignUp() {
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="password"
-                  className="form-control text-center p-3"
+                  className="form-control"
                   id="password"
                   placeholder="Mot de passe"
                   required
                   ref={addInputs}
                 />
-                {<p className="text-danger">{validation}</p>}
+                {/* {<p className="text-danger">{validation}</p>} */}
               </div>
               <div className="mb-3 w-75 mx-auto">
                 <input
                   type="password"
-                  className="form-control text-center p-3"
+                  className="form-control"
                   id="passwordConfirmation"
                   placeholder="Confirmation du mot de passe"
                   required
                   ref={addInputs}
                 />
+                {<p className="text-danger">{validation}</p>}
               </div>
               {/* Terms and conditions checkbox */}
-              <div className="form-check d-flex justify-content-center gap-3">
+              <div className="form-check mx-auto w-75">
                 <input
-                  className="form-check-input required text-center"
+                  className="form-check-input required"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                   required
                 />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
-                  D’accord avec les {'    '}
-                  <Link className="text-decoration-none">
+                  D’accord avec
+                  <span className="text-decoration-underline text-color">
+                    {' '}
                     Termes et conditions
-                  </Link>
+                  </span>
                 </label>
               </div>
               {/* Submit button */}
               <div className="d-grid gap-2 col-6 mx-auto w-75 mt-4">
-                <button
-                  className="btn text-white rounded-2 fs-5 but d-flex align-items-center justify-content-center gap-3"
-                  type="submit"
-                >
-                  S’inscrire
-                  {loading && <ClipLoader
-                  color={'#8bcbf9'}
-                  size={20}/>}
+                <button className="btn btn-primary rounded-5" type="submit">
+                  S’enregistrer
                 </button>
+              </div>
+              <div className="w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
+                <div className="border-0 type border-bottom me-1"></div>
+                <div className="or-sign"> Ou inscrivez-vous avec</div>
+                <div className="border-0 type border-bottom mx-1"></div>
+              </div>
+              <div className="icon-sign-up w-75 mx-auto d-flex justify-content-center align-items-center mt-4">
+                {/* Icône Google */}
+                <a
+                  href="google"
+                  className="d-flex me-4 justify-content-center align-items-center border border-primary rounded-circle p-2"
+                >
+                  <FaGoogle
+                    className="text-white"
+                    size={29}
+                    style={{ color: '#4285F4' }}
+                  />
+                </a>
+                {/* Icône Facebook */}
+                <a
+                  href="facebook"
+                  className="d-flex justify-content-center align-items-center border border-primary rounded-circle p-2"
+                >
+                  <FaFacebook
+                    className="text-white"
+                    size={30}
+                    style={{ color: '#1877F2' }}
+                  />
+                </a>
               </div>
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">
                 <p>
-                  Vous avez déjà un compte ?{'   '}
-                  <Link to="/Connexion" className="text-decoration-none">
+                  Vous avez déjà un compte ?
+                  <Link to="/Connexion" className="text-color">
                     Connexion
                   </Link>
                 </p>

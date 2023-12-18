@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { storage } from '../../config/firebase-config.js';
 import { AuthContext } from '../../contexte/authContext.js';
 import { usePostActions } from '../ComposTimeLine/postActions/usePostActions';
+import { FiCamera } from 'react-icons/fi';
 
 function ProfilPage() {
   const { handleLikePost, DeletePost, handleEdit } = usePostActions();
@@ -20,6 +21,11 @@ function ProfilPage() {
     return storedImageUrl || 'https://your-default-image-url.jpg';
   });
 
+  const [bannerImageUrl, setBannerImageUrl] = useState(() => {
+    const storedImageUrl = localStorage.getItem('bannerImageUrl');
+    return storedImageUrl || 'https://your-default-banner-image-url.jpg';
+  });
+
   // Utilisation de useState pour gérer l'onglet actif par défaut
   const [activeTab, setActiveTab] = useState('images');
 
@@ -28,26 +34,44 @@ function ProfilPage() {
     localStorage.setItem('profileImageUrl', profileImageUrl);
   }, [profileImageUrl]);
 
+  useEffect(() => {
+    localStorage.setItem('bannerImageUrl', bannerImageUrl);
+  }, [bannerImageUrl]);
+
   // Fonction pour gérer le changement de la photo de profil
   const handleChangeProfileImage = async (event) => {
     const file = event.target.files[0];
-
-    // Vérifier si un fichier a été sélectionné
     if (file) {
-      // Création d'une référence vers le stockage Firebase avec un nom unique basé sur UUID
       const storageRef = ref(storage, `profileImages/${uuidv4()}-${file.name}`);
-
       try {
-        // importation du fichier vers le stockage Firebase
         await uploadBytes(storageRef, file);
-
-        // Obtenir l'URL de téléchargement du fichier importer
         const downloadURL = await getDownloadURL(storageRef);
-
-        // Mettre à jour l'état avec la nouvelle URL de l'image
         setProfileImageUrl(downloadURL);
+        currentUser.photoURL = downloadURL;
+        // Here, you should also update the user's profile URL in your database or context
       } catch (error) {
         console.error('Error uploading image to Firebase Storage:', error);
+      }
+    }
+  };
+
+  const handleChangeBannerImage = async (event) => {
+    const file = event.target.files[0];
+
+    console.log('handleChangeBannerImage called');
+
+    if (file) {
+      const storageRef = ref(storage, `bannerImages/${uuidv4()}-${file.name}`);
+
+      try {
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+        setBannerImageUrl(downloadURL);
+      } catch (error) {
+        console.error(
+          'Error uploading banner image to Firebase Storage:',
+          error
+        );
       }
     }
   };
@@ -57,6 +81,8 @@ function ProfilPage() {
     setActiveTab(tab);
   };
 
+  // ======================================================= Delete and Modify Posts =================================================
+
   return (
     <div className="ProfilPage mt-4">
       <div className="container">
@@ -65,9 +91,16 @@ function ProfilPage() {
             <div className="container my-3">
               <div className="rounded-5 bg-white">
                 <input
-                  src={currentUser.Banner}
+                  src={bannerImageUrl}
+                  type="file"
                   alt=""
-                  type="image"
+                  // type="image"
+                  className="img-fluid rounded-5 w-100 banner d-none"
+                  onChange={handleChangeBannerImage}
+                />
+                <img
+                  src={bannerImageUrl}
+                  alt=""
                   className="img-fluid rounded-5 w-100 banner"
                 />
               </div>
@@ -80,6 +113,16 @@ function ProfilPage() {
                   imageUrl={currentUser.photoURL}
                   className="profil-img"
                 />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="d-none"
+                  id="profileImageInput"
+                  onChange={handleChangeProfileImage}
+                />
+                <label htmlFor="profileImageInput">
+                  <FiCamera className="camera-icon" />
+                </label>
               </div>
               <div className="text-profil text-center text-lg-start">
                 <h5 className="fw-bold text-black">
@@ -91,28 +134,22 @@ function ProfilPage() {
               </div>
             </div>
             <div className="btn-profil d-flex align-items-center Btn-Group">
-              <input
-                type="file"
-                accept="image/*"
-                className="d-none"
-                id="profileImageInput"
-                onChange={handleChangeProfileImage}
-              />
-              <label
-                htmlFor="profileImageInput"
-                className="btn bt btn-primary me-2 w-100 rounded-pill"
-              >
+              {/* <input type="file" accept="image/*" className="d-none" id="profileImageInput" onChange={handleChangeProfileImage} />
+              <label htmlFor="profileImageInput" className="btn btn-primary btn-sm me-2 w-100 rounded-5">
+              
+>>>>>>> origin/12_12_2023_Profil-Page
                 modifier le profil
-              </label>
+              </label> */}
               <button
                 type="button"
-                className="btn bt2 btn-outline-primary rounded-5"
+                className="btn btn-primary btn-sm rounded-5 w-100"
               >
                 <CgMore className="fs-2" />
               </button>
             </div>
           </div>
         </div>
+
         <div className="my-4 bg-light p-3 shadaw-sm rounded-4">
           <div className="Publications p-3">
             <ul className="d-flex justify-content-around align-items-center list-unstyled">
@@ -126,7 +163,18 @@ function ProfilPage() {
               </li>
             </ul>
           </div>
-          <div className=""></div>
+          <div className="">
+            {activeTab === 'images' && (
+              <PostImageProfile
+                userId={currentUser?.uid}
+                currentUser={currentUser}
+                handleLikePost={handleLikePost}
+                DeletePost={DeletePost}
+                handleEdit={handleEdit}
+                // any other props that PostCard needs
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

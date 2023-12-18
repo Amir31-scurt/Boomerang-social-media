@@ -1,23 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL,
-} from 'firebase/storage';
-import { updateDoc, doc } from 'firebase/firestore';
-import { storage, DB } from '../../config/firebase-config'; // Adjust the import path as needed
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
+import { storage } from '../../config/firebase-config.js';
 
-function Profile({ imageUrl }) {
+function Profile({ imageUrl, onImageChange }) {
   const inputRef = useRef(null);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
 
-  // useEffect(() => {
-  //   // Récupérer l'URL de l'image depuis le stockage local lors du montage du composant
-  //   const savedImage = localStorage.getItem('profileImage');
-  //   if (savedImage) {
-  //     setImage(savedImage);
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Retrieve the image URL from local storage when the component mounts
+    const storedImageUrl = localStorage.getItem('profileImage');
+    if (storedImageUrl) {
+      setImage(storedImageUrl);
+    }
+  }, []);
 
   const handleImageClick = () => {
     inputRef.current.click();
@@ -25,40 +21,43 @@ function Profile({ imageUrl }) {
 
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
+    console.log(file);
+    setImage(file);
+
     if (file) {
-      // Create a storage reference
-      const fileRef = storageRef(storage, `/profileImages/${file.name}`);
+      const auth = getAuth();
+      const user = auth.currentUser;
 
-      try {
-        // Upload file to Firebase Storage
-        await uploadBytes(fileRef, file);
+      if (user) {
+        const storageRef = ref(
+          storage,
+          `profileImages/${user.uid}-${file.name}`
+        );
 
-        // Get download URL
-        const downloadURL = await getDownloadURL(fileRef);
+        try {
+          await uploadBytes(storageRef, file);
+          const downloadURL = await getDownloadURL(storageRef);
 
-        // Update local state
-        setImage(downloadURL);
+          // Update the image URL in your application
+          setImage(downloadURL);
 
-        // Update Firestore user document
-        const userDocRef = doc(DB, 'users' /* userID */); // Replace with actual user ID
-        await updateDoc(userDocRef, { photoURL: downloadURL });
+          // You can also store the image URL in local storage
+          // localStorage.setItem('profileImage', downloadURL);
 
-        // Optionally, save to local storage
-        // localStorage.setItem('profileImage', downloadURL);
-      } catch (error) {
-        console.error('Error uploading image: ', error);
+          localStorage.setItem('profileImage', downloadURL);
+        } catch (error) {
+          console.error('Error uploading image to Firebase Storage:', error);
+        }
       }
     }
   };
-  const imageSrc =
-    image instanceof File ? URL.createObjectURL(image) : image || imageUrl;
 
   return (
     <div className="container mt-5">
       <div onClick={handleImageClick} className="this-profil">
         {image ? (
           <img
-            src={imageSrc}
+            src={image instanceof File ? URL.createObjectURL(image) : image}
             alt=""
             className="image-display-after cursor-pointer  rounded-full border-4 border border-light "
           />

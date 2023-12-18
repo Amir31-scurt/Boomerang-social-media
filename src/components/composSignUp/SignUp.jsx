@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
-import icon from '../../assets/images/User.png';
+import icon from '../../assets/images/user.png';
 import banner from '../../assets/images/Banner.jpg';
 
 function SignUp() {
@@ -242,7 +242,9 @@ function SignUp() {
                   type="submit"
                 >
                   S’inscrire
-                  {loading && <ClipLoader color={'#8bcbf9'} size={25} />}
+                  {loading && <ClipLoader
+                  color={'#8bcbf9'}
+                  size={20}/>}
                 </button>
               </div>
               <div className="lien-text mt-4 w-75 mx-auto d-flex justify-content-center align-items-center">

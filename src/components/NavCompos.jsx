@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { CiSettings } from 'react-icons/ci';
 import { FaRegUser } from 'react-icons/fa';
 import { FiHome } from 'react-icons/fi';
-import userProfile from '../assets/images/User.png';
+import userProfile from '../assets/images/user.png';
+import { AuthContext } from '../contexte/authContext';
 
 const Navbar = () => {
+  const { currentUser } = useContext(AuthContext);
   return (
     <nav className="navbar fixed-top">
       <div className="container">
@@ -51,7 +53,7 @@ const Navbar = () => {
           </div>
           <Link to="" className="p-0 ms-3">
             <img
-              src={userProfile}
+              src={currentUser.photoURL}
               alt="user"
               className="rounded-circle img-user"
             />

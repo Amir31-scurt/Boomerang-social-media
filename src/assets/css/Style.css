@@ -45,11 +45,48 @@
   border-radius: 15px;
   resize: none;
   padding: 12px;
+  background-color: rgba(255, 255, 255, 0);
+}
+.AreaModifTextPub {
+  margin: 10px 0px;
+  width: 80%;
+  min-height: 150px;
+  border: none;
+  border-radius: 10px;
+  resize: none;
+  padding: 12px;
 }
 .AreaModifDesc:focus {
   outline: none;
   border: 2px solid #066e41ca;
 }
+.AreaModifTextPub:focus {
+  outline: none;
+}
+
+/* Style de la barre de défilement verticale */
+.AreaModifTextPub::-webkit-scrollbar {
+  width: 10px;
+  display: none;
+}
+.AreaModifDesc::-webkit-scrollbar,
+#text-aria::-webkit-scrollbar {
+  width: 10px;
+}
+
+.AreaModifTextPub::-webkit-scrollbar-thumb,
+#text-aria::-webkit-scrollbar-thumb,
+.AreaModifDesc::-webkit-scrollbar-thumb {
+  background-color: #92a3ac; /* Couleur de la barre de défilement */
+  border-radius: 15px; /* Coins arrondis */
+}
+
+.AreaModifTextPub::-webkit-scrollbar-track,
+#text-aria::-webkit-scrollbar-track,
+.AreaModifDesc::-webkit-scrollbar-track {
+  background-color: #ffffff00; /* Couleur de la piste de défilement */
+}
+
 .SaveBtnModif {
   background-color: #ffffffca;
   border: none;
@@ -73,13 +110,13 @@
   justify-content: center;
   align-items: center;
 }
-.imgPreview {
+.imgPreview1 {
   width: 60%;
   height: 350px;
   margin: auto;
   border-radius: 20px;
 }
-.previewIimage {
+.previewIimage1 {
   width: 100%;
   height: 100%;
   border-radius: 20px;
@@ -89,7 +126,7 @@
   width: 100%;
   margin: auto;
   height: fit-content;
-  background-color: #ffffffc3;
+  background-color: #ffffff;
   border-radius: 15px;
   padding-top: 20px;
 }
@@ -125,7 +162,6 @@
 
 .PartieProfil {
   width: 93%;
-
   display: flex;
   align-items: center;
 }
@@ -158,19 +194,7 @@
   border: none;
   resize: none;
 }
-#text-aria3 {
-  background: none;
-  color: rgba(0, 0, 0, 0.61);
-  font-weight: bold;
-  border-radius: 15px;
-  min-height: 250px;
-  outline: none;
-  padding: 10px;
-  margin-top: 10px;
-  height: auto;
-  border: none;
-  resize: none;
-}
+
 .aria-content {
   border-radius: 15px;
 }
@@ -186,14 +210,19 @@
 .partagerBtn {
   border: none;
   background: transparent;
+  height: 43px;
 }
 .partagerBtn:hover {
-  background-color: rgba(7, 35, 120, 0.79);
   border-radius: 15px;
-  color: white;
+  background-color: #8d88dea5;
 }
 .contenuPartage {
   height: 40px;
+}
+.dropDownMenu2 {
+  backdrop-filter: blur(15px);
+  border: none;
+  background-color: rgba(224, 222, 222, 0.797);
 }
 
 /* //////////////////////Modal //////////////////////**/
@@ -206,7 +235,8 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(5, 60, 114, 0.826);
+  z-index: 300;
+  background-color: rgba(2, 43, 84, 0.826);
 }
 @media (max-width: 1024px) {
   .modal-parant {
@@ -219,10 +249,34 @@
   margin: 7%auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 93%;
   border-radius: 15px;
+  border-bottom-left-radius: 75px;
+  border-top-right-radius: 75px;
+  animation: modalAnimation 0.7s ease-out;
 }
 
+@keyframes modalAnimation {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 1800px) {
+  .modal-contenu {
+    width: 67%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .modal-contenu {
+    width: 90%;
+  }
+}
 #imageUrl {
   height: 50px;
   border-radius: 15px;
@@ -260,6 +314,7 @@
   align-items: center;
   border: none;
   background: transparent;
+  animation: modalAnimation 0.7s ease-out;
 }
 
 .close {
@@ -269,6 +324,7 @@
 .publish {
   background-color: #2e1a77;
   color: #ffffff;
+  animation: modalAnimation 0.7s ease-out;
 }
 
 .close:hover {
@@ -328,6 +384,7 @@
 }
 .milieuContenu {
   height: auto;
+  animation: modalAnimation 0.7s ease-out;
 }
 .BlsSmall {
   height: 40px;

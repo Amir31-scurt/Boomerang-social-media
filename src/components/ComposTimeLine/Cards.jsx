@@ -6,6 +6,10 @@ import { PostCard } from './PostCard';
 import { format } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from '../../contexte/authContext';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { DB, auth } from '../../config/firebase-config';
+import { storage } from '../../config/firebase-config';
+import { ClipLoader, PulseLoader } from 'react-spinners';
 import {
   addDoc,
   collection,
@@ -17,10 +21,6 @@ import {
   orderBy,
   updateDoc,
 } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { DB, auth } from '../../config/firebase-config';
-import { storage } from '../../config/firebase-config';
-import { ClipLoader, PulseLoader } from 'react-spinners';
 
 export const Cards = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -32,6 +32,7 @@ export const Cards = () => {
   const handleOpenModal = () => {
     setModalOpen(true);
   };
+
   //Fermeture du Modal
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -39,6 +40,7 @@ export const Cards = () => {
     setDescript('');
     setSelectedFile(null); // Réinitialiser la sélection de fichier
   };
+
   // L'etat de like a un poste
   const [postLikes, setPostLikes] = useState({});
   // l'etat du Bouton Post Text par defaut
@@ -51,8 +53,7 @@ export const Cards = () => {
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
 
-  // ... other state and function definitions
-
+  // Delete Poste
   const DeletePost = (documentId) => {
     setPostToDelete(documentId);
     setConfirmModalOpen(true);
@@ -66,8 +67,6 @@ export const Cards = () => {
       setPostToDelete(null);
     }
   };
-
-  // boutton modifier une description
 
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState('');
@@ -85,14 +84,16 @@ export const Cards = () => {
   const [textPost, setTextPost] = useState('');
   const Changement = (e) => {
     setTextPost(e.target.value);
-    if (textPost !== '') {
+    if (e.target.value !== '') {
       setAfficheBtn(true);
     } else {
       setAfficheBtn(false);
     }
   };
-  // L'evenement onClick sur le bouron Publier __
+
+  // L'evenement onClick sur le bouron Publier Text __
   const handleSubmit = async () => {
+
     const docRef = await addDoc(collection(DB, 'posts'), {
       userID: user.uid,
       likes: 0,
@@ -101,6 +102,7 @@ export const Cards = () => {
       date: format(new Date(), 'dd/MM/yyyy - HH:mm:ss'),
       publication: textPost,
     });
+
     const newPostText = {
       userID: user.uid,
       likes: 0,
@@ -112,7 +114,7 @@ export const Cards = () => {
 
     //Destructurer le tableau, puis ajouter un nouveau post
     setPostCard([newPostText, ...postCard]);
-    setTextPost(' ');
+    setTextPost('');
     toast.success('Publication réussie !', {
       position: 'top-right',
       autoClose: 3000,
@@ -136,7 +138,7 @@ export const Cards = () => {
     return imageUrlRegex.test(url);
   };
 
-  //=============== Le bouton Type File===debut=========
+  //=============== Le bouton Type File ===debut=========
 
   // Ajouter un nouvel état
   const [selectedFile, setSelectedFile] = useState(null);
@@ -177,6 +179,7 @@ export const Cards = () => {
       fileRef.put(selectedFile).then(() => {
         fileRef.getDownloadURL().then((url) => {});
       });
+
       // Ajoutez le fichier à la publication dans Firestore
       await addDoc(collection(DB, 'posts'), {
         userID: user.uid,
@@ -187,6 +190,7 @@ export const Cards = () => {
         publication: imageUrl || URL.createObjectURL(selectedFile), // Utilisez l'URL de l'image si disponible
         description: descript,
       });
+
       setErrorMessage('');
     } else if ((imageUrl !== '' && isValidImageUrl(imageUrl)) || selectedFile) {
       // Si une URL d'image est fournie
@@ -285,7 +289,7 @@ export const Cards = () => {
     }
   };
 
-  //==============================================================================
+  //====================================================
   // Fonction pour comparer les dates de deux publications
   const compareDates = (postA, postB) => {
     const dateA = new Date(postA.date);
@@ -316,7 +320,6 @@ export const Cards = () => {
 
   // La Methode sort Pour trier le tab
 
-  // Effet de liker
   const sortedPosts = postCard.slice().sort(compareDates);
   useEffect(() => {
     const fetchLikes = async () => {
@@ -336,7 +339,8 @@ export const Cards = () => {
     display: afficheBtn ? 'block' : 'none',
   };
 
-  //================ Le bouton Modifier Funtions===DEBUT=========
+  //================ Le bouton ModifierDescription Funtions===DEBUT===
+  
   const handleEdit = (postId, newDescription) => {
     // Mettez à jour la description du post dans le tableau state
     setPostCard((posts) =>
@@ -357,7 +361,30 @@ export const Cards = () => {
         console.error('Error updating document: ', error);
       });
   };
-  //================ Le bouton Modifier Funtions===DEBUT=========
+  //================ Le bouton ModifierBescription Funtions===FIN=========
+
+  //================ Le bouton ModifierTextPUB ===DEBUT=========
+  const handleEditTexPub = (postId, newTextPub) => {
+    // Mettez à jour la description du post dans le tableau state
+    setPostCard((posts) =>
+      posts.map((post) =>
+        post.id === postId ? { ...post, publication: newTextPub } : post
+      )
+    );
+
+    // Mettre à jour la publicationText du post dans Firestore
+    const postRef = doc(DB, 'posts', postId);
+    updateDoc(postRef, {
+      publication: newTextPub,
+    })
+      .then(() => {
+        console.log('Document successfully updated!');
+      })
+      .catch((error) => {
+        console.error('Error updating document: ', error);
+      });
+  };
+  //================ Le bouton ModifierText Pub ===FIN=========
 
   return (
     <div>
@@ -407,7 +434,7 @@ export const Cards = () => {
             onClose={() => setConfirmModalOpen(false)}
             onConfirm={handleConfirmDelete}
           >
-            <p>Are you sure you want to delete this post?</p>
+            <p>Etes-vous sur de vouloir supprimer cet poste?</p>
           </ConfirmationModal>
         </div>
       ))}
@@ -428,11 +455,14 @@ export const Cards = () => {
             suppression={card.suppression}
             publication={card.publication}
             description={card.description}
-            hadleDelete={(id) => {
+            hadleDelete={() => {
               DeletePost(card.id);
             }}
             currentUser={currentUser}
             handleEdit={(newDescription) => handleEdit(card.id, newDescription)}
+            handleEditTexPub={(newTextPub) =>
+              handleEditTexPub(card.id, newTextPub)
+            }
           />
         ))}
       </div>
@@ -444,9 +474,13 @@ export const Cards = () => {
         <div className="modal-parant" style={modalStyle}>
           <div className="modal-contenu">
             {/* Le contenu du Modal */}
-
+            <div className="w-100">
+              <h3 className="text-center fst-italic fw-bold">
+                Créer une publication
+              </h3>
+            </div>
             <div className=" d-flex flex-column">
-              <label htmlFor="imageUrl" className="ms-2 fs-5 text-start">
+              <label htmlFor="imageUrl" className="ms-2 fs-5 my-3 text-start ">
                 Image / Vidéo URL *
               </label>
               <input
@@ -462,7 +496,7 @@ export const Cards = () => {
             </div>
 
             <div className="  d-flex flex-column mb-4">
-              <label htmlFor="aria-modal" className="ms-2 fs-5 text-start">
+              <label htmlFor="aria-modal" className="mb-2 fs-5 text-start">
                 Ajouter Une Description
               </label>
               <textarea
@@ -479,7 +513,7 @@ export const Cards = () => {
 
             <div className="BoutonFile py-3 mb-2">
               <div className="d-flex w-100 align-items-center flex-column justify-content-center">
-                <label for="fileInput" class="custom-button1 fs-6">
+                <label for="fileInput" class="custom-button1 fs-5 p-3">
                   Choisir Image / vidéo
                 </label>
                 <div className="w-100 mb-4">
@@ -491,21 +525,36 @@ export const Cards = () => {
                   />
                   {/*=============== Loading Code =============== */}
                   {loading && (
-                    <PulseLoader className="m-4" color={'#128'} size={18} />
+                    <div className="d-flex my-2 w-100 justify-content-center ">
+                      <div className=" d-flex align-items-center">
+                        <h5 className="fw-bold fst-italic ms-4 mt-1 text-primary">
+                          Chargement
+                        </h5>
+                        <PulseLoader className="m-4" color={'#128'} size={16} />
+                      </div>
+                    </div>
                   )}
                   {/*=============== Loading Code Fin=============== */}
 
                   {imageUrl === '' && selectedFile ? (
-                    <div className="imgPreview">
+                    <div className="">
                       <p className="fichierChoisi ps-3">
                         <span className="Typy pe-2">Type de fichier :</span>
                         {selectedFile.type}
                       </p>
-                      <img
-                        src={URL.createObjectURL(selectedFile)}
-                        alt=""
-                        className="previewIimage img-fluid"
-                      />
+                      <div
+                        className={`imgPreview1 ${
+                          selectedFile.type !== 'video/mp4'
+                            ? 'd-flex'
+                            : 'd-none'
+                        }`}
+                      >
+                        <img
+                          src={URL.createObjectURL(selectedFile)}
+                          alt=""
+                          className="previewIimage1 img-fluid "
+                        />
+                      </div>
                     </div>
                   ) : null}
                 </div>

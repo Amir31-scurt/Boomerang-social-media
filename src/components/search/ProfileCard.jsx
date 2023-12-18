@@ -1,92 +1,83 @@
+
 import React, { useState, useEffect, useContext } from 'react';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase-config.js';
 import { AuthContext } from '../../contexte/authContext.js';
+import { Link } from 'react-router-dom';
 
-const ProfileCard = ({ photoURL, displayName, email, userId }) => {
+const ProfileCard = ({ photoURL, displayName, email, userId, onProfileClick }) => {
   const { user, currentUser } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
   const [followClicked, setFollowClicked] = useState(false);
 
-  const handleFollowUser = async (userIdToFollow) => {
+  
+  useEffect(() => {
+    const fetchFollowStatus = async () => {
+      try {
+        const followDocRef = doc(db, 'users', user.uid);
+        const followDocSnapshot = await getDoc(followDocRef);
+
+        if (followDocSnapshot.exists()) {
+          const followData = followDocSnapshot.data();
+          setIsFollowing(
+            followData.usersFollowed && followData.usersFollowed.includes(user.uid)
+          );
+        }
+      } catch (error) {
+        console.error('Error fetching follow status:', error);
+      }
+    };
+
+    fetchFollowStatus();
+  }, [user.uid]);
+
+  const handleFollowToggle = async () => {
     try {
-      const userDocRef = doc(db, 'users', currentUser.uid);
-      const userToFollowDocRef = doc(db, 'users', userIdToFollow);
-      console.log(userToFollowDocRef);
+      const followDocRef = doc(db, 'users', user.uid);
+      const followDocSnapshot = await getDoc(followDocRef);
 
-      const userDocSnapshot = await getDoc(userDocRef);
-      const userToFollowDocSnapshot = await getDoc(userToFollowDocRef);
+      if (followDocSnapshot.exists()) {
+        const followData = followDocSnapshot.data();
+        let updatedFollows = followData.follows || 0;
+        let updatedUserFollowing = followData.usersFollowed || [];
 
-      if (userDocSnapshot.exists() && userToFollowDocSnapshot.exists()) {
-        const userData = userDocSnapshot.data();
-        const userToFollowData = userToFollowDocSnapshot.data();
-
-        let updatedUserFollowing = userData.following || [];
-        let updatedUserToFollowFollowers = userToFollowData.followers || [];
-
-        let updatedFollowingCount = userData.followingCount || 0;
-        let updatedNumberfollowers = userToFollowData.Numberfollowers || 0;
-
-        const currentUserFollowing =
-          userData.following && userData.following.includes(userIdToFollow);
-
-        if (currentUserFollowing) {
-          // If the user is already following, consider it as an unfollow
+        if (isFollowing) {
+          updatedFollows -= 1;
           updatedUserFollowing = updatedUserFollowing.filter(
-            (userId) => userId !== userIdToFollow
-          );
-          updatedUserToFollowFollowers = updatedUserToFollowFollowers.filter(
-            (userId) => userId !== currentUser.uid
-          );
-          updatedFollowingCount -= 1;
-          updatedNumberfollowers -= 1;
+            (followedId) => followedId !== user.uid
+          ); 
         } else {
-          // If the user is not following, consider it as a follow
-          updatedUserFollowing.push(userIdToFollow);
-          updatedUserToFollowFollowers.push(currentUser.uid);
-          updatedFollowingCount += 1;
-          updatedNumberfollowers += 1;
+          updatedFollows += 1;
+          updatedUserFollowing.push(user.uid);
         }
 
-        // Update Firestore with new following and followers lists, and the new following count
-        await updateDoc(userDocRef, {
-          following: updatedUserFollowing,
-          followingCount: updatedFollowingCount,
-        });
-        await updateDoc(userToFollowDocRef, {
-          followers: updatedUserToFollowFollowers,
-          Numberfollowers: updatedNumberfollowers,
+        await updateDoc(followDocRef, {
+          follows: updatedFollows,
+          usersFollowed: updatedUserFollowing,
         });
 
-        // Update local state to reflect the new following list
-        setIsFollowing(!currentUserFollowing);
+        setIsFollowing(!isFollowing);
       }
     } catch (error) {
-      console.error('Error toggling follow/unfollow: ', error);
+      console.error('Error toggling follow:', error);
     }
   };
 
-  // const handleFollowToggle = () => {
-  //   setFollowClicked((prevFollowClicked) => !prevFollowClicked);
-  // };
-
-  useEffect(() => {
-    // Fetch new data here
-  }, [isFollowing]);
-
   return (
-    <div className="mb-3 col-12">
-      <div className="card w-100  position-relative">
-        <div className="mx-4 my-3 d-flex justify-content-between align-items-center cardConte">
-          <div className="d-flex align-items-center">
-            <div className="rounded rounded-circle ms-2">
-              <input
-                type="image"
-                alt=""
-                className="icone-carte me-3 image rounded rounded-circle ms-2"
-                src={photoURL}
-              />
+    <div className="mb-3 col-md-6">
+      <div className="card w-100 position-relative">
+        <div className="imageProfile"> 
+          {/* <img src={noire} alt="" className="image" /> */}
+
+        </div>
+        <div className="mx-4 mt-3 d-flex justify-content-between cardConte">
+          <div className="d-flex">
+            <div className="rounded searchRounded rounded-circle ms-2">
+            <Link to={"/autre-profile"} >
+          <img     src={photoURL}  alt="" className="img-fluid w-100" />
+          </Link>
+         
             </div>
             <div className="paraTest ms-3 text-start">
               <h6 className="fw-bold">{displayName}</h6>
@@ -95,10 +86,13 @@ const ProfileCard = ({ photoURL, displayName, email, userId }) => {
           </div>
           <div className="">
             <button
-              onClick={handleFollowUser}
-              className={`btn btn-md rounded-5 mt-2 border:active-none ${
-                isFollowing ? 'btn-secondary' : 'btn-primary'
-              }`}
+              onClick={handleFollowToggle}
+              style={{
+                background: isFollowing ? 'gray' : 'blue',
+                color: 'white',
+              }}
+              className="w-20 btn btn-primary btn-sm rounded-5 mt-2 border:active-none"
+
               id="button"
             >
               {isFollowing ? 'Unfollow' : 'Follow'}

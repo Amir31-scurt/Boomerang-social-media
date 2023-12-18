@@ -50,8 +50,6 @@ export const Cards = () => {
     await deleteDoc(doc(DB, "posts", documentId));
     setPostCard((cards) => cards.filter((card) => card.id !== documentId));
   };
-  // boutton modifier une description
-
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState("");
   const handleChangeImageUrl = (e) => {
@@ -68,13 +66,13 @@ export const Cards = () => {
   const [textPost, setTextPost] = useState("");
   const Changement = (e) => {
     setTextPost(e.target.value);
-    if (textPost !== "") {
+    if (e.target.value !== "") {
       setAfficheBtn(true);
     } else {
       setAfficheBtn(false);
     }
   };
-  // L'evenement onClick sur le bouron Publier __
+  // L'evenement onClick sur le bouron Publier Text __
   const handleSubmit = async () => {
     const docRef = await addDoc(collection(DB, "posts"), {
       userID: user.uid,
@@ -95,7 +93,7 @@ export const Cards = () => {
 
     //Destructurer le tableau, puis ajouter un nouveau post
     setPostCard([newPostText, ...postCard]);
-    setTextPost(" ");
+    setTextPost("");
     toast.success("Publication réussie !", {
       position: "top-right",
       autoClose: 3000,
@@ -119,7 +117,7 @@ export const Cards = () => {
     return imageUrlRegex.test(url);
   };
 
-  //=============== Le bouton Type File===debut=========
+  //=============== Le bouton Type File ===debut=========
 
   // Ajouter un nouvel état
   const [selectedFile, setSelectedFile] = useState(null);
@@ -129,8 +127,7 @@ export const Cards = () => {
     if (files && files.length > 0) {
       const selectedFile = files[0];
       setSelectedFile(selectedFile);
-      setLoading(true)
-
+      setLoading(true);
       // Stockage local du fichier
       const storageRef = ref(storage, `ImagesDePost/${selectedFile.name}`);
 
@@ -319,7 +316,7 @@ export const Cards = () => {
     display: afficheBtn ? "block" : "none",
   };
 
-  //================ Le bouton Modifier Funtions===DEBUT=========
+  //================ Le bouton ModifierDescription Funtions===DEBUT=========
   const handleEdit = (postId, newDescription) => {
     // Mettez à jour la description du post dans le tableau state
     setPostCard((posts) =>
@@ -340,7 +337,30 @@ export const Cards = () => {
         console.error("Error updating document: ", error);
       });
   };
-  //================ Le bouton Modifier Funtions===DEBUT=========
+  //================ Le bouton ModifierBescription Funtions===FIN=========
+
+  //================ Le bouton ModifierTextPUB ===DEBUT=========
+  const handleEditTexPub = (postId, newTextPub) => {
+    // Mettez à jour la description du post dans le tableau state
+    setPostCard((posts) =>
+      posts.map((post) =>
+        post.id === postId ? { ...post, publication: newTextPub } : post
+      )
+    );
+
+    // Mettre à jour la publicationText du post dans Firestore
+    const postRef = doc(DB, "posts", postId);
+    updateDoc(postRef, {
+      publication: newTextPub,
+    })
+      .then(() => {
+        console.log("Document successfully updated!");
+      })
+      .catch((error) => {
+        console.error("Error updating document: ", error);
+      });
+  };
+  //================ Le bouton ModifierText Pub ===FIN=========
 
   return (
     <div>
@@ -409,6 +429,9 @@ export const Cards = () => {
             }}
             currentUser={currentUser}
             handleEdit={(newDescription) => handleEdit(card.id, newDescription)}
+            handleEditTexPub={(newTextPub) =>
+              handleEditTexPub(card.id, newTextPub)
+            }
           />
         ))}
       </div>
@@ -420,9 +443,13 @@ export const Cards = () => {
         <div className="modal-parant" style={modalStyle}>
           <div className="modal-contenu">
             {/* Le contenu du Modal */}
-
+            <div className="w-100">
+              <h3 className="text-center fst-italic fw-bold">
+                Créer une publication
+              </h3>
+            </div>
             <div className=" d-flex flex-column">
-              <label htmlFor="imageUrl" className="ms-2 fs-5 text-start">
+              <label htmlFor="imageUrl" className="ms-2 fs-5 my-3 text-start ">
                 Image / Vidéo URL *
               </label>
               <input
@@ -455,7 +482,7 @@ export const Cards = () => {
 
             <div className="BoutonFile py-3 mb-2">
               <div className="d-flex w-100 align-items-center flex-column justify-content-center">
-                <label for="fileInput" class="custom-button1 fs-6">
+                <label for="fileInput" class="custom-button1 fs-5 p-3">
                   Choisir Image / vidéo
                 </label>
                 <div className="w-100 mb-4">
@@ -466,20 +493,37 @@ export const Cards = () => {
                     onChange={handleFileChange}
                   />
                   {/*=============== Loading Code =============== */}
-                  {loading && <PulseLoader className="m-4" color={"#128"} size={18} />}
+                  {loading && (
+                    <div className="d-flex my-2 w-100 justify-content-center ">
+                      <div className=" d-flex align-items-center">
+                        <h5 className="fw-bold fst-italic ms-4 mt-1 text-primary">
+                          Chargement
+                        </h5>
+                        <PulseLoader className="m-4" color={"#128"} size={16} />
+                      </div>
+                    </div>
+                  )}
                   {/*=============== Loading Code Fin=============== */}
 
                   {imageUrl === "" && selectedFile ? (
-                    <div className="imgPreview">
+                    <div className="">
                       <p className="fichierChoisi ps-3">
                         <span className="Typy pe-2">Type de fichier :</span>
                         {selectedFile.type}
                       </p>
-                      <img
-                        src={URL.createObjectURL(selectedFile)}
-                        alt=""
-                        className="previewIimage img-fluid"
-                      />
+                      <div
+                        className={`imgPreview1 ${
+                          selectedFile.type !== "video/mp4"
+                            ? "d-flex"
+                            : "d-none"
+                        }`}
+                      >
+                        <img
+                          src={URL.createObjectURL(selectedFile)}
+                          alt=""
+                          className="previewIimage1 img-fluid "
+                        />
+                      </div>
                     </div>
                   ) : null}
                 </div>

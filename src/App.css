@@ -414,7 +414,8 @@ textarea {
 
 /* Style page content */
 .main {
-  margin-left: 21%; /* Same as the width of the sidebar */
+  margin-left: 23%; /* Same as the width of the sidebar */
+  margin-right: 3%;
   /* padding: 0px 10px; */
   width: 100%;
   overflow: hidden;

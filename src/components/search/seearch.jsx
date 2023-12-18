@@ -6,13 +6,12 @@ import { DB } from '../../config/firebase-config.js';
 import { collection, getDocs } from 'firebase/firestore';
 import { AuthContext } from '../../contexte/authContext.js';
 
-export default function Search({profile}) {
-  const { displayName, email, profilPic, banner } = profile;
+export default function Search() {
   const { currentUser } = useContext(AuthContext);
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isFollowing, setIsFollowing] = useState({});
-  const UserProfile = ({ profile }) => {
+ 
    
 
   useEffect(() => {
@@ -123,20 +122,22 @@ export default function Search({profile}) {
     }
   }, [currentUser]);
 
-
-  const handleProfileClick = async () => {
+  const handleProfileClick = async (userId) => {
     try {
-      const userDoc = await DB.collection('users').doc(email, displayName,profilPic, banner).get();
-      const userData = userDoc.data();
-
-      // Vous pouvez maintenant utiliser 'userData' pour afficher les détails de l'utilisateur
-      console.log('Données de l\'utilisateur:', userData);
+      const userDocRef = doc(DB, 'users', userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+  
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        // Faites quelque chose avec les informations de l'utilisateur, par exemple, imprimez-les dans la console.
+        console.log('Informations de l\'utilisateur:', userData);
+      }
     } catch (error) {
-      console.error('Erreur lors de la récupération des données de l\'utilisateur', error);
+      console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error);
     }
   };
-
   
+
 
   return (
     <div className="form formSearch">
@@ -167,7 +168,7 @@ export default function Search({profile}) {
                               alt={`${profile.displayName}'s profile`}
                               className="icone-carte me-3 image rounded rounded-circle ms-2"
                               src={profile.profilPic}
-                              onClick={() => handleProfileClick(currentUser)}
+                              onClick={() => handleProfileClick(profile.userId)}
                             />
                           </div>
                           <div className="paraTest ms-3 text-start d-flex flex-column align-items-start">
@@ -205,4 +206,3 @@ export default function Search({profile}) {
     </div>
   );
 }
-};

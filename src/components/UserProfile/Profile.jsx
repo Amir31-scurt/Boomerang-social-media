@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import React, { useRef, useState, useEffect } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';

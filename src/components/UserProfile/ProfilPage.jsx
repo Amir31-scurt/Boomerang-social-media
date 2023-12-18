@@ -158,27 +158,6 @@ function ProfilPage() {
                   className={`border-0 ${activeTab === 'images' ? 'act' : ''}`}
                   onClick={() => handleTabClick('images')}
                 >
-                  Images
-                </button>
-              </li>
-
-              <li>
-                <button
-                  className={`rounded-5 border-0 ${
-                    activeTab === 'videos' ? 'act' : ''
-                  }`}
-                  onClick={() => handleTabClick('videos')}
-                >
-                  Videos
-                </button>
-              </li>
-              <li>
-                <button
-                  className={`rounded-5 border-0 ${
-                    activeTab === 'posts' ? 'act' : ''
-                  }`}
-                  onClick={() => handleTabClick('posts')}
-                >
                   Posts
                 </button>
               </li>

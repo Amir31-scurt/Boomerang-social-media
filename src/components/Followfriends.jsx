@@ -95,20 +95,24 @@ export default function Followfriends() {
   }, []);
 
   return (
-    <div className="FollowCard">
+    <div className="FollowCard mt-5">
       <div class="card-body">
-        <ul className="">
+        <ul className="list-unstyled">
           <h4 className="text-start">Amis que j'ai suivie</h4>
           <hr />
           {following.map((followingList) => (
-            <li key={followingList.uid}>{followingList.displayName}</li>
+            <li key={followingList.uid} className="my-3">
+              {followingList.displayName}
+            </li>
           ))}
         </ul>
-        <ul>
+        <ul className="list-unstyled">
           <h4 className="text-start">Amis</h4>
           <hr />
           {followers.map((user) => (
-            <li key={user.uid}>{user.displayName}</li>
+            <li key={user.uid} className="my-3">
+              {user.displayName}
+            </li>
           ))}
         </ul>
       </div>

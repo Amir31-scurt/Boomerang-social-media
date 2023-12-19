@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
 import icon from '../../assets/images/user.png';
 import banner from '../../assets/images/Banner.jpg';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 function SignUp() {
   const { signUp } = useContext(AuthContext);
@@ -30,6 +32,12 @@ function SignUp() {
       inputs.current.push(val);
     }
   };
+
+  // Modal de termes et condtions d'utilisation
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   // Authentifiaction
   const formRef = useRef();
@@ -72,6 +80,9 @@ function SignUp() {
         icon,
         banner
       );
+
+      // retourner vide les inputs
+      formRef.current.reset();
       toast.success('Inscription valide avec succès', {
         position: 'top-right',
         autoClose: 3000,
@@ -82,18 +93,10 @@ function SignUp() {
         progress: undefined,
         theme: 'colored',
       });
-      // console.log(auth);
-      console.log(cred);
-
-      // retourner vide les inputs
-
-      formRef.current.reset();
       setValidation('');
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        navigate('/Connexion');
-      }, 3000);
+      navigate('/Connexion');
+      setLoading(false);
     } catch (err) {
       // Si y'a erreur dans l'authentification
       console.log(err.code);
@@ -220,21 +223,76 @@ function SignUp() {
                 />
               </div>
               {/* Terms and conditions checkbox */}
-              <div className="form-check d-flex justify-content-center gap-3">
+              <div className="form-check d-flex justify-content-center align-items-center gap-1">
                 <input
-                  className="form-check-input required text-center"
+                  className="form-check-input required text-center p-0 m-0"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                   required
                 />
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                  D’accord avec les {'    '}
-                  <Link className="text-decoration-none">
-                    Termes et conditions
+                <label
+                  className="form-check-label d-flex gap-1"
+                  htmlFor="flexCheckDefault"
+                >
+                  D’accord avec les {''}
+                  <Link className="text-decoration-none" onClick={handleShow}>
+                    termes et conditions
                   </Link>
                 </label>
               </div>
+              {/* Bootstrap Modal */}
+              <Modal
+                show={showModal}
+                className="TermsModal bg-light bg-opacity-25 vh-100 d-flex align-items-center  w-100 p-0 m-0"
+                onHide={handleClose}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Termes et Conditions</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>
+                    Bienvenue sur notre réseau social, une plateforme conçue
+                    pour connecter les individus de manière positive et
+                    respectueuse.
+                  </p>
+                  <p>
+                    En créant un compte et en utilisant notre réseau social,
+                    vous acceptez explicitement les présentes conditions
+                    d'utilisation. Veuillez les lire attentivement avant de
+                    continuer.
+                  </p>
+                  <p>
+                    Le processus de création de compte est simple et ouvert à
+                    tous ceux qui respectent nos conditions d'admissibilité. Ces
+                    conditions visent à garantir un environnement sûr et
+                    respectueux pour tous nos utilisateurs
+                  </p>
+                  <p>
+                    Il est strictement interdit de publier du contenu illégal,
+                    offensant, discriminatoire ou contraire à nos normes
+                    communautaires. Nous nous réservons le droit de supprimer
+                    tout contenu en violation de ces règles.
+                  </p>
+                  <p>
+                    Nous attendons de nos utilisateurs qu'ils interagissent de
+                    manière respectueuse envers les autres membres de notre
+                    communauté. Tout comportement inapproprié, harcèlement ou
+                    discours haineux est strictement interdit
+                  </p>
+                  <p>
+                    Nous nous réservons le droit de modifier les termes et
+                    conditions à tout moment. Les utilisateurs seront informés
+                    des changements, et il est de leur responsabilité de
+                    consulter régulièrement les conditions mises à jour.
+                  </p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Fermer
+                  </Button>
+                </Modal.Footer>
+              </Modal>
               {/* Submit button */}
               <div className="d-grid gap-2 col-6 mx-auto w-75 mt-4">
                 <button

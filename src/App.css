@@ -401,6 +401,10 @@ textarea {
   overflow-x: hidden;
   padding-top: 20px;
 }
+.friendsPicture {
+  width: 50px;
+  border-radius: 50%;
+}
 
 /* The navigation menu links */
 .sidenav a {
@@ -465,4 +469,49 @@ textarea {
     margin: 0;
     padding: 0;
   }
+}
+
+/* _____________      Modal Termes et conditions         __________ */
+/* Custom styles for the modal */
+.TermsModal .modal {
+  background-color: gray;
+}
+.TermsModal .modal-content {
+  background: #fff;
+  border-radius: 15px; /* Square corners */
+  padding: 20px;
+}
+
+.TermsModal .modal-header,
+.TermsModal .modal-body,
+.TermsModal .modal-footer {
+  border-bottom: none; /* Removes the default border */
+}
+.TermsModal .modal-body {
+  overflow-y: scroll;
+  height: 300px;
+}
+
+.TermsModal .modal-title {
+  font-weight: bold;
+}
+
+/* Customize the modal button */
+.TermsModal .modal-footer .btn {
+  background-color: #145da0; /* Black background */
+  color: #fff; /* White text */
+  border-radius: 15px; /* Square corners */
+}
+.TermsModal .modal-footer .btn:hover {
+  background-color: #1973c7;
+}
+
+/* Add animation to the modal */
+.TermsModal .modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+  transform: translateY(-50%);
+}
+
+.TermsModal .modal.show .modal-dialog {
+  transform: translateY(0);
 }

@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { CiSettings } from 'react-icons/ci';
 import { FaRegUser } from 'react-icons/fa';
 import { FiHome } from 'react-icons/fi';
-import userProfile from '../assets/images/user.png';
 import { AuthContext } from '../contexte/authContext';
 
 const Navbar = () => {
@@ -51,7 +50,7 @@ const Navbar = () => {
           <div className="p-2 text-center ms-3 position-relative dropdown-menu-icon setting-icon cursor-pointer">
             <CiSettings className="feather-settings feathers" />
           </div>
-          <Link to="" className="p-0 ms-3">
+          <Link to="User-Page" className="p-0 ms-3">
             <img
               src={currentUser.photoURL}
               alt="user"

@@ -5,6 +5,7 @@ import '../../App.css';
 import { DB } from '../../config/firebase-config.js';
 import { collection, getDocs } from 'firebase/firestore';
 import { AuthContext } from '../../contexte/authContext.js';
+import { Link } from 'react-router-dom';
 
 export default function Search() {
   const { currentUser } = useContext(AuthContext);
@@ -122,10 +123,8 @@ export default function Search() {
 
   return (
     <div className="form formSearch">
-
-      <SearchForm filter={search} func={(e)=> setSearch(e.target.value)} />{' '}
+      <SearchForm filter={search} func={(e) => setSearch(e.target.value)} />{' '}
       {/* Use the reusable SearchForm component */}
-      
       <div className="container flex-column d-flex ">
         <div className="row">
           {searchResults &&
@@ -148,11 +147,13 @@ export default function Search() {
                       <div className="mx-4 my-3 d-flex justify-content-between align-items-center cardConte">
                         <div className="d-flex align-items-center justify-content-center">
                           <div className="rounded rounded-circle ms-2">
-                            <img
-                              alt={`${profile.displayName}'s profile`}
-                              className="icone-carte me-3 image rounded rounded-circle ms-2"
-                              src={profile.profilPic}
-                            />
+                            <Link to="../autre-profile">
+                              <img
+                                alt={`${profile.displayName}'s profile`}
+                                className="icone-carte me-3 image rounded rounded-circle ms-2"
+                                src={profile.profilPic}
+                              />
+                            </Link>
                           </div>
                           <div className="paraTest ms-3 text-start d-flex flex-column align-items-start">
                             <h6 className="fw-bold">{profile.displayName}</h6>

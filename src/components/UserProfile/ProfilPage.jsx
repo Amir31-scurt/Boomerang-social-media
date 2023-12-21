@@ -83,7 +83,7 @@ function ProfilPage() {
         if (!querySnapshot.empty) {
           // Get the document reference from the first document in the snapshot
           const userDocRef = querySnapshot.docs[0].ref;
-
+          console.log(userDocRef);
           // Update Firestore with the new URL
           await updateDoc(userDocRef, {
             profilPic: downloadURL, // Make sure this field name matches your Firestore field name
@@ -94,9 +94,9 @@ function ProfilPage() {
           setProfileImageUrl(downloadURL);
           if (currentUser && currentUser.updateProfile) {
             await currentUser.updateProfile({ photoURL: downloadURL });
-            console.log('Profile updated successfully');
+            alert('Profile updated successfully');
           } else {
-            console.error('Error: currentUser is not available or invalid');
+            alert('Error: currentUser is not available or invalid');
           }
         } else {
           console.error('No user document found for UID:', currentUser.uid);
@@ -164,7 +164,7 @@ function ProfilPage() {
             <div className="d-flex this-text-profil">
               <div className="profil-img rounded-5 cursor-pointer">
                 <Profile
-                  imageUrl={currentUser.photoURL}
+                  imageUrl={currentUser.profilPic}
                   className="profil-img"
                 />
                 <input

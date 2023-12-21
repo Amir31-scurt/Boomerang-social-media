@@ -49,11 +49,11 @@ export const Cards = () => {
   // l'etat du Tableau par defaut du Post Card
   const [postCard, setPostCard] = useState([]);
 
-  // Poste Delete
+  //====================================================== Poste Delete
+
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
 
-  // Delete Poste
   const DeletePost = (documentId) => {
     setPostToDelete(documentId);
     setConfirmModalOpen(true);
@@ -67,6 +67,8 @@ export const Cards = () => {
       setPostToDelete(null);
     }
   };
+
+  // ====================================================== Delete Poste
 
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState('');
@@ -397,12 +399,9 @@ export const Cards = () => {
             </div>
 
             <div className="text-post mt-4">
-              <input
-                className="m-2 mx-3 minilog"
-                type="image"
-                src={user.photoURL}
-              />
-
+              <div className="my-2 mx-3">
+                <input className="minilog " type="image" src={user.photoURL} />
+              </div>
               {/* le texte a publié */}
               <div className="w-100 aria-content">
                 <textarea

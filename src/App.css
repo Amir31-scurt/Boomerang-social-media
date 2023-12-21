@@ -182,7 +182,11 @@
   color: #75e6da;
 }
 .logo {
-  width: 100px;
+  width: 40px;
+}
+.minilog {
+  width: 50px;
+  height: 50px;
 }
 @media (max-width: 1024px) {
   /* .signUp-form{
@@ -194,13 +198,13 @@
     margin: 100px 0 !important;
   }
   .logo {
-    width: 80px;
+    width: 40px;
   }
   .SideIcon {
     font-size: 20px;
   }
   .feathers {
-    font-size: 15px;
+    font-size: 20px;
   }
   .feather-settings {
     font-size: 30px;

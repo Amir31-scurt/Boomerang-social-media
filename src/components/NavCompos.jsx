@@ -5,6 +5,7 @@ import { CiSettings } from 'react-icons/ci';
 import { FaRegUser } from 'react-icons/fa';
 import { FiHome } from 'react-icons/fi';
 import { AuthContext } from '../contexte/authContext';
+import Logo from '../assets/images/Boomerang Logo.png';
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -14,11 +15,7 @@ const Navbar = () => {
         <div className="nav-top">
           <Link to="/Timeline">
             <span className="d-inline-block fredoka-font ls-3 fw-600 text-current font-xxl logo-text mb-0">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Boomerang-Logo.svg"
-                alt=""
-                className="logo"
-              />
+              <img src={Logo} alt="logo" className="logo" />
             </span>
           </Link>
           <span className="nav-menu me-0 ms-2"></span>

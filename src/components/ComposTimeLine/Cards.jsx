@@ -93,7 +93,6 @@ export const Cards = () => {
 
   // L'evenement onClick sur le bouron Publier Text __
   const handleSubmit = async () => {
-
     const docRef = await addDoc(collection(DB, 'posts'), {
       userID: user.uid,
       likes: 0,
@@ -340,7 +339,7 @@ export const Cards = () => {
   };
 
   //================ Le bouton ModifierDescription Funtions===DEBUT===
-  
+
   const handleEdit = (postId, newDescription) => {
     // Mettez à jour la description du post dans le tableau state
     setPostCard((posts) =>
@@ -398,7 +397,11 @@ export const Cards = () => {
             </div>
 
             <div className="text-post mt-4">
-              <div className="m-4">{elem.container1}</div>
+              <input
+                className="m-2 mx-3 minilog"
+                type="image"
+                src={user.photoURL}
+              />
 
               {/* le texte a publié */}
               <div className="w-100 aria-content">
@@ -534,7 +537,7 @@ export const Cards = () => {
                       </div>
                     </div>
                   )}
-                  {/*=============== Loading Code Fin=============== */}
+                  {/*=============== Loading Code Fin =============== */}
 
                   {imageUrl === '' && selectedFile ? (
                     <div className="">

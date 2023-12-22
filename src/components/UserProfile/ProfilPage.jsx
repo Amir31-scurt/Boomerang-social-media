@@ -3,54 +3,108 @@ import Profile from './Profile';
 import { CgMore } from 'react-icons/cg';
 import { PostImageProfile } from './PostImageProfile';
 import '../../assets/css/Profile.css';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-import { storage } from '../../config/firebase-config.js';
+import { db, storage } from '../../config/firebase-config.js';
 import { AuthContext } from '../../contexte/authContext.js';
 import { usePostActions } from '../ComposTimeLine/postActions/usePostActions';
 import { FiCamera } from 'react-icons/fi';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {
+  doc,
+  updateDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from 'firebase/firestore';
 
 function ProfilPage() {
   const { handleLikePost, DeletePost, handleEdit } = usePostActions();
   const { currentUser } = useContext(AuthContext);
 
+  // Initialize state with null or undefined, or a loading image placeholder
   // Utilisation de useState pour gérer l'URL de l'image de profil
-  const [profileImageUrl, setProfileImageUrl] = useState(() => {
-    // Récupérer l'URL de l'image depuis le localStorage lors du montage du composant
-    const storedImageUrl = localStorage.getItem('profileImageUrl');
-    return storedImageUrl || 'https://your-default-image-url.jpg';
-  });
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [bannerImageUrl, setBannerImageUrl] = useState('');
 
-  const [bannerImageUrl, setBannerImageUrl] = useState(() => {
-    const storedImageUrl = localStorage.getItem('bannerImageUrl');
-    return storedImageUrl || 'https://your-default-banner-image-url.jpg';
-  });
+  // ===============================================================================================
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      if (currentUser && currentUser.uid) {
+        const usersDocRef = collection(db, 'users');
+        const userQuery = query(
+          usersDocRef,
+          where('uid', '==', currentUser.uid)
+        );
+        const querySnapshot = await getDocs(userQuery);
+
+        if (!querySnapshot.empty) {
+          // Since we're querying by UID, there should be only one document.
+          const userData = querySnapshot.docs[0].data();
+          setProfileImageUrl(userData.profilPic || '');
+          setBannerImageUrl(userData.bannerPic || '');
+          console.log(userData);
+        } else {
+          console.log('No user document found with the UID:', currentUser.uid);
+          // Handle the case where no document is found. You may want to create one or alert the user.
+        }
+      }
+    };
+
+    if (currentUser) {
+      fetchProfileData();
+    }
+  }, [currentUser]);
 
   // Utilisation de useState pour gérer l'onglet actif par défaut
   const [activeTab, setActiveTab] = useState('images');
 
-  // Utilisation de useEffect pour sauvegarder l'URL de l'image dans le localStorage à chaque changement
-  useEffect(() => {
-    localStorage.setItem('profileImageUrl', profileImageUrl);
-  }, [profileImageUrl]);
-
-  useEffect(() => {
-    localStorage.setItem('bannerImageUrl', bannerImageUrl);
-  }, [bannerImageUrl]);
-
   // Fonction pour gérer le changement de la photo de profil
+  console.log(currentUser);
   const handleChangeProfileImage = async (event) => {
     const file = event.target.files[0];
-    if (file) {
+    if (file && currentUser) {
       const storageRef = ref(storage, `profileImages/${uuidv4()}-${file.name}`);
       try {
+        // Upload the file to Firebase Storage
         await uploadBytes(storageRef, file);
+        // Get the download URL
         const downloadURL = await getDownloadURL(storageRef);
-        setProfileImageUrl(downloadURL);
-        currentUser.photoURL = downloadURL;
-        // Here, you should also update the user's profile URL in your database or context
+
+        // Query Firestore to find the user's document based on uid
+        const usersDocRef = collection(db, 'users');
+        const userQuery = query(
+          usersDocRef,
+          where('uid', '==', currentUser.uid)
+        );
+        const querySnapshot = await getDocs(userQuery);
+        console.log(userQuery);
+
+        if (!querySnapshot.empty) {
+          // Get the document reference from the first document in the snapshot
+          const userDocRef = querySnapshot.docs[0].ref;
+          console.log(userDocRef);
+          // Update Firestore with the new URL
+          await updateDoc(userDocRef, {
+            profilPic: downloadURL, // Make sure this field name matches your Firestore field name
+            photoURL: downloadURL, // And this one as well, if you have it
+          });
+
+          // Update local state and Auth profile
+          setProfileImageUrl(downloadURL);
+          if (currentUser && currentUser.updateProfile) {
+            await currentUser.updateProfile({ photoURL: downloadURL });
+            alert('Profile updated successfully');
+          } else {
+            alert('Error: currentUser is not available or invalid');
+          }
+        } else {
+          console.error('No user document found for UID:', currentUser.uid);
+          // Handle the case where the user document does not exist
+        }
       } catch (error) {
         console.error('Error uploading image to Firebase Storage:', error);
+        // Handle the error, perhaps by showing a message to the user
       }
     }
   };
@@ -110,7 +164,7 @@ function ProfilPage() {
             <div className="d-flex this-text-profil">
               <div className="profil-img rounded-5 cursor-pointer">
                 <Profile
-                  imageUrl={currentUser.photoURL}
+                  imageUrl={currentUser.profilPic}
                   className="profil-img"
                 />
                 <input

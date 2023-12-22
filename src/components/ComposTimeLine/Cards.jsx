@@ -49,11 +49,11 @@ export const Cards = () => {
   // l'etat du Tableau par defaut du Post Card
   const [postCard, setPostCard] = useState([]);
 
-  // Poste Delete
+  //====================================================== Poste Delete
+
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
 
-  // Delete Poste
   const DeletePost = (documentId) => {
     setPostToDelete(documentId);
     setConfirmModalOpen(true);
@@ -67,6 +67,8 @@ export const Cards = () => {
       setPostToDelete(null);
     }
   };
+
+  // ====================================================== Delete Poste
 
   // l'etat de l'input  de l'image
   const [imageUrl, setImageUrl] = useState('');
@@ -93,7 +95,6 @@ export const Cards = () => {
 
   // L'evenement onClick sur le bouron Publier Text __
   const handleSubmit = async () => {
-
     const docRef = await addDoc(collection(DB, 'posts'), {
       userID: user.uid,
       likes: 0,
@@ -340,7 +341,7 @@ export const Cards = () => {
   };
 
   //================ Le bouton ModifierDescription Funtions===DEBUT===
-  
+
   const handleEdit = (postId, newDescription) => {
     // Mettez à jour la description du post dans le tableau state
     setPostCard((posts) =>
@@ -398,8 +399,9 @@ export const Cards = () => {
             </div>
 
             <div className="text-post mt-4">
-              <div className="m-4">{elem.container1}</div>
-
+              <div className="my-2 mx-3">
+                <input className="minilog " type="image" src={user.photoURL} />
+              </div>
               {/* le texte a publié */}
               <div className="w-100 aria-content">
                 <textarea
@@ -534,7 +536,7 @@ export const Cards = () => {
                       </div>
                     </div>
                   )}
-                  {/*=============== Loading Code Fin=============== */}
+                  {/*=============== Loading Code Fin =============== */}
 
                   {imageUrl === '' && selectedFile ? (
                     <div className="">

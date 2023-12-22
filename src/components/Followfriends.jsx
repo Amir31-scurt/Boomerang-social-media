@@ -3,21 +3,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { DB } from '../config/firebase-config';
-import {
-  collection,
-  where,
-  query,
-  getDoc,
-  getDocs,
-  doc,
-} from 'firebase/firestore';
+import { collection, where, query, getDocs } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { AuthContext } from '../contexte/authContext';
 
 export default function Followfriends() {
   const [following, setFollowing] = useState([]);
   const [followers, setFollowers] = useState([]);
-  const { user, currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchFollowing = async () => {
@@ -95,14 +88,23 @@ export default function Followfriends() {
   }, []);
 
   return (
-    <div className="FollowCard mt-5">
+    <div className="FollowCard vh-100 mt-5">
       <div class="card-body">
         <ul className="list-unstyled">
           <h4 className="text-start">Amis que j'ai suivie</h4>
           <hr />
           {following.map((followingList) => (
-            <li key={followingList.uid} className="my-3">
-              {followingList.displayName}
+            <li
+              key={followingList.uid}
+              className="my-3 d-flex align-items-center gap-3"
+            >
+              <input
+                type="image"
+                src={followingList.profilPic}
+                className="friendsPicture"
+                alt="profile picture"
+              />
+              <h6>{followingList.displayName}</h6>
             </li>
           ))}
         </ul>
@@ -111,7 +113,18 @@ export default function Followfriends() {
           <hr />
           {followers.map((user) => (
             <li key={user.uid} className="my-3">
-              {user.displayName}
+              <li
+                key={user.uid}
+                className="my-3 d-flex align-items-center gap-3"
+              >
+                {/* <input
+                  type="image"
+                  src={user.photoURL}
+                  className="friendsPicture"
+                  alt="Profile picture"
+                /> */}
+                <h6>{user.displayName}</h6>
+              </li>
             </li>
           ))}
         </ul>

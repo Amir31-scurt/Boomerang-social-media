@@ -2,12 +2,12 @@
 
 /* .Profil-img{
   height: 8%;
-}
+}*/
 
-.Profil-img img{
+.Profil-img img {
   border-radius: 10px;
   object-fit: cover;
-} */
+}
 
 .page-profil {
   height: 65vh;

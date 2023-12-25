@@ -115,7 +115,7 @@ export default function Followfriends() {
             <li key={user.uid} className="my-3">
               <li
                 key={user.uid}
-                className="my-3 d-flex align-items-center gap-3"
+                className="my-1 d-flex align-items-center gap-3"
               >
                 {/* <input
                   type="image"

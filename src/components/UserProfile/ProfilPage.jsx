@@ -17,6 +17,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import ImageCropper from './ImageCropper.jsx';
 
 function ProfilPage() {
   const { handleLikePost, DeletePost, handleEdit } = usePostActions();
@@ -27,6 +28,9 @@ function ProfilPage() {
   const [profileImageUrl, setProfileImageUrl] = useState('');
   const [bannerImageUrl, setBannerImageUrl] = useState('');
 
+  const [isCroppingProfile, setIsCroppingProfile] = useState(false);
+  const [isCroppingBanner, setIsCroppingBanner] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   // ===============================================================================================
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -63,6 +67,7 @@ function ProfilPage() {
   console.log(currentUser);
   const handleChangeProfileImage = async (event) => {
     const file = event.target.files[0];
+    setIsCroppingProfile(true);
     if (file && currentUser) {
       const storageRef = ref(storage, `profileImages/${uuidv4()}-${file.name}`);
       try {
@@ -107,6 +112,14 @@ function ProfilPage() {
         // Handle the error, perhaps by showing a message to the user
       }
     }
+  };
+
+  const handleCroppedImage = (croppedImage) => {
+    // Logic to handle the cropped image
+    // For example, upload it to Firebase and update the state
+    // Then, reset the cropping state
+    setIsCroppingProfile(false);
+    setIsCroppingBanner(false);
   };
 
   const handleChangeBannerImage = async (event) => {
@@ -163,10 +176,21 @@ function ProfilPage() {
           <div className=" d-flex justify-content-between pb-4 mx-5 identite">
             <div className="d-flex this-text-profil">
               <div className="profil-img rounded-5 cursor-pointer">
-                <Profile
-                  imageUrl={currentUser.profilPic}
-                  className="profil-img"
-                />
+                {isCroppingProfile && (
+                  <ImageCropper
+                    imageFile={selectedFile}
+                    onCropped={handleCroppedImage}
+                    aspectRatio={1} // For square cropping
+                  />
+                )}
+                {/* {isCroppingBanner && (
+                  <ImageCropper
+                    imageFile={selectedFile}
+                    onCropped={handleCroppedImage}
+                    aspectRatio={16 / 9} // Example aspect ratio for banners
+                  />
+                )} */}
+                <Profile imageUrl={currentUser.profilPic} className="" />
                 <input
                   type="file"
                   accept="image/*"
@@ -175,7 +199,7 @@ function ProfilPage() {
                   onChange={handleChangeProfileImage}
                 />
                 <label htmlFor="profileImageInput">
-                  <FiCamera className="camera-icon" />
+                  {/* <FiCamera className="camera-icon" /> */}
                 </label>
               </div>
               <div className="text-profil text-center text-lg-start">

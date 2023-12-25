@@ -12,6 +12,8 @@ export default function Search() {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isFollowing, setIsFollowing] = useState({});
+ 
+   
 
   useEffect(() => {
     const fetchFollowStatus = async (userIdToFollow) => {
@@ -121,6 +123,23 @@ export default function Search() {
     }
   }, [currentUser]);
 
+  const handleProfileClick = async (userId) => {
+    try {
+      const userDocRef = doc(DB, 'users', userId);
+      const userDocSnapshot = await getDoc(userDocRef);
+  
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        // Faites quelque chose avec les informations de l'utilisateur, par exemple, imprimez-les dans la console.
+        console.log('Informations de l\'utilisateur:', userData);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la récupération des informations de l\'utilisateur:', error);
+    }
+  };
+  
+
+
   return (
     <div className="form formSearch">
       <SearchForm filter={search} func={(e) => setSearch(e.target.value)} />{' '}
@@ -147,6 +166,8 @@ export default function Search() {
                       <div className="mx-4 my-3 d-flex justify-content-between align-items-center cardConte">
                         <div className="d-flex align-items-center justify-content-center">
                           <div className="rounded rounded-circle ms-2">
+
+
                             <Link to="../autre-profile">
                               <img
                                 alt={`${profile.displayName}'s profile`}
@@ -154,7 +175,9 @@ export default function Search() {
                                 src={profile.profilPic}
                               />
                             </Link>
+
                           </div>
+                        
                           <div className="paraTest ms-3 text-start d-flex flex-column align-items-start">
                             <h6 className="fw-bold">{profile.displayName}</h6>
                             <p className="m-0 p-0">{profile.email}</p>
